@@ -1,3 +1,16 @@
-.settings
 bin
 gen
+.metadata
+tmp/**
+.DS_Store
+*.tmp
+*.bak
+tmp/**/*
+*.swp
+*~.nib
+Thumbs.db
+Desktop.ini
+*~
+*.apk
+local.properties
+*.jar
