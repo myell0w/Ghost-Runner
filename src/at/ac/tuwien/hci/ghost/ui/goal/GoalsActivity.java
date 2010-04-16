@@ -1,4 +1,4 @@
-package at.ac.tuwien.hci.ghost.ui;
+package at.ac.tuwien.hci.ghost.ui.goal;
 
 import android.app.Activity;
 

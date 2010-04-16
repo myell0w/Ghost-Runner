@@ -26,6 +26,7 @@
     <string name="app.averagePace">Average Pace</string>
     <string name="app.averageSpeed">Average Speed</string>
 	
+	<string name="app.unitTime">h</string>
 	<string name="app.unitDistance">km</string>
 	<string name="app.unitPace">min/km</string>
 	<string name="app.unitCalories">kcal</string>
@@ -40,7 +41,8 @@
 
 <!-- Routes -->
 	<string name="routes.runs">Runs</string>
-	<string name="routes.none">No Routes</string>
+	<string name="routes.none">No Routes!</string>
+	<string name="routes.noRuns">No Runs!</string>
 
 <!-- History -->
     <string name="history.jan">January</string>

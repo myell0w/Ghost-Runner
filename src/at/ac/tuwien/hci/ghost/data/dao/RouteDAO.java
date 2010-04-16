@@ -13,10 +13,10 @@ public class RouteDAO implements DataAccessObject {
 		// TODO remove Stub-Implementation
 		List<Entity> routes = new ArrayList<Entity>();
 		
-		routes.add(new Route("Route 66", 3.4f, 12));
-		routes.add(new Route("Fun", 3.4f, 2));
-		routes.add(new Route("Home Run", 1.4f));
-		routes.add(new Route("Warm up", 2.4f, 32));
+		routes.add(new Route(1,"Route 66", 3.4f, 12));
+		routes.add(new Route(2,"Fun", 3.4f, 2));
+		routes.add(new Route(3,"Home Run", 1.4f));
+		routes.add(new Route(4,"Warm up", 2.4f, 32));
 		
 		return routes;
 	}

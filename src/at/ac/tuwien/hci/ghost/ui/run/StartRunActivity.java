@@ -1,4 +1,4 @@
-package at.ac.tuwien.hci.ghost.ui;
+package at.ac.tuwien.hci.ghost.ui.run;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,7 +15,7 @@ public class StartRunActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        showDialog(DIALOG_BLOED);
+        //showDialog(DIALOG_BLOED);
     }
     
     protected Dialog onCreateDialog(int id) {

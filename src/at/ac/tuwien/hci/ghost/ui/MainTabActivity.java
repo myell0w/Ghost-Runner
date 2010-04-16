@@ -5,9 +5,13 @@ import android.os.Bundle;
 import android.widget.TabHost;
 import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.R.string;
+import at.ac.tuwien.hci.ghost.ui.goal.GoalsActivity;
+import at.ac.tuwien.hci.ghost.ui.history.HistoryActivity;
+import at.ac.tuwien.hci.ghost.ui.route.RoutesActivity;
+import at.ac.tuwien.hci.ghost.ui.run.StartRunActivity;
 
 
-public class TabActivity extends android.app.TabActivity {
+public class MainTabActivity extends android.app.TabActivity {
 	 @Override
 	    protected void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
