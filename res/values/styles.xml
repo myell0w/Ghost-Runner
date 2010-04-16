@@ -4,8 +4,8 @@
 <!-- ==================== THEMES  ========================================================================= -->
 
 <!-- The Theme of the GhostRunner Application -->
- <style name="GhostRunnerTheme" parent="android:Theme.Light">
-    <item name="android:windowNoTitle">false</item>
+ <style name="GhostRunnerTheme" parent="android:Theme.Black">
+    <item name="android:windowNoTitle">true</item>
   </style>  
   
 <!-- ==================== STYLES  ========================================================================= -->  

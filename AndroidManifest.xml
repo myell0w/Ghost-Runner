@@ -3,13 +3,24 @@
       package="at.ac.tuwien.hci.ghost"
       android:versionCode="1"
       android:versionName="1.0">
-    <application android:icon="@drawable/icon" android:label="@string/app.name">
-        <activity android:name=".StartRunActivity"
-                  android:label="@string/app.name">
+    <application android:icon="@drawable/icon" android:label="@string/app.name" android:theme="@style/GhostRunnerTheme">
+        <activity android:name=".ui.TabActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        
+        <activity android:name=".ui.StartRunActivity">
+        </activity>
+        
+        <activity android:name=".ui.HistoryActivity">
+        </activity>
+        
+        <activity android:name=".ui.RoutesActivity">
+        </activity>
+        
+        <activity android:name=".ui.GoalsActivity">
         </activity>
 
     </application>
