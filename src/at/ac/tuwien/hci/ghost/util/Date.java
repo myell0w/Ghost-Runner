@@ -16,20 +16,18 @@ import java.util.GregorianCalendar;
  * @author Matthias
  */
 
-public class Date
-{
+public class Date {
 	/** das gespeicherte Datum */
 	private GregorianCalendar date = null;
 	/** das Default-Format */
 	private static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-	private static SimpleDateFormat sdfFull = new SimpleDateFormat("EE, dd.MM.yyyy HH:MM");
-	private static SimpleDateFormat sdfMySql = new SimpleDateFormat("yyyy-MM-dd");
+	private static SimpleDateFormat sdfFull = new SimpleDateFormat(
+			"EE, dd.MM.yyyy HH:mm");
 
 	/**
 	 * erzeugt ein Date-Objekt mit dem aktuellen Datum
 	 */
-	public Date()
-	{
+	public Date() {
 		date = new GregorianCalendar();
 	}
 
@@ -39,8 +37,7 @@ public class Date
 	 * @param date
 	 *            Das Datum als String im Format dd.MM.yyyy
 	 */
-	public Date(String date) throws ParseException
-	{
+	public Date(String date) throws ParseException {
 		set(date);
 	}
 
@@ -52,8 +49,7 @@ public class Date
 	 * @param format
 	 *            Das Format des Datums
 	 */
-	public Date(String date, String format) throws ParseException
-	{
+	public Date(String date, String format) throws ParseException {
 		set(date, format);
 	}
 
@@ -63,20 +59,8 @@ public class Date
 	 * @param date
 	 *            Standard-Java-Datum
 	 */
-	public Date(java.util.Date date)
-	{
+	public Date(java.util.Date date) {
 		set(date);
-	}
-
-	/**
-	 * erzeugt ein Datum aus einem java.sql.Date-Objekt
-	 * 
-	 * @param date
-	 *            Sql-Datum
-	 */
-	public Date(java.sql.Date date)
-	{
-		if (date != null) set(date);
 	}
 
 	/**
@@ -85,8 +69,7 @@ public class Date
 	 * @param date
 	 *            GregorianCalendar-Datum
 	 */
-	public Date(GregorianCalendar date)
-	{
+	public Date(GregorianCalendar date) {
 		set(date);
 	}
 
@@ -96,9 +79,14 @@ public class Date
 	 * @param millis
 	 *            die Millisekunden seit 1970 oder so
 	 */
-	public Date(long millis)
-	{
+	public Date(long millis) {
 		set(millis);
+	}
+	
+	public Date(int day, int month, int year, int hour, int minute) {
+		set(day,month,year);
+		setHour(hour);
+		setMinute(minute);
 	}
 
 	/**
@@ -111,16 +99,14 @@ public class Date
 	 * @param year
 	 *            Das Jahr
 	 */
-	public Date(int day, int month, int year)
-	{
+	public Date(int day, int month, int year) {
 		set(day, month, year);
 	}
 
 	/**
 	 * setzt das Datum auf den heutigen Tag
 	 */
-	public void setToToday()
-	{
+	public void setToToday() {
 		date = new GregorianCalendar();
 	}
 
@@ -130,13 +116,8 @@ public class Date
 	 * @param date
 	 *            Datum im Format dd.MM.yyyy oder yyyy-MM-dd
 	 */
-	public void set(String date) throws ParseException
-	{
-		try {
+	public void set(String date) throws ParseException {
 			set(sdf.parse(date));
-		} catch (ParseException pEx) {
-			set(sdfMySql.parse(date));
-		}
 	}
 
 	/**
@@ -147,8 +128,7 @@ public class Date
 	 * @param format
 	 *            Das Format des Datums
 	 */
-	public void set(String date, String format) throws ParseException
-	{
+	public void set(String date, String format) throws ParseException {
 		SimpleDateFormat df = new SimpleDateFormat(format);
 
 		set(df.parse(date));
@@ -161,8 +141,7 @@ public class Date
 	 *            Das gewünschte Datum als Standard-Java-Datum
 	 */
 	@SuppressWarnings("deprecation")
-	public void set(java.util.Date date)
-	{
+	public void set(java.util.Date date) {
 		set(date.getDate(), date.getMonth() + 1, date.getYear() + 1900);
 	}
 
@@ -173,8 +152,7 @@ public class Date
 	 *            Das gewünschte Datum als SQL-Datum
 	 */
 	@SuppressWarnings("deprecation")
-	public void set(java.sql.Date date)
-	{
+	public void set(java.sql.Date date) {
 		set(date.getDate(), date.getMonth() + 1, date.getYear() + 1900);
 	}
 
@@ -184,8 +162,7 @@ public class Date
 	 * @param date
 	 *            Das gewünschte Datum als GregorianCalendar
 	 */
-	public void set(GregorianCalendar date)
-	{
+	public void set(GregorianCalendar date) {
 		set(date.get(Calendar.DAY_OF_MONTH), date.get(Calendar.MONTH), date.get(Calendar.YEAR));
 	}
 
@@ -195,8 +172,7 @@ public class Date
 	 * @param millis
 	 *            Millisekunden seit 1970
 	 */
-	public void set(long millis)
-	{
+	public void set(long millis) {
 		set(new java.util.Date(millis));
 	}
 
@@ -210,11 +186,32 @@ public class Date
 	 * @param year
 	 *            Das Jahr
 	 */
-	public void set(int day, int month, int year)
-	{
+	public void set(int day, int month, int year) {
 		// Monat wird in GregorianCalender mit 0 = Jänner, 11 = Dezember
 		// gespeichert ==> -1
 		this.date = new GregorianCalendar(year, month - 1, day);
+	}
+	
+	/**
+	 * Setzt die Stunde neu
+	 * 
+	 * @param hour die neue Stunde
+	 * @return
+	 */
+	public Date setHour(int hour) {
+		this.date.set(Calendar.HOUR, hour);
+		return this;
+	}
+	
+	/**
+	 * Setzt die Minute neu
+	 * 
+	 * @param minute die neue Minute
+	 * @return
+	 */
+	public Date setMinute(int minute) {
+		this.date.set(Calendar.MINUTE,minute);
+		return this;
 	}
 
 	/**
@@ -223,8 +220,7 @@ public class Date
 	 * @param day
 	 *            Der neue Tag
 	 */
-	public Date setDay(int day)
-	{
+	public Date setDay(int day) {
 		this.date.set(Calendar.DAY_OF_MONTH, day);
 		return this;
 	}
@@ -235,8 +231,7 @@ public class Date
 	 * @param month
 	 *            Der neue Monat
 	 */
-	public Date setMonth(int month)
-	{
+	public Date setMonth(int month) {
 		this.date.set(Calendar.MONTH, month);
 		return this;
 	}
@@ -247,25 +242,30 @@ public class Date
 	 * @param year
 	 *            Das neue Jahr
 	 */
-	public Date setYear(int year)
-	{
+	public Date setYear(int year) {
 		this.date.set(Calendar.YEAR, year);
 		return this;
+	}
+	
+	public int getHour() {
+		return date.get(Calendar.HOUR);
+	}
+	
+	public int getMinute() {
+		return date.get(Calendar.MINUTE);
 	}
 
 	/**
 	 * @return Der Tag des Monats (1-31)
 	 */
-	public int getDay()
-	{
+	public int getDay() {
 		return date.get(Calendar.DAY_OF_MONTH);
 	}
 
 	/**
 	 * @return Der Monat des Jahres (1 = Jänner, 12 = Dezember)
 	 */
-	public int getMonth()
-	{
+	public int getMonth() {
 		// Monat wird in GregorianCalender mit 0 = Jänner, 11 = Dezember
 		// gespeichert ==> +1
 		return date.get(Calendar.MONTH) + 1;
@@ -274,8 +274,7 @@ public class Date
 	/**
 	 * @return Das Jahr
 	 */
-	public int getYear()
-	{
+	public int getYear() {
 		return date.get(Calendar.YEAR);
 	}
 
@@ -286,8 +285,7 @@ public class Date
 	 *            Das gewünschte Feld (zB Calendar.MONTH)
 	 * @return Der Wert des gewünschte Felds
 	 */
-	public int get(int field)
-	{
+	public int get(int field) {
 		// Monat wird in GregorianCalender mit 0 = Jänner, 11 = Dezember
 		// gespeichert ==> +1
 		if (field == Calendar.MONTH)
@@ -298,8 +296,7 @@ public class Date
 	/**
 	 * @return Cast auf java.util.Date-Objekt
 	 */
-	public java.util.Date getAsJavaDefaultDate()
-	{
+	public java.util.Date getAsJavaDefaultDate() {
 		return date.getTime();
 	}
 
@@ -310,8 +307,7 @@ public class Date
 	 *            Ein Datum in der Zukunft
 	 * @return Anzahl an Jahren die zwischen dem Datum und d liegen
 	 */
-	public long getYearDifference(Date d)
-	{
+	public long getYearDifference(Date d) {
 		return d.getYear() - getYear();
 	}
 
@@ -319,23 +315,24 @@ public class Date
 	 * String-Darstellung im Default-Format
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return sdf.format(date.getTime());
 	}
 
 	/**
 	 * @return Wochentag, dd.mm.yyyy
 	 */
-	public String toFullString()
-	{
+	public String toFullString() {
 		return sdfFull.format(date.getTime());
 	}
-	
+
 	/**
 	 * Adds amount to the specified field
-	 * @param field Calendar.DAY/MONTH/YEAR
-	 * @param amount signed amount
+	 * 
+	 * @param field
+	 *            Calendar.DAY/MONTH/YEAR
+	 * @param amount
+	 *            signed amount
 	 */
 	public void add(int field, int amount) {
 		date.add(field, amount);
@@ -348,8 +345,7 @@ public class Date
 	 *            Das Format des Datums (zB yyyy-MM-dd)
 	 * @return Das Datum im gewünschten Format als String
 	 */
-	public String toString(String format)
-	{
+	public String toString(String format) {
 		SimpleDateFormat df = new SimpleDateFormat(format);
 		return df.format(date.getTime());
 	}

@@ -34,7 +34,7 @@ public class MainTabActivity extends android.app.TabActivity {
 	                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)));
 	        
 	        tabHost.addTab(tabHost.newTabSpec("TabGoals")
-	        		.setIndicator(this.getResources().getText(R.string.app_tabGoals))
+	        		.setIndicator(this.getResources().getText(R.string.app_tabGoals),this.getResources().getDrawable(R.drawable.tab_goal))
 	                .setContent(new Intent(this, GoalsActivity.class)));
 	    }
 }

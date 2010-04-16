@@ -64,5 +64,6 @@
 	<string name="goals.runs">Monthly Runs</string>
 	
 	<string name="goals.new">New Goal</string>
+	<string name="goals.none">No Goals!</string>
 
 </resources>
