@@ -58,7 +58,6 @@ public class RoutesActivity extends ListActivity {
 		
 		Route r = routes.get(position);
 		
-		System.out.println("Calling AllRunsOfRouteActivity with ID = " + r.getID());
 		Intent allRunsIntent = new Intent(this, AllRunsOfRouteActivity.class); 
 		allRunsIntent.putExtra("at.ac.tuwien.hci.ghost.RouteID", r.getID()); 
 		

@@ -10,4 +10,14 @@
   
 <!-- ==================== STYLES  ========================================================================= -->  
  
+ <style name="MainStyle" parent="android:Theme.Light">
+ 	<item name="android:listViewStyle">@style/MyListViewStyle</item>  
+ </style>
+ 
+ <style name="MyListViewStyle" parent="@android:style/Widget.ListView">
+  <item name="android:background">#FFFFFFFF</item>
+  <!--  <item name="android:listSelector">@drawable/z_selector_background</item>-->
+</style>
+ 
+ 
 </resources>
