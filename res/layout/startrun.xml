@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical">
+
+	<LinearLayout 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" 
+		android:layout_marginBottom="10dip"
+		android:orientation="vertical">
+
+		<Spinner android:id="@+id/selectedRoute" 
+		    android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
+		</Spinner>
+
+		<Spinner android:id="@+id/selectedGoal" 
+		         android:layout_width="fill_parent"
+			     android:layout_height="wrap_content">
+		</Spinner>
+
+		<Button android:id="@+id/startRunButton" android:layout_width="fill_parent"
+			android:layout_height="50dip"
+			android:text="@string/run.start">
+		</Button>
+
+	</LinearLayout>
+
+	<com.google.android.maps.MapView
+		xmlns:android="http://schemas.android.com/apk/res/android" 
+		android:id="@+id/overviewMap"
+		android:layout_width="fill_parent" 
+		android:layout_height="fill_parent"
+		android:clickable="true" 
+		android:apiKey="Your Maps API Key goes here" />
+</LinearLayout> 
