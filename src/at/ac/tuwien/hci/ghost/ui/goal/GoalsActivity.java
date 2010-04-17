@@ -18,8 +18,6 @@ import at.ac.tuwien.hci.ghost.data.entities.Route;
 import at.ac.tuwien.hci.ghost.ui.route.AllRunsOfRouteActivity;
 
 public class GoalsActivity extends ListActivity {
-	private static final int VIEW_ALL_RUNS = 1;
-
 	/** all goals */
 	private List<Goal> goals = null;
 	/** DAO for retrieving Routes */

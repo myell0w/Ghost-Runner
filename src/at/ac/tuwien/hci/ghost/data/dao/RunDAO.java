@@ -15,7 +15,7 @@ public class RunDAO implements DataAccessObject {
 		// TODO remove method stub
 		List<Entity> searchResult = new ArrayList<Entity>();
 		
-		if (!searchTerms.isEmpty() && searchTerms.get(0).getID() == 1) {
+		if (searchTerms != null && !searchTerms.isEmpty() && searchTerms.get(0).getID() == 1) {
 		searchResult.add(new Run(1,new Date(), 3600, 9.56f, 323, null));
 		searchResult.add(new Run(2,new Date(12,3,2010), 3300, 5.56f, 323, null));
 		} else {
@@ -28,7 +28,6 @@ public class RunDAO implements DataAccessObject {
 	}
 
 	public List<Run> getAllRunsOfRoute(Route route) {
-		// TODO remove stub-implementation
 		List<Entity> searchTerm = new ArrayList<Entity>(1);
 		List<Entity> searchResult = null;
 		List<Run> ret = null;
@@ -45,5 +44,24 @@ public class RunDAO implements DataAccessObject {
 		}
 		
 		return ret;
+	}
+	
+	public List<Run> getAllRunsInMonth(int month) {
+		// TODO: remove stub-implementation and implement
+		List<Entity> searchResult = null;
+		List<Run> ret = null;
+		
+		searchResult = search(null);
+		
+		ret = new ArrayList<Run>(searchResult.size());
+		
+		for (Entity e : searchResult) {
+			if (e instanceof Run) {
+				ret.add((Run)e);
+			}
+		}
+		
+		return ret;
+		
 	}
 }
