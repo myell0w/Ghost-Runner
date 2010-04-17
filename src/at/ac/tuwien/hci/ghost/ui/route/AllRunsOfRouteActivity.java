@@ -27,7 +27,8 @@ public class AllRunsOfRouteActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         
         // create the route from the ID
-        route = new Route(getIntent().getExtras().getInt("ac.at.tuwien.hci.ghost.RouteID"));
+        System.out.println("Extras: " + getIntent().getExtras());
+        route = new Route(getIntent().getExtras().getInt("at.ac.tuwien.hci.ghost.RouteID"));
         
         System.out.println("AllRunsOfRoute was called with ID = " + route.getID());
         

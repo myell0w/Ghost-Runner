@@ -1,9 +1,11 @@
 package at.ac.tuwien.hci.ghost.data.entities;
 
-public class Goal {
+public class Goal extends Entity {
 	public enum Period { WEEK, MONTH, YEAR };
 	public enum Type { DISTANCE, CALORIES, RUNS };
 	
+	/** the id of the goal */
+	private int id = 0;
 	/** the progress of the goal, between 0 and 1 */
 	private float progress = 0.f;
 	/** the value of the goal */
@@ -13,9 +15,19 @@ public class Goal {
 	/** the type of the goal */
 	private Type type = null;
 	
-	public Goal(Type type, float goal) {
+	public Goal(int id, Type type, float goal, float progress) {
+		this.id = id;
 		this.type = type;
 		this.goal = goal;
+		this.progress = progress;
+	}
+	
+	public Goal(int id, Type type, float goal) {
+		this(id,type,goal,0.f);
+	}
+	
+	public Goal(int id) {
+		this.id = id;
 	}
 	
 	public Type getType() {
@@ -60,5 +72,10 @@ public class Goal {
 	
 	public boolean finished() {
 		return progress >= 1.f;
+	}
+
+	@Override
+	public int getID() {
+		return id;
 	}
 }
