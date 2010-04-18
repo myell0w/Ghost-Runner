@@ -19,6 +19,9 @@
         <activity android:name=".ui.run.StartRunActivity">
         </activity>
         
+         <activity android:name=".ui.run.RunDetailsActivity">
+        </activity>
+        
         <activity android:name=".ui.history.HistoryActivity">
         </activity>
         

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical">
+
+	<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:stretchColumns="1" android:layout_marginBottom="10dip">
+		<TableRow>
+			<TextView android:text="@string/app.totalTime"	android:padding="3dip" />
+			<TextView android:id="@+id/detailTotalTime" android:gravity="right" android:padding="3dip" />
+		</TableRow>
+		<TableRow>
+			<TextView android:text="@string/app.totalDistance"	android:padding="3dip" />
+			<TextView android:id="@+id/detailTotalDistance" android:gravity="right" android:padding="3dip" />
+		</TableRow>
+		<TableRow>
+			<TextView android:text="@string/app.averagePace" android:padding="3dip" />
+			<TextView android:id="@+id/detailAveragePace" android:gravity="right" android:padding="3dip" />
+		</TableRow>
+		<TableRow>
+			<TextView android:text="@string/app.averageSpeed"	android:padding="3dip" />
+			<TextView android:id="@+id/detailAverageSpeed" android:gravity="right" android:padding="3dip" />
+		</TableRow>
+		<TableRow>
+			<TextView android:text="@string/app.totalCalories"	android:padding="3dip" />
+			<TextView android:id="@+id/detailTotalCalories" android:gravity="right" android:padding="3dip" />
+		</TableRow>
+		
+	</TableLayout>
+
+	<com.google.android.maps.MapView
+		xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/overviewMap"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:clickable="true" android:apiKey="Your Maps API Key goes here" />
+</LinearLayout> 

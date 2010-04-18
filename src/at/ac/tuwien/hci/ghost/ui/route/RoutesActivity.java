@@ -14,6 +14,7 @@ import at.ac.tuwien.hci.ghost.data.dao.DataAccessObject;
 import at.ac.tuwien.hci.ghost.data.dao.RouteDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
+import at.ac.tuwien.hci.ghost.util.Constants;
 
 public class RoutesActivity extends ListActivity {
 	private static final int VIEW_ALL_RUNS = 1;
@@ -59,7 +60,7 @@ public class RoutesActivity extends ListActivity {
 		Route r = routes.get(position);
 		
 		Intent allRunsIntent = new Intent(this, AllRunsOfRouteActivity.class); 
-		allRunsIntent.putExtra("at.ac.tuwien.hci.ghost.Route", r);
+		allRunsIntent.putExtra(Constants.ROUTE, r);
 		
 		this.startActivityForResult(allRunsIntent, VIEW_ALL_RUNS);
 	}

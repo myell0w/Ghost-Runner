@@ -1,5 +1,6 @@
 package at.ac.tuwien.hci.ghost.util;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -16,7 +17,10 @@ import java.util.GregorianCalendar;
  * @author Matthias
  */
 
-public class Date {
+public class Date implements Serializable {
+	/**the serial version UID	 */
+	private static final long serialVersionUID = 192026271093734748L;
+	
 	/** das gespeicherte Datum */
 	private GregorianCalendar date = null;
 	/** das Default-Format */
