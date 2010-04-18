@@ -1,6 +1,5 @@
 package at.ac.tuwien.hci.ghost.data.adapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -40,7 +39,8 @@ public class RouteAdapter extends ArrayAdapter<Route> {
 			}
 			
 			if (runCount != null) {
-				runCount.setText(r.getRunCount() + " " + getContext().getResources().getString(R.string.routes_runs));
+				runCount.setText(r.getDistance() + " " + getContext().getResources().getString(R.string.app_unitDistance) + ", " 
+							   + r.getRunCount() + " " + getContext().getResources().getString(R.string.routes_runs));
 			}
 		}
 		return v;

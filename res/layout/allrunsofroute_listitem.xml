@@ -16,18 +16,20 @@
         android:layout_weight="1"
         android:layout_height="fill_parent">
         <TextView
-            android:id="@+id/runStat"
+            android:id="@+id/runDate"
             android:layout_width="fill_parent"
             android:layout_height="0dip"
             android:layout_weight="1"
             android:gravity="center_vertical"
+            style="@style/ListDetail"
         />
-        <TextView android:id="@+id/runDate"
+        <TextView android:id="@+id/runStat"
             android:layout_width="fill_parent"
             android:layout_height="0dip"
             android:layout_weight="1" 
             android:singleLine="true"
             android:ellipsize="marquee"
+            style="@style/ListHeading"
         />
     </LinearLayout>
 </LinearLayout>

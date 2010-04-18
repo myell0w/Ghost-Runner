@@ -4,6 +4,10 @@
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent" style="@style/MainStyle">
 
+	<TextView android:id="@+id/routeHeading" android:layout_width="fill_parent"
+	   android:layout_height="20dip" android:textColor="#FFFFFF">
+	</TextView>
+
 	<ListView android:id="@+id/android:list" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" />
 	<TextView android:id="@+id/android:empty"

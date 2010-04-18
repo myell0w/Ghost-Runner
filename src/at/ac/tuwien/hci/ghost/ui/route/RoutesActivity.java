@@ -59,7 +59,7 @@ public class RoutesActivity extends ListActivity {
 		Route r = routes.get(position);
 		
 		Intent allRunsIntent = new Intent(this, AllRunsOfRouteActivity.class); 
-		allRunsIntent.putExtra("at.ac.tuwien.hci.ghost.RouteID", r.getID()); 
+		allRunsIntent.putExtra("at.ac.tuwien.hci.ghost.Route", r);
 		
 		this.startActivityForResult(allRunsIntent, VIEW_ALL_RUNS);
 	}

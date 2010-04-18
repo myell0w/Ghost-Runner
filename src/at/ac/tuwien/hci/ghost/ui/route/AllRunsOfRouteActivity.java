@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.ListActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.data.adapter.RunAdapter;
 import at.ac.tuwien.hci.ghost.data.dao.DataAccessObject;
@@ -26,11 +27,8 @@ public class AllRunsOfRouteActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        // create the route from the ID
-        System.out.println("Extras: " + getIntent().getExtras());
-        route = new Route(getIntent().getExtras().getInt("at.ac.tuwien.hci.ghost.RouteID"));
-        
-        System.out.println("AllRunsOfRoute was called with ID = " + route.getID());
+        // get Route from the Intent
+        route = (Route)getIntent().getExtras().getSerializable("at.ac.tuwien.hci.ghost.Route");
         
         // create dao-object
         dao = new RunDAO();
@@ -41,6 +39,9 @@ public class AllRunsOfRouteActivity extends ListActivity {
         
         this.setContentView(R.layout.allrunsofroute);        
         this.setListAdapter(adapter);
+        
+        TextView heading = (TextView)this.findViewById(R.id.routeHeading);
+        heading.setText(route.getName());
     }
     
     private List<Run> getAllRuns() {

@@ -6,6 +6,7 @@
 <!-- The Theme of the GhostRunner Application -->
  <style name="GhostRunnerTheme" parent="android:Theme.Black">
     <item name="android:windowNoTitle">true</item>
+    <!--<item name="android:typeface"></item>-->
   </style>  
   
 <!-- ==================== STYLES  ========================================================================= -->  
@@ -19,5 +20,14 @@
   <!--  <item name="android:listSelector">@drawable/z_selector_background</item>-->
 </style>
  
+<style name="ListHeading">
+	<item name="android:textColor">#333333</item>
+	<item name="android:textSize">17sp</item>
+</style>
+
+<style name="ListDetail">
+	<item name="android:textColor">#999999</item>
+	<item name="android:textSize">14sp</item>
+</style>
  
 </resources>

@@ -20,7 +20,7 @@ public class Date {
 	/** das gespeicherte Datum */
 	private GregorianCalendar date = null;
 	/** das Default-Format */
-	private static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+	private static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 	private static SimpleDateFormat sdfFull = new SimpleDateFormat(
 			"EE, dd.MM.yyyy HH:mm");
 

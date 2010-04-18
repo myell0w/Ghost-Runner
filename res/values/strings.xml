@@ -57,6 +57,8 @@
     <string name="history.oct">October</string>
     <string name="history.nov">November</string>
     <string name="history.dec">December</string>
+    
+    <string name="history.noRoute">No Route</string>
 
 <!-- Goals -->
 	<string name="goals.distance">Monthly Distance</string>

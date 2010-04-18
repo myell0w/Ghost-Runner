@@ -4,10 +4,8 @@ import java.util.List;
 
 import android.app.ListActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ListView;
 import at.ac.tuwien.hci.ghost.R;
-import at.ac.tuwien.hci.ghost.data.adapter.RunAdapter;
+import at.ac.tuwien.hci.ghost.data.adapter.HistoryAdapter;
 import at.ac.tuwien.hci.ghost.data.dao.DataAccessObject;
 import at.ac.tuwien.hci.ghost.data.dao.RunDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
@@ -18,7 +16,7 @@ public class HistoryActivity extends ListActivity {
 	/** DAO for retrieving Routes */
 	private DataAccessObject dao = null;
 	/** Adapter for combining Entities and ListView */
-	private RunAdapter adapter = null;
+	private HistoryAdapter adapter = null;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -30,7 +28,7 @@ public class HistoryActivity extends ListActivity {
 		// get all routes
 		runs = getRunsInMonth(3);
 		// create adapter
-		adapter = new RunAdapter(this, R.layout.history_listitem, runs);
+		adapter = new HistoryAdapter(this, R.layout.history_listitem, runs);
 		
 		this.setListAdapter(adapter);
 		this.setContentView(R.layout.history);        
