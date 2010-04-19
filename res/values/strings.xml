@@ -71,4 +71,6 @@
 <!--  Weather -->
 	<string name="weather.header">Weatherinfo for today: </string>
 
+<string name="goals.delete">Delete Goal</string>
+<string name="goals.discard">Discard</string>
 </resources>

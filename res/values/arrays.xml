@@ -5,7 +5,6 @@
 		<item>Calories</item>
 		<item>Runs</item>
 	</array>
-	
 	<array name="goalPeriod">
 		<item>Week</item>
 		<item>Month</item>
