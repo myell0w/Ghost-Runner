@@ -4,20 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ListActivity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ListView;
 import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.data.adapter.GoalAdapter;
 import at.ac.tuwien.hci.ghost.data.dao.DataAccessObject;
 import at.ac.tuwien.hci.ghost.data.dao.GoalDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Goal;
-import at.ac.tuwien.hci.ghost.data.entities.Route;
-import at.ac.tuwien.hci.ghost.ui.route.AllRunsOfRouteActivity;
 
 public class GoalsActivity extends ListActivity {
 	
