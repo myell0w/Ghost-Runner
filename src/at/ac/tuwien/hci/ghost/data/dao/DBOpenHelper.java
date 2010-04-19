@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import at.ac.tuwien.hci.ghost.util.Constants;
 
 public class DBOpenHelper extends SQLiteOpenHelper {
 	
@@ -17,7 +18,13 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Add create table statements
-		db.execSQL("CREATE TABLE IF NOT EXISTS tb_ghost_test (name text, value integer);");
+		db.execSQL("CREATE TABLE IF NOT EXISTS " + Constants.DB_TABLE_GOALS + " (" +
+				   Constants.DB_GOALS_COLUMN_ID + " " + Constants.DB_GOALS_COLUMN_TYPE_ID + ", " +
+				   Constants.DB_GOALS_COLUMN_PROGRESS + " " + Constants.DB_GOALS_COLUMN_TYPE_PROGRESS + ", " +
+				   Constants.DB_GOALS_COLUMN_TYPE + " " + Constants.DB_GOALS_COLUMN_TYPE_TYPE + ", " +
+				   Constants.DB_GOALS_COLUMN_GOALVALUE + " " + Constants.DB_GOALS_COLUMN_TYPE_GOALVALUE + ", " +
+				   Constants.DB_GOALS_COLUMN_PERIOD + " " + Constants.DB_GOALS_COLUMN_TYPE_PERIOD +
+				   ");");
 	}
 
 	@Override
@@ -25,7 +32,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 		// TODO Delete all tables
 		Log.i(DBOpenHelper.class.toString(),"Upgrading database from version " + oldVersion + " to version " + newVersion + "." +
 		         "Data tables will be truncated.");
-		db.execSQL("DROP TABLE IF EXISTS tb_ghost_test;");
+		db.execSQL("DROP TABLE IF EXISTS " + Constants.DB_TABLE_GOALS + ";");
 		onCreate(db);
 	}
 

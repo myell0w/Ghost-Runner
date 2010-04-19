@@ -3,12 +3,17 @@ package at.ac.tuwien.hci.ghost.data.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
 import at.ac.tuwien.hci.ghost.util.Date;
 
-public class RunDAO implements DataAccessObject {
+public class RunDAO extends DataAccessObject {
+
+	public RunDAO(Context context) {
+		super(context);
+	}
 
 	@Override
 	public List<Entity> search(List<Entity> searchTerms) {

@@ -31,7 +31,7 @@ public class HistoryActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		
 		// create dao-object
-		dao = new RunDAO();
+		dao = new RunDAO(this);
 		// get all routes
 		runs = getRunsInMonth(3);
 		// create adapter
