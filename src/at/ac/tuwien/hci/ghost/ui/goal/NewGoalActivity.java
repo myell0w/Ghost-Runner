@@ -112,8 +112,6 @@ public class NewGoalActivity extends Activity implements TextWatcher {
 		} catch(Exception e) {
 			Log.i(NewGoalActivity.class.toString(),"ERROR: during getText");
 		}
-		
-		goalDAO.update(goal);
 	}
 	
 	@Override
@@ -161,6 +159,13 @@ public class NewGoalActivity extends Activity implements TextWatcher {
 
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
-		
+		Log.i(NewGoalActivity.class.toString(),"INFO: afterTextChanged");
+		EditText textGoal = (EditText)findViewById(R.id.textGoal);
+		try {
+			goal.setGoalValue(Float.valueOf(textGoal.getText().toString()));
+			Log.i(NewGoalActivity.class.toString(),"INFO: save Text");
+		} catch(Exception e) {
+			Log.i(NewGoalActivity.class.toString(),"ERROR: during getText");
+		}
 	}
 }
