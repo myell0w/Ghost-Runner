@@ -8,10 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
-import at.ac.tuwien.hci.ghost.data.entities.Goal;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
-import at.ac.tuwien.hci.ghost.data.entities.Goal.Period;
-import at.ac.tuwien.hci.ghost.data.entities.Goal.Type;
 import at.ac.tuwien.hci.ghost.util.Constants;
 
 public class RouteDAO extends DataAccessObject {
