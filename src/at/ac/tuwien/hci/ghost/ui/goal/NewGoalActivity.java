@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import at.ac.tuwien.hci.ghost.R;
+import at.ac.tuwien.hci.ghost.data.dao.GoalDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Goal;
 import at.ac.tuwien.hci.ghost.data.entities.Goal.Period;
 import at.ac.tuwien.hci.ghost.data.entities.Goal.Type;
@@ -24,8 +25,9 @@ public class NewGoalActivity extends Activity implements TextWatcher {
 
     private int mState;
     private Goal goal;
+    private GoalDAO goalDAO;
     
-    /** menu constans */
+    /** menu constants */
 	private final int MENU_GOALEDIT_DISCARD = 101;
 	private final int MENU_GOALEDIT_DELETE = 102;
     
@@ -41,6 +43,8 @@ public class NewGoalActivity extends Activity implements TextWatcher {
 			mState = bundle.getInt("actionKey");
 		if(bundle.containsKey("newGoal"))
 			goal = (Goal) bundle.get("newGoal");
+		
+		goalDAO = new GoalDAO(this);
 		
 		Spinner spinnerType=(Spinner)findViewById(R.id.selectedType);
 		ArrayAdapter<Type> adapterType = new ArrayAdapter<Type>(this, android.R.layout.simple_spinner_item, Goal.Type.values());
@@ -61,7 +65,7 @@ public class NewGoalActivity extends Activity implements TextWatcher {
 	            }
 	        );
 
-		Spinner spinnerPeriod = (Spinner) findViewById(R.id.selectedPeriod);
+		/*Spinner spinnerPeriod = (Spinner) findViewById(R.id.selectedPeriod);
 		ArrayAdapter<Period> adapterPeriod = new ArrayAdapter<Period>(this, android.R.layout.simple_spinner_item, Goal.Period.values());
 		adapterPeriod.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerPeriod.setAdapter(adapterPeriod);	
@@ -78,7 +82,7 @@ public class NewGoalActivity extends Activity implements TextWatcher {
 	                public void onNothingSelected(AdapterView<?> parent) {
 	                }
 	            }
-	        );
+	        );*/
 	}
 	
 	@Override
@@ -99,8 +103,8 @@ public class NewGoalActivity extends Activity implements TextWatcher {
 		Spinner spinnerType=(Spinner)findViewById(R.id.selectedType);
 		goal.setType((Type)spinnerType.getSelectedItem());
 		
-		Spinner spinnerPeriod=(Spinner)findViewById(R.id.selectedPeriod);
-		goal.setPeriod((Period)spinnerPeriod.getSelectedItem());
+		//Spinner spinnerPeriod=(Spinner)findViewById(R.id.selectedPeriod);
+		//goal.setPeriod((Period)spinnerPeriod.getSelectedItem());
 		
 		EditText textGoal = (EditText)findViewById(R.id.textGoal);
 		try {
@@ -109,16 +113,17 @@ public class NewGoalActivity extends Activity implements TextWatcher {
 			Log.i(NewGoalActivity.class.toString(),"ERROR: during getText");
 		}
 		
-		//TODO: save
+		goal.print();
+		goalDAO.update(goal);
 	}
 	
 	@Override
 	public void onPause() {
 		super.onPause();
 		if(mState == STATE_EDIT) {
-			//TODO: call update
+			goalDAO.update(goal);
 		} else if (mState == STATE_INSERT) {
-			//TODO: call update
+			goalDAO.update(goal);
 		}
 	}
 	
@@ -138,11 +143,11 @@ public class NewGoalActivity extends Activity implements TextWatcher {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case MENU_GOALEDIT_DISCARD:
-            // TODO delete Goal
+        	goalDAO.delete(goal.getID());
         	super.finish();
             return true;
         case MENU_GOALEDIT_DELETE:
-        	// TODO delete Goal
+        	goalDAO.delete(goal.getID());
         	super.finish();
         	return true;
         }

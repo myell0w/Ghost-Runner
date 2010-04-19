@@ -101,9 +101,6 @@ public class GoalDAO extends DataAccessObject {
 				}
 				cursor.close();
 			}
-			goals.add(new Goal(1,Goal.Type.DISTANCE, 50.f, 0.4f));
-			goals.add(new Goal(2,Goal.Type.CALORIES, 2000.f));
-			goals.add(new Goal(3,Goal.Type.RUNS, 20));
 		}
 		catch(Exception e)
 		{
@@ -125,6 +122,8 @@ public class GoalDAO extends DataAccessObject {
 		try
 		{
 			Goal goal = (Goal)entity;
+			System.out.println("insert:");
+			goal.print();
 			ContentValues values = new ContentValues();
 			if(goal.getPeriod() != null)
 				values.put(Constants.DB_GOALS_COLUMN_PERIOD, goal.getPeriod().ordinal());
@@ -176,6 +175,8 @@ public class GoalDAO extends DataAccessObject {
 		try
 		{
 			Goal goal = (Goal)entity;
+			System.out.println("update:");
+			goal.print();
 			ContentValues values = new ContentValues();
 			if(goal.getPeriod() != null)
 				values.put(Constants.DB_GOALS_COLUMN_PERIOD, goal.getPeriod().ordinal());

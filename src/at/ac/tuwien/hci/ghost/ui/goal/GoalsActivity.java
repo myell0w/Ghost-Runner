@@ -85,12 +85,12 @@ public class GoalsActivity extends ListActivity {
         switch (item.getItemId()) {
         case MENU_GOAL_ADD:
         	Intent newGoalIntent = new Intent(this, NewGoalActivity.class);
-        	newGoalIntent.putExtra("newGoal", new Goal(1));
+        	Goal goal= new Goal(1);
+        	long newId = ((GoalDAO)dao).insert(goal);
+        	goal.setID(newId);
+        	newGoalIntent.putExtra("newGoal", goal);
         	newGoalIntent.putExtra("actionType", NewGoalActivity.STATE_INSERT);
     		this.startActivity(newGoalIntent);
-            // TODO code for adding a goal
-    		Goal goal = new Goal(1);
-        	((GoalDAO)dao).insert(goal);
         	//onResume();
             return true;
         case MENU_SETTINGS:

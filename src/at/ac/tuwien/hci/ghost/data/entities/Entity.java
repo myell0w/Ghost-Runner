@@ -7,4 +7,5 @@ public abstract class Entity implements Serializable {
 	private static final long serialVersionUID = -5700235356938057111L;
 
 	public abstract long getID();
+	public abstract void setID(long id);
 }
