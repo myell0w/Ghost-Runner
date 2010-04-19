@@ -16,7 +16,7 @@ public interface Constants {
 	public static final String DB_GOALS_COLUMN_TYPE_GOALVALUE = "REAL";
 	public static final String DB_GOALS_COLUMN_TYPE_PERIOD = "INTEGER";
 	public static final String DB_GOALS_COLUMN_TYPE_TYPE = "INTEGER";
-	
+
 	public static final String DB_TABLE_ROUTES = "Routes";
 	public static final String DB_ROUTES_COLUMN_ID = "id";
 	public static final String DB_ROUTES_COLUMN_NAME = "name";
@@ -44,4 +44,10 @@ public interface Constants {
 	public static final String DB_RUNS_COLUMN_TYPE_SPEED = "REAL";
 	public static final String DB_RUNS_COLUMN_TYPE_CALORIES = "INTEGER";
 	public static final String DB_RUNS_COLUMN_TYPE_ROUTEID = "INTEGER";
+	
+	/** menu constans */
+	public static final int MENU_SWITCH_VIEW = 101;
+	public static final int MENU_SETTINGS = 102;
+	public static final int MENU_WEATHER = 103;
+	public static final int MENU_NEW_GOAL = 104;
  }
