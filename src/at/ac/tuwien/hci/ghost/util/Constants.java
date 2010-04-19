@@ -16,4 +16,10 @@ public interface Constants {
 	public static final String DB_GOALS_COLUMN_TYPE_GOALVALUE = "REAL";
 	public static final String DB_GOALS_COLUMN_TYPE_PERIOD = "INTEGER";
 	public static final String DB_GOALS_COLUMN_TYPE_TYPE = "INTEGER";
+	
+	/** menu constans */
+	public static final int MENU_SWITCH_VIEW = 101;
+	public static final int MENU_SETTINGS = 102;
+	public static final int MENU_WEATHER = 103;
+	public static final int MENU_NEW_GOAL = 104;
 }

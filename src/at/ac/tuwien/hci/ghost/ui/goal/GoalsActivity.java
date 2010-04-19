@@ -15,14 +15,9 @@ import at.ac.tuwien.hci.ghost.data.dao.GoalDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Goal;
 import at.ac.tuwien.hci.ghost.ui.WeatherActivity;
+import at.ac.tuwien.hci.ghost.util.Constants;
 
 public class GoalsActivity extends ListActivity {
-	
-	/** menu constans */
-	private final int MENU_GOAL_ADD = 101;
-	private final int MENU_GOAL_SETTINGS = 102;
-	private final int MENU_WEATHER = 103;
-	
 	/** all goals */
 	private List<Goal> goals = null;
 	/** DAO for retrieving Routes */
@@ -69,9 +64,9 @@ public class GoalsActivity extends ListActivity {
 	
 	/* Creates the menu items */
     public boolean onCreateOptionsMenu(Menu menu) {
-    	menu.add(0, MENU_GOAL_ADD, 0, getResources().getString(R.string.goals_new));
-    	menu.add(0, MENU_GOAL_SETTINGS, 1, getResources().getString(R.string.app_settings));
-    	menu.add(0, MENU_WEATHER, 2, getResources().getString(R.string.app_weather));
+    	menu.add(0, Constants.MENU_NEW_GOAL, 0, getResources().getString(R.string.goals_new));
+    	menu.add(0, Constants.MENU_SETTINGS, 1, getResources().getString(R.string.app_settings));
+    	menu.add(0, Constants.MENU_WEATHER, 2, getResources().getString(R.string.app_weather));
     	
         return true;
     }
@@ -79,7 +74,7 @@ public class GoalsActivity extends ListActivity {
     /* Handles menu item selections */
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case MENU_GOAL_ADD:
+        case Constants.MENU_NEW_GOAL:
         	Intent newGoalIntent = new Intent(this, NewGoalActivity.class); 
     		this.startActivity(newGoalIntent);
             // TODO code for adding a goal
@@ -87,11 +82,11 @@ public class GoalsActivity extends ListActivity {
         	((GoalDAO)dao).insert(goal);
         	//onResume();
             return true;
-        case MENU_GOAL_SETTINGS:
+        case Constants.MENU_SETTINGS:
         	// TODO code for doing settings for goals
         	return true;
         	
-        case MENU_WEATHER:
+        case Constants.MENU_WEATHER:
         	Intent weatherIntent = new Intent(this, WeatherActivity.class); 
     		this.startActivity(weatherIntent);
     		
