@@ -4,7 +4,7 @@ import at.ac.tuwien.hci.ghost.util.Date;
 
 public class Run extends Entity {
 	/** the id of the run */
-	private int id = -1;
+	private long id = -1;
 	/** date of the run */
 	private Date date = null;
 	/** total time of the run in seconds */
@@ -20,7 +20,7 @@ public class Run extends Entity {
 	/** the route of the run, or null */
 	private Route route = null;
 	
-	public Run(int id, Date date, long timeInSeconds, float distance, int calories, Route route) {
+	public Run(long id, Date date, long timeInSeconds, float distance, int calories, Route route) {
 		this.id = id;
 		this.date = date;
 		this.calories = calories;
@@ -32,7 +32,7 @@ public class Run extends Entity {
 		updateSpeedAndPace();
 	}
 	
-	public Run(int id) {
+	public Run(long id) {
 		this.id = id;
 	}
 	
@@ -99,7 +99,7 @@ public class Run extends Entity {
 	}
 	
 	@Override
-	public int getID() {
+	public long getID() {
 		return id;
 	}
 }

@@ -40,7 +40,6 @@ public class GoalAdapter extends ArrayAdapter<Goal> {
 			}
 			
 			if (progress != null) {
-				System.out.println("Progress: " + g.getProgressPercentage());
 				progress.setProgress(g.getProgressPercentage());
 			}
 		}
@@ -50,15 +49,15 @@ public class GoalAdapter extends ArrayAdapter<Goal> {
 	private String typeDescription(Goal goal) {
 		switch(goal.getType()) {
 		case CALORIES:
-			return getContext().getResources().getString(R.string.goals_calories) + ": " + (int)goal.getGoal() + " " +
+			return getContext().getResources().getString(R.string.goals_calories) + ": " + (int)goal.getGoalValue() + " " +
 				   getContext().getResources().getString(R.string.app_unitCalories);
 			
 		case DISTANCE:
-			return getContext().getResources().getString(R.string.goals_distance) + ": " + goal.getGoal() + " " +
+			return getContext().getResources().getString(R.string.goals_distance) + ": " + goal.getGoalValue() + " " +
 			   getContext().getResources().getString(R.string.app_unitDistance);
 			
 		case RUNS:
-			return getContext().getResources().getString(R.string.goals_runs) + ": " + (int)goal.getGoal();
+			return getContext().getResources().getString(R.string.goals_runs) + ": " + (int)goal.getGoalValue();
 			
 			default:
 				return getContext().getResources().getString(R.string.goals_none);

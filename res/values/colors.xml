@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+   <color name="grayBackground">#bcb5b7</color>
+   <color name="historyOverlay">#e7e7e7</color>
+   <color name="historyMonth">#fdfdfd</color>
+</resources>

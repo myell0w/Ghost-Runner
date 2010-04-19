@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Route extends Entity {
 	/** id of the route */
-	private int id = -1;
+	private long id = -1;
 	/** name of the route */
 	private String name = null;
 	/** distance of the route */
@@ -20,22 +20,22 @@ public class Route extends Entity {
 	/** runs on this Route (optional) */
 	//private List<Run> runs = null;
 	
-	public Route(int id, String name, float distance, int runCount) {
+	public Route(long id, String name, float distance, int runCount) {
 		this.id = id;
 		this.name = name;
 		this.distance = distance;
 		this.runCount = runCount;
 	}
 	
-	public Route(int id, String name, float distance) {
+	public Route(long id, String name, float distance) {
 		this(id,name,distance,0);
 	}
 	
-	public Route(int id, String name) {
+	public Route(long id, String name) {
 		this(id,name, 0.0f, 0);
 	}
 	
-	public Route(int id) {
+	public Route(long id) {
 		this(id,"",0.f,0);
 	}
 
@@ -68,7 +68,7 @@ public class Route extends Entity {
 	}
 
 	@Override
-	public int getID() {
+	public long getID() {
 		return id;
 	}
 }

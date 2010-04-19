@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical">
+
+	<FrameLayout android:layout_width="fill_parent"
+		android:layout_height="100dip" android:background="@color/grayBackground"
+		android:layout_marginBottom="15dip">
+	</FrameLayout>
+
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:background="@color/grayBackground"
+		style="@style/HistoryDetails">
+		<TextView android:id="@+id/routeInfo" android:text="@string/app.route"
+			android:layout_width="fill_parent" android:layout_height="25dip">
+		</TextView>
+		<TextView android:id="@+id/speedInfo" android:layout_width="fill_parent"
+			android:layout_height="25dip">
+		</TextView>
+		<TextView android:id="@+id/caloriesInfo"
+			android:layout_width="fill_parent" android:layout_height="25dip">
+		</TextView>
+		<TextView android:id="@+id/remainingDistanceInfo"
+			android:layout_width="fill_parent" android:layout_height="25dip">
+		</TextView>
+	</LinearLayout>
+
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android_orientation="horizontal">
+		<Button android:id="@+id/stopRunButton" android:layout_height="wrap_content"
+			android:layout_width="0dp" android:layout_weight="1" android:text="@string/run.stop">
+		</Button>
+		<Button android:id="@+id/pauseRunButton" android:layout_height="wrap_content"
+			android:layout_width="0dp" android:layout_weight="1" android:text="@string/run.pause">
+		</Button>
+	</LinearLayout>
+
+</LinearLayout>
