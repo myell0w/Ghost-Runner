@@ -16,6 +16,9 @@
             </intent-filter>
         </activity>
         
+        <activity android:name=".ui.WeatherActivity">
+        </activity>
+        
         <activity android:name=".ui.run.StartRunActivity">
         </activity>
         
