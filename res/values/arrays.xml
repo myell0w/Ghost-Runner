@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<array name="goalTypes">
+		<item>Distance</item>
+		<item>Calories</item>
+		<item>Runs</item>
+	</array>
+	
+	<array name="goalPeriod">
+		<item>Week</item>
+		<item>Month</item>
+		<item>Year</item>
+	</array>
+</resources>

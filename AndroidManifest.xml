@@ -36,6 +36,9 @@
         
         <activity android:name=".ui.goal.GoalsActivity">
         </activity>
+        
+        <activity android:name=".ui.goal.NewGoalActivity">
+        </activity>
 
     </application>
 
