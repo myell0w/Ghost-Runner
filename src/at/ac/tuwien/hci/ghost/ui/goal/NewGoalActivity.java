@@ -65,7 +65,7 @@ public class NewGoalActivity extends Activity implements TextWatcher {
 	            }
 	        );
 
-		Spinner spinnerPeriod = (Spinner) findViewById(R.id.selectedPeriod);
+		/*Spinner spinnerPeriod = (Spinner) findViewById(R.id.selectedPeriod);
 		ArrayAdapter<Period> adapterPeriod = new ArrayAdapter<Period>(this, android.R.layout.simple_spinner_item, Goal.Period.values());
 		adapterPeriod.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerPeriod.setAdapter(adapterPeriod);	
@@ -82,7 +82,7 @@ public class NewGoalActivity extends Activity implements TextWatcher {
 	                public void onNothingSelected(AdapterView<?> parent) {
 	                }
 	            }
-	        );
+	        );*/
 	}
 	
 	@Override
@@ -103,8 +103,8 @@ public class NewGoalActivity extends Activity implements TextWatcher {
 		Spinner spinnerType=(Spinner)findViewById(R.id.selectedType);
 		goal.setType((Type)spinnerType.getSelectedItem());
 		
-		Spinner spinnerPeriod=(Spinner)findViewById(R.id.selectedPeriod);
-		goal.setPeriod((Period)spinnerPeriod.getSelectedItem());
+		//Spinner spinnerPeriod=(Spinner)findViewById(R.id.selectedPeriod);
+		//goal.setPeriod((Period)spinnerPeriod.getSelectedItem());
 		
 		EditText textGoal = (EditText)findViewById(R.id.textGoal);
 		try {
