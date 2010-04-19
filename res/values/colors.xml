@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-   <color name="grayBackground">#bcb5b7</color>
-   <color name="historyOverlay">#e7e7e7</color>
-   <color name="historyMonth">#fdfdfd</color>
+	<color name="heading">#DDDDDD</color>
+	<color name="listHeading">#CCCCCC</color>
+	<color name="listDetail">#888888</color>
+	<color name="normalText">#777777</color>
+	<color name="grayBackground">#bcb5b7</color>
+	<color name="historyOverlay">#e7e7e7</color>
+	<color name="historyMonth">#fdfdfd</color>
 </resources>

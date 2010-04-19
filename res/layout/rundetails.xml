@@ -3,10 +3,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
 	android:orientation="vertical">
+	
+	<TextView android:id="@+id/runHeading" android:layout_width="fill_parent"
+	   android:layout_height="wrap_content" style="@style/Heading">
+	</TextView>
 
 	<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:stretchColumns="1" android:layout_marginBottom="10dip">
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:stretchColumns="1" android:layout_marginBottom="10dip" android:layout_marginLeft="6dip">
 		<TableRow>
 			<TextView android:text="@string/app.totalTime"	android:padding="3dip" />
 			<TextView android:id="@+id/detailTotalTime" android:gravity="right" android:padding="3dip" />
@@ -27,7 +31,6 @@
 			<TextView android:text="@string/app.totalCalories"	android:padding="3dip" />
 			<TextView android:id="@+id/detailTotalCalories" android:gravity="right" android:padding="3dip" />
 		</TableRow>
-		
 	</TableLayout>
 
 	<com.google.android.maps.MapView

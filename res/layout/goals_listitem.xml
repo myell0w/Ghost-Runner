@@ -2,7 +2,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" android:layout_height="?android:attr/listPreferredItemHeight"
-	android:padding="6dip" style="@style/MainStyle">
+	android:padding="6dip">
 
 	<ImageView android:id="@+id/goalImage" android:layout_width="wrap_content"
 		android:layout_height="fill_parent" android:layout_marginRight="6dip"
@@ -16,7 +16,7 @@
 
 		<TextView android:id="@+id/goalDescription"
 			android:layout_width="fill_parent" android:layout_height="0dip"
-			android:layout_weight="1" android:gravity="center_vertical" style="@style/ListDetail"
+			android:layout_weight="1" android:gravity="center_vertical" style="@style/ListDetail" android:textColor="@color/listHeading"
 			android:layout_marginBottom="5dip" />
 
 		<ProgressBar android:id="@+id/goalProgress"

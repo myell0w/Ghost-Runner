@@ -12,12 +12,14 @@
 		xmlns:android="http://schemas.android.com/apk/res/android" 
 		android:id="@+id/overviewMap"
 		android:layout_width="fill_parent" 
-		android:layout_height="fill_parent"
+		android:layout_height="0dip"
+		android:layout_weight="0.9"
 		android:clickable="true" 
 		android:apiKey="Your Maps API Key goes here" />
 
 	<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android_orientation="horizontal">
+		android:layout_height="0dip"
+		android:layout_weight="0.2" android_orientation="horizontal" android:layout_marginTop="7dip">
 		<Button android:id="@+id/stopRunButton" android:layout_height="wrap_content"
 			android:layout_width="0dp" android:layout_weight="1" android:text="@string/run.stop">
 		</Button>
