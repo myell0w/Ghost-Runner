@@ -17,6 +17,7 @@ public abstract class DataAccessObject {
 	{
 		this.context = context;
 		dbOpenHelper = new DBOpenHelper(context);
+		open();
 	}
 	
 	protected void open()
@@ -30,4 +31,8 @@ public abstract class DataAccessObject {
 	}
 	
 	abstract public List<Entity> search(List<Entity> searchTerms);
+	abstract public Entity search(long id);
+	abstract public long insert(Entity entity);
+	abstract public boolean delete(long id);
+	abstract public boolean update(Entity entity);
 }

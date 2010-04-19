@@ -83,7 +83,8 @@ public class GoalsActivity extends ListActivity {
         	Intent newGoalIntent = new Intent(this, NewGoalActivity.class); 
     		this.startActivity(newGoalIntent);
             // TODO code for adding a goal
-        	//((GoalDAO)dao).insert("new goal", 2);
+    		Goal goal = new Goal(1);
+        	((GoalDAO)dao).insert(goal);
         	//onResume();
             return true;
         case MENU_GOAL_SETTINGS:

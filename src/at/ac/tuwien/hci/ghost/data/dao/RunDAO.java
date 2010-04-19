@@ -69,4 +69,28 @@ public class RunDAO extends DataAccessObject {
 		return ret;
 		
 	}
+
+	@Override
+	public boolean delete(long id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public long insert(Entity entity) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Entity search(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean update(Entity entity) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
