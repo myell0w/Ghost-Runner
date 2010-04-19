@@ -4,7 +4,6 @@ import java.util.List;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 
 public abstract class DataAccessObject {
