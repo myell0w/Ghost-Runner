@@ -18,13 +18,16 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Add create table statements
-		db.execSQL("CREATE TABLE IF NOT EXISTS " + Constants.DB_TABLE_GOALS + " (" +
+		String createTableGoals = null;
+		createTableGoals = "CREATE TABLE IF NOT EXISTS " + Constants.DB_TABLE_GOALS + " (" +
 				   Constants.DB_GOALS_COLUMN_ID + " " + Constants.DB_GOALS_COLUMN_TYPE_ID + ", " +
 				   Constants.DB_GOALS_COLUMN_PROGRESS + " " + Constants.DB_GOALS_COLUMN_TYPE_PROGRESS + ", " +
 				   Constants.DB_GOALS_COLUMN_TYPE + " " + Constants.DB_GOALS_COLUMN_TYPE_TYPE + ", " +
 				   Constants.DB_GOALS_COLUMN_GOALVALUE + " " + Constants.DB_GOALS_COLUMN_TYPE_GOALVALUE + ", " +
 				   Constants.DB_GOALS_COLUMN_PERIOD + " " + Constants.DB_GOALS_COLUMN_TYPE_PERIOD +
-				   ");");
+				   ");";
+		Log.i(DBOpenHelper.class.toString(), createTableGoals);
+		db.execSQL(createTableGoals);
 	}
 
 	@Override

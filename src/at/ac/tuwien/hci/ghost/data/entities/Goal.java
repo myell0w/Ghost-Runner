@@ -23,7 +23,7 @@ public class Goal extends Entity {
 		};
 	
 	/** the id of the goal */
-	private int id = 0;
+	private long id = 0;
 	/** the progress of the goal, between 0 and 1 */
 	private float progress = 0.f;
 	/** the value of the goal */
@@ -33,18 +33,18 @@ public class Goal extends Entity {
 	/** the type of the goal */
 	private Type type = null;
 	
-	public Goal(int id, Type type, float goalValue, float progress) {
+	public Goal(long id, Type type, float goalValue, float progress) {
 		this.id = id;
 		this.type = type;
 		this.goalValue = goalValue;
 		this.progress = progress;
 	}
 	
-	public Goal(int id, Type type, float goalValue) {
+	public Goal(long id, Type type, float goalValue) {
 		this(id,type,goalValue,0.f);
 	}
 	
-	public Goal(int id) {
+	public Goal(long id) {
 		this.id = id;
 	}
 	
@@ -93,7 +93,7 @@ public class Goal extends Entity {
 	}
 
 	@Override
-	public int getID() {
+	public long getID() {
 		return id;
 	}
 }
