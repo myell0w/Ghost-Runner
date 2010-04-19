@@ -36,9 +36,9 @@ public class GoalsActivity extends ListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		System.out.println("FUCK");
 		// create dao-object
-		dao = new GoalDAO();
+		dao = new GoalDAO(this);
 		// get all routes
 		goals = getAllGoals();
 		// create adapter
@@ -71,6 +71,7 @@ public class GoalsActivity extends ListActivity {
         switch (item.getItemId()) {
         case MENU_GOAL_ADD:
             // TODO code for adding a goal
+        	((GoalDAO)dao).insert(1, 2);
             return true;
         case MENU_GOAL_SETTINGS:
         	// TODO code for doing settings for goals
