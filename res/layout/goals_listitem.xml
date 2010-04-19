@@ -7,7 +7,7 @@
 	<ImageView android:id="@+id/goalImage" android:layout_width="wrap_content"
 		android:layout_height="fill_parent" android:layout_marginRight="6dip"
 
-		android:src="@drawable/tab_goal" />
+		android:src="@drawable/listitem_goal" />
 
 	<LinearLayout android:orientation="vertical"
 
