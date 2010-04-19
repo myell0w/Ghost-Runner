@@ -39,7 +39,17 @@ public class GoalsActivity extends ListActivity {
 		// create adapter
 		adapter = new GoalAdapter(this, R.layout.goals_listitem, goals);
 
-		this.setContentView(R.layout.routes);        
+		this.setContentView(R.layout.goals);        
+		this.setListAdapter(adapter);
+	}
+	
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		System.out.println("Resuming GOALS");
+		goals = getAllGoals();
+		adapter = new GoalAdapter(this, R.layout.goals_listitem, goals);
 		this.setListAdapter(adapter);
 	}
 
@@ -66,7 +76,8 @@ public class GoalsActivity extends ListActivity {
         switch (item.getItemId()) {
         case MENU_GOAL_ADD:
             // TODO code for adding a goal
-        	((GoalDAO)dao).insert(1, 2);
+        	((GoalDAO)dao).insert("new goal", 2);
+        	onResume();
             return true;
         case MENU_GOAL_SETTINGS:
         	// TODO code for doing settings for goals

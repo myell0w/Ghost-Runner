@@ -83,10 +83,10 @@ public class GoalDAO implements DataAccessObject {
 		return goals;
 	}
 	
-	public void insert(int value1, int value2)
+	public void insert(String value1, int value2)
 	{
 		ContentValues initialValues = new ContentValues();
-		initialValues.put("name", "ma wurscht");
+		initialValues.put("name", value1);
 		initialValues.put("value", 2);
 		open();
 		ghostDB.insert("tb_ghost_test", null, initialValues);
