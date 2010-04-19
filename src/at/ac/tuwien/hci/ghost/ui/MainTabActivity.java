@@ -19,22 +19,26 @@ public class MainTabActivity extends android.app.TabActivity {
 	        final TabHost tabHost = getTabHost();
 
 	        tabHost.addTab(tabHost.newTabSpec("TabRun")
-	                .setIndicator(this.getResources().getText(R.string.app_tabRun))
+	                .setIndicator(this.getResources().getText(R.string.app_tabRun),
+	        				this.getResources().getDrawable(R.drawable.tab_run))
 	                .setContent(new Intent(this, StartRunActivity.class)));
 
 	        tabHost.addTab(tabHost.newTabSpec("TabRoutes")
-	        		.setIndicator(this.getResources().getText(R.string.app_tabRoutes))
+	        		.setIndicator(this.getResources().getText(R.string.app_tabRoutes),
+	        				this.getResources().getDrawable(R.drawable.tab_routes))
 	                .setContent(new Intent(this, RoutesActivity.class)));
 	        
 	        // This tab sets the intent flag so that it is recreated each time
 	        // the tab is clicked.
 	        tabHost.addTab(tabHost.newTabSpec("TabHistory")
-	        		.setIndicator(this.getResources().getText(R.string.app_tabHistory))
+	        		.setIndicator(this.getResources().getText(R.string.app_tabHistory),
+	        				this.getResources().getDrawable(R.drawable.tab_history))
 	                .setContent(new Intent(this, HistoryActivity.class)
 	                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)));
 	        
 	        tabHost.addTab(tabHost.newTabSpec("TabGoals")
-	        		.setIndicator(this.getResources().getText(R.string.app_tabGoals),this.getResources().getDrawable(R.drawable.tab_goal))
+	        		.setIndicator(this.getResources().getText(R.string.app_tabGoals),
+	        				this.getResources().getDrawable(R.drawable.tab_goal))
 	                .setContent(new Intent(this, GoalsActivity.class)));
 	    }
 }
