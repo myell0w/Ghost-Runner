@@ -35,7 +35,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 		   Constants.DB_ROUTES_COLUMN_NAME + " " + Constants.DB_ROUTES_COLUMN_TYPE_NAME + ", " +
 		   Constants.DB_ROUTES_COLUMN_RUNCOUNT + " " + Constants.DB_ROUTES_COLUMN_TYPE_RUNCOUNT +
 		   ");";
-		createTableGoals = "CREATE TABLE IF NOT EXISTS " + Constants.DB_TABLE_RUNS + " (" +
+		createTableRuns = "CREATE TABLE IF NOT EXISTS " + Constants.DB_TABLE_RUNS + " (" +
 		   Constants.DB_RUNS_COLUMN_ID + " " + Constants.DB_RUNS_COLUMN_TYPE_ID + ", " +
 		   Constants.DB_RUNS_COLUMN_DATE + " " + Constants.DB_RUNS_COLUMN_TYPE_DATE + ", " +
 		   Constants.DB_RUNS_COLUMN_TIMEINSECONDS + " " + Constants.DB_RUNS_COLUMN_TYPE_TIMEINSECONDS + ", " +
