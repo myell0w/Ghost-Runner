@@ -16,6 +16,9 @@
             </intent-filter>
         </activity>
         
+        <activity android:name=".ui.WeatherActivity">
+        </activity>
+        
         <activity android:name=".ui.run.StartRunActivity">
         </activity>
         
@@ -32,6 +35,9 @@
         </activity>
         
         <activity android:name=".ui.goal.GoalsActivity">
+        </activity>
+        
+        <activity android:name=".ui.goal.NewGoalActivity">
         </activity>
 
     </application>

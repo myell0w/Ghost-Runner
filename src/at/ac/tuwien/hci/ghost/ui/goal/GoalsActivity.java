@@ -8,22 +8,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ListView;
 import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.data.adapter.GoalAdapter;
 import at.ac.tuwien.hci.ghost.data.dao.DataAccessObject;
 import at.ac.tuwien.hci.ghost.data.dao.GoalDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Goal;
-import at.ac.tuwien.hci.ghost.data.entities.Route;
-import at.ac.tuwien.hci.ghost.ui.route.AllRunsOfRouteActivity;
+import at.ac.tuwien.hci.ghost.ui.WeatherActivity;
 
 public class GoalsActivity extends ListActivity {
 	
 	/** menu constans */
 	private final int MENU_GOAL_ADD = 101;
 	private final int MENU_GOAL_SETTINGS = 102;
+	private final int MENU_WEATHER = 103;
 	
 	/** all goals */
 	private List<Goal> goals = null;
@@ -73,6 +71,8 @@ public class GoalsActivity extends ListActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
     	menu.add(0, MENU_GOAL_ADD, 0, getResources().getString(R.string.goals_new));
     	menu.add(0, MENU_GOAL_SETTINGS, 1, getResources().getString(R.string.app_settings));
+    	menu.add(0, MENU_WEATHER, 2, getResources().getString(R.string.app_weather));
+    	
         return true;
     }
     
@@ -80,13 +80,20 @@ public class GoalsActivity extends ListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case MENU_GOAL_ADD:
+        	Intent newGoalIntent = new Intent(this, NewGoalActivity.class); 
+    		this.startActivity(newGoalIntent);
             // TODO code for adding a goal
-        	
         	//((GoalDAO)dao).insert("new goal", 2);
-        	onResume();
+        	//onResume();
             return true;
         case MENU_GOAL_SETTINGS:
         	// TODO code for doing settings for goals
+        	return true;
+        	
+        case MENU_WEATHER:
+        	Intent weatherIntent = new Intent(this, WeatherActivity.class); 
+    		this.startActivity(weatherIntent);
+    		
         	return true;
         }
         return false;

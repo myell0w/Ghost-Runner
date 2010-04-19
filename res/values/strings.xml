@@ -68,5 +68,7 @@
 	<string name="goals.new">New Goal</string>
 	<string name="goals.none">No Goals!</string>
 
+<!--  Weather -->
+	<string name="weather.header">Weatherinfo for today: </string>
 
 </resources>
