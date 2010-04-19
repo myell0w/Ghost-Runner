@@ -10,41 +10,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Goal;
+import at.ac.tuwien.hci.ghost.data.entities.Goal.Period;
+import at.ac.tuwien.hci.ghost.data.entities.Goal.Type;
+import at.ac.tuwien.hci.ghost.util.Constants;
 
-public class GoalDAO implements DataAccessObject {
-	
-	private SQLiteDatabase ghostDB = null;
-	private DBOpenHelper dbOpenHelper = null;
-	private Context context = null;
-	
-	public GoalDAO(Context context)
-	{
-		this.context = context;
-		try
-		{
-			dbOpenHelper = new DBOpenHelper(context);
-		}
-		catch(Exception e)
-		{
-			Log.e(GoalDAO.class.toString(),"Fuck1: " + e);
-		}
-	}
-	
-	private void open()
-	{
-		try
-		{
-			ghostDB = dbOpenHelper.getWritableDatabase();
-		}
-		catch(Exception e)
-		{
-			Log.e(GoalDAO.class.toString(),"Fuck2: " + e);
-		}
-	}
-	
-	private void close()
-	{
-		ghostDB.close();
+public class GoalDAO extends DataAccessObject {
+
+	public GoalDAO(Context context) {
+		super(context);
 	}
 
 	@Override
@@ -55,17 +28,26 @@ public class GoalDAO implements DataAccessObject {
 		{
 			Cursor cursor = null;
 			open();
-			cursor = ghostDB.query("tb_ghost_test", new String[] {"name","value"}, null, null, null, null, null);
+			cursor = ghostDB.query(Constants.DB_TABLE_GOALS,
+					               new String[] {Constants.DB_GOALS_COLUMN_ID,
+					                             Constants.DB_GOALS_COLUMN_PERIOD,
+					                             Constants.DB_GOALS_COLUMN_PROGRESS,
+					                             Constants.DB_GOALS_COLUMN_TYPE,
+					                             Constants.DB_GOALS_COLUMN_GOALVALUE},
+					               null, null, null, null, null);
 			if(cursor != null)
 			{
 				if(cursor.moveToFirst())
 				{
 					do
 					{
-						String name = cursor.getString(0);
-						int value = cursor.getInt(1);
-						goals.add(new Goal(4,Goal.Type.RUNS,30));
-						System.out.println("Fetched name=" + name + ", value=" + value);
+						Goal goal = new Goal(cursor.getInt(0));
+						goal.setPeriod(Period.Int2Period(cursor.getInt(1)));
+						goal.setProgress(cursor.getFloat(2));
+						goal.setType(Type.Int2Type(cursor.getInt(3)));
+						goal.setGoalValue(cursor.getFloat(4));
+
+						goals.add(goal);
 					}
 					while(cursor.moveToNext());
 				}
@@ -83,14 +65,16 @@ public class GoalDAO implements DataAccessObject {
 		return goals;
 	}
 	
-	public void insert(String value1, int value2)
+	public void insert(Goal goal)
 	{
 		ContentValues initialValues = new ContentValues();
-		initialValues.put("name", value1);
-		initialValues.put("value", 2);
+		initialValues.put(Constants.DB_GOALS_COLUMN_PERIOD, goal.getPeriod().ordinal());
+		initialValues.put(Constants.DB_GOALS_COLUMN_PROGRESS, goal.getProgress());
+		initialValues.put(Constants.DB_GOALS_COLUMN_GOALVALUE, goal.getGoalValue());
+		initialValues.put(Constants.DB_GOALS_COLUMN_TYPE, goal.getType().ordinal());
 		open();
-		ghostDB.insert("tb_ghost_test", null, initialValues);
-		Log.e(GoalDAO.class.toString(),"Fuck the world");
+		ghostDB.insert(Constants.DB_TABLE_GOALS, null, initialValues);
+		Log.e(GoalDAO.class.toString(),"Inserted feckin' value in table Goals");
 		close();
 	}
 

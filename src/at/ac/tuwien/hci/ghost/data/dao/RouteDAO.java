@@ -3,10 +3,15 @@ package at.ac.tuwien.hci.ghost.data.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
 
-public class RouteDAO implements DataAccessObject {
+public class RouteDAO extends DataAccessObject {
+
+	public RouteDAO(Context context) {
+		super(context);
+	}
 
 	@Override
 	public List<Entity> search(List<Entity> searchTerms) {

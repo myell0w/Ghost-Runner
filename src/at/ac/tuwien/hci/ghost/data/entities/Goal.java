@@ -1,29 +1,47 @@
 package at.ac.tuwien.hci.ghost.data.entities;
 
 public class Goal extends Entity {
-	public enum Period { WEEK, MONTH, YEAR };
-	public enum Type { DISTANCE, CALORIES, RUNS };
+	public enum Period { WEEK, MONTH, YEAR; 
+		  public static Period Int2Period(int value)
+		  {
+			  if(value == WEEK.ordinal())
+				  return WEEK;
+			  if(value == MONTH.ordinal())
+				  return MONTH;
+			  return YEAR;
+		  }
+		};
+	public enum Type { DISTANCE, CALORIES, RUNS;
+		public static Type Int2Type(int value)
+		  {
+			  if(value == DISTANCE.ordinal())
+				  return DISTANCE;
+			  if(value == CALORIES.ordinal())
+				  return CALORIES;
+			  return RUNS;
+		  }
+		};
 	
 	/** the id of the goal */
 	private int id = 0;
 	/** the progress of the goal, between 0 and 1 */
 	private float progress = 0.f;
 	/** the value of the goal */
-	private float goal = 0.f;
+	private float goalValue = 0.f;
 	/** the period of the goal */
 	private Period period = Period.MONTH;
 	/** the type of the goal */
 	private Type type = null;
 	
-	public Goal(int id, Type type, float goal, float progress) {
+	public Goal(int id, Type type, float goalValue, float progress) {
 		this.id = id;
 		this.type = type;
-		this.goal = goal;
+		this.goalValue = goalValue;
 		this.progress = progress;
 	}
 	
-	public Goal(int id, Type type, float goal) {
-		this(id,type,goal,0.f);
+	public Goal(int id, Type type, float goalValue) {
+		this(id,type,goalValue,0.f);
 	}
 	
 	public Goal(int id) {
@@ -38,12 +56,12 @@ public class Goal extends Entity {
 		this.type = type;
 	}
 
-	public float getGoal() {
-		return goal;
+	public float getGoalValue() {
+		return goalValue;
 	}
 
-	public void setGoal(float goal) {
-		this.goal = goal;
+	public void setGoalValue(float goalValue) {
+		this.goalValue = goalValue;
 	}
 
 	public Period getPeriod() {
@@ -63,7 +81,7 @@ public class Goal extends Entity {
 	}
 	
 	public float getProgressFraction() {
-		return progress * goal;
+		return progress * goalValue;
 	}
 	
 	public int getProgressPercentage() {
