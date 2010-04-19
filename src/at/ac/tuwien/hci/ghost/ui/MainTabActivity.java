@@ -17,7 +17,6 @@ public class MainTabActivity extends android.app.TabActivity {
 	        super.onCreate(savedInstanceState);
 
 	        final TabHost tabHost = getTabHost();
-
 	        tabHost.addTab(tabHost.newTabSpec("TabRun")
 	                .setIndicator(this.getResources().getText(R.string.app_tabRun),
 	        				this.getResources().getDrawable(R.drawable.tab_run))

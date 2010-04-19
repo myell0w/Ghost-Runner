@@ -18,15 +18,12 @@ import at.ac.tuwien.hci.ghost.ui.WeatherActivity;
 import at.ac.tuwien.hci.ghost.util.Constants;
 
 public class GoalsActivity extends ListActivity {
-<<<<<<< HEAD
 	
 	/** menu constans */
 	private final int MENU_GOAL_ADD = 101;
 	private final int MENU_SETTINGS = 102;
 	private final int MENU_WEATHER = 103;
-	
-=======
->>>>>>> 7d5912f87429fe8cc37561117468171da5a9b1c9
+
 	/** all goals */
 	private List<Goal> goals = null;
 	/** DAO for retrieving Routes */

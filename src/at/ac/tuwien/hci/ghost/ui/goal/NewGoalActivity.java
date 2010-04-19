@@ -87,7 +87,7 @@ public class NewGoalActivity extends Activity implements TextWatcher {
 		EditText textGoal = (EditText)findViewById(R.id.textGoal);
 		if(s.equals(textGoal.getText())) {
 			try {
-				goal.setGoal(Float.valueOf(textGoal.getText().toString()));
+				goal.setGoalValue(Float.valueOf(textGoal.getText().toString()));
 				Log.i(NewGoalActivity.class.toString(),"INFO: save Text");
 			} catch(Exception e) {
 				Log.i(NewGoalActivity.class.toString(),"ERROR: during getText");
@@ -104,7 +104,7 @@ public class NewGoalActivity extends Activity implements TextWatcher {
 		
 		EditText textGoal = (EditText)findViewById(R.id.textGoal);
 		try {
-			goal.setGoal(Float.valueOf(textGoal.getText().toString()));
+			goal.setGoalValue(Float.valueOf(textGoal.getText().toString()));
 		} catch(Exception e) {
 			Log.i(NewGoalActivity.class.toString(),"ERROR: during getText");
 		}
