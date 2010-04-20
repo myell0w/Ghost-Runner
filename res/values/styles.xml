@@ -23,8 +23,10 @@
 </style>
 
 <style name="HistoryMonth">
-	<item name="android:textColor">@color/historyMonth</item>
+	<!-- <item name="android:textColor">@color/historyMonth</item>  -->
 	<item name="android:textSize">19sp</item>
+	<item name="android:textColor">@color/heading</item>
+	<item name="android:textStyle">bold</item>
 </style>
 
 <style name="HistoryDetails">
@@ -33,10 +35,11 @@
 </style>
  
 <style name="Heading">
-	<item name="android:textSize">17sp</item>
+	<item name="android:textSize">19sp</item>
 	<item name="android:textColor">@color/heading</item>
-	<item name="android:background">#444444</item>
-	<item name="android:padding">7dip</item>
+	<item name="android:background">@drawable/header_small</item>
+	<item name="android:padding">10dip</item>
+	<item name="android:textStyle">bold</item>
 </style>
  
 </resources>

@@ -8,13 +8,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.data.adapter.GoalAdapter;
 import at.ac.tuwien.hci.ghost.data.dao.DataAccessObject;
 import at.ac.tuwien.hci.ghost.data.dao.GoalDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Goal;
+import at.ac.tuwien.hci.ghost.data.entities.Run;
 import at.ac.tuwien.hci.ghost.ui.WeatherActivity;
+import at.ac.tuwien.hci.ghost.ui.run.RunDetailsActivity;
 import at.ac.tuwien.hci.ghost.util.Constants;
 
 public class GoalsActivity extends ListActivity {
@@ -55,6 +59,18 @@ public class GoalsActivity extends ListActivity {
 		goals = getAllGoals();
 		adapter = new GoalAdapter(this, R.layout.goals_listitem, goals);
 		this.setListAdapter(adapter);
+	}
+	
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		
+		Goal g = goals.get(position);
+		
+		Intent newGoalIntent = new Intent(this, NewGoalActivity.class);
+		newGoalIntent.putExtra("newGoal", g);
+    	newGoalIntent.putExtra("actionType", NewGoalActivity.STATE_EDIT);
+    	this.startActivity(newGoalIntent);
 	}
 
 	private List<Goal> getAllGoals() {

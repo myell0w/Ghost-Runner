@@ -4,23 +4,24 @@
 	android:orientation="vertical">
 
 	<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:background="@color/grayBackground"
+		android:layout_height="wrap_content" android:background="@drawable/header_big"
 		android:orientation="vertical">
 
 		<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:stretchColumns="1" android:layout_marginTop="2dip" android:layout_marginBottom="1dip" android:paddingLeft="13dip" android:paddingRight="13dip">
+			android:stretchColumns="1" android:layout_marginTop="2dip" android:layout_marginBottom="1dip" android:paddingLeft="13dip"
+			android:paddingRight="13dip">
 			<TableRow>
 				<ImageButton android:id="@+id/prevMonth"
 					android:layout_width="wrap_content" android:layout_height="wrap_content"
-					android:src="@drawable/arrow_left"></ImageButton>
+					android:src="@drawable/arrow_left" android:layout_marginTop="4dip"></ImageButton>
 				<TextView android:id="@+id/monthName" android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:gravity="center"
 					android:layout_marginTop="10dip" android:text="@string/history.apr"
 					style="@style/HistoryMonth"></TextView>
 				<ImageButton android:id="@+id/nextMonth"
 					android:layout_width="wrap_content" android:layout_height="wrap_content"
-					android:src="@drawable/arrow_right"></ImageButton>
+					android:src="@drawable/arrow_right" android:layout_marginTop="4dip"></ImageButton>
 			</TableRow>
 		</TableLayout>
 
@@ -28,7 +29,7 @@
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
 			android:stretchColumns="1" android:layout_marginTop="1dip"
 			android:layout_marginLeft="15dip" android:layout_marginRight="15dip"
-			android:layout_marginBottom="10dip" android:background="@color/historyOverlay"
+			android:layout_marginBottom="10dip" android:background="@drawable/box"
 			android:padding="5dip"
 			style="@style/HistoryDetails">
 			<TableRow>

@@ -13,10 +13,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.data.dao.GoalDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Goal;
-import at.ac.tuwien.hci.ghost.data.entities.Goal.Period;
 import at.ac.tuwien.hci.ghost.data.entities.Goal.Type;
 
 public class NewGoalActivity extends Activity implements TextWatcher {
@@ -40,7 +40,7 @@ public class NewGoalActivity extends Activity implements TextWatcher {
 		Intent intent = this.getIntent();
 		Bundle bundle = intent.getExtras();
 		if(bundle.containsKey("actionType"))
-			mState = bundle.getInt("actionKey");
+			mState = bundle.getInt("actionType");
 		if(bundle.containsKey("newGoal"))
 			goal = (Goal) bundle.get("newGoal");
 		
@@ -64,6 +64,17 @@ public class NewGoalActivity extends Activity implements TextWatcher {
 	                }
 	            }
 	        );
+		
+		TextView header = (TextView)findViewById(R.id.newgoalHeading);
+		if(mState == STATE_EDIT) {
+			header.setText("Edit Goal");
+			spinnerType.setSelection(goal.getType().ordinal());
+			EditText textGoal = (EditText)findViewById(R.id.textGoal);
+			textGoal.setText(String.valueOf(goal.getGoalValue()));
+			
+		} else {
+			header.setText("New Goal");
+		}
 
 		/*Spinner spinnerPeriod = (Spinner) findViewById(R.id.selectedPeriod);
 		ArrayAdapter<Period> adapterPeriod = new ArrayAdapter<Period>(this, android.R.layout.simple_spinner_item, Goal.Period.values());
@@ -85,20 +96,6 @@ public class NewGoalActivity extends Activity implements TextWatcher {
 	        );*/
 	}
 	
-	@Override
-	public void afterTextChanged(Editable s) {
-		Log.i(NewGoalActivity.class.toString(),"INFO: afterTextChanged");
-		EditText textGoal = (EditText)findViewById(R.id.textGoal);
-		if(s.equals(textGoal.getText())) {
-			try {
-				goal.setGoalValue(Float.valueOf(textGoal.getText().toString()));
-				Log.i(NewGoalActivity.class.toString(),"INFO: save Text");
-			} catch(Exception e) {
-				Log.i(NewGoalActivity.class.toString(),"ERROR: during getText");
-			}
-		}
-	}
-	
 	public void saveGoal() {
 		Spinner spinnerType=(Spinner)findViewById(R.id.selectedType);
 		goal.setType((Type)spinnerType.getSelectedItem());
@@ -107,6 +104,7 @@ public class NewGoalActivity extends Activity implements TextWatcher {
 		//goal.setPeriod((Period)spinnerPeriod.getSelectedItem());
 		
 		EditText textGoal = (EditText)findViewById(R.id.textGoal);
+		
 		try {
 			goal.setGoalValue(Float.valueOf(textGoal.getText().toString()));
 		} catch(Exception e) {
@@ -120,6 +118,7 @@ public class NewGoalActivity extends Activity implements TextWatcher {
 	@Override
 	public void onPause() {
 		super.onPause();
+		saveGoal();
 		if(mState == STATE_EDIT) {
 			goalDAO.update(goal);
 		} else if (mState == STATE_INSERT) {
@@ -129,7 +128,7 @@ public class NewGoalActivity extends Activity implements TextWatcher {
 	
 	/* Creates the menu items */
     public boolean onCreateOptionsMenu(Menu menu) {
-    	if(mState == STATE_EDIT)
+    	if(mState == STATE_INSERT)
     		menu.add(0, MENU_GOALEDIT_DISCARD, 0, getResources().getString(R.string.goals_discard))
     			.setIcon(android.R.drawable.ic_menu_delete);
     	else
@@ -169,6 +168,20 @@ public class NewGoalActivity extends Activity implements TextWatcher {
 			Log.i(NewGoalActivity.class.toString(),"INFO: save Text");
 		} catch(Exception e) {
 			Log.i(NewGoalActivity.class.toString(),"ERROR: during getText");
+		}
+	}
+	
+	@Override
+	public void afterTextChanged(Editable s) {
+		Log.i(NewGoalActivity.class.toString(),"INFO: afterTextChanged");
+		EditText textGoal = (EditText)findViewById(R.id.textGoal);
+		if(s.equals(textGoal.getText())) {
+			try {
+				goal.setGoalValue(Float.valueOf(textGoal.getText().toString()));
+				Log.i(NewGoalActivity.class.toString(),"INFO: save Text");
+			} catch(Exception e) {
+				Log.i(NewGoalActivity.class.toString(),"ERROR: during getText");
+			}
 		}
 	}
 }

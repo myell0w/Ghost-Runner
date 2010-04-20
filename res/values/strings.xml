@@ -76,4 +76,6 @@
 
 <string name="goals.delete">Delete Goal</string>
 <string name="goals.discard">Discard</string>
+<string name="goals.type">Type</string>
+<string name="goals.value">Value</string>
 </resources>

@@ -4,13 +4,26 @@
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 
+<TextView android:id="@+id/newgoalHeading" android:layout_width="fill_parent"
+	   android:layout_height="wrap_content" style="@style/Heading">
+	</TextView>
+	
+<TextView android:text="@string/goals.type" android:id="@+id/goals_type" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
 <Spinner android:id="@+id/selectedType" android:layout_width="fill_parent" android:layout_height="wrap_content"></Spinner>
 <!-- <Spinner android:id="@+id/selectedPeriod" android:layout_width="fill_parent" android:layout_height="wrap_content"></Spinner> -->
 
 
+<TextView android:text="@string/goals.value" android:id="@+id/goals_value"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:paddingTop="2dip"></TextView>
 <EditText android:id="@+id/textGoal"
 	android:inputType="number"
+	android:numeric="integer"
+	android:maxLength="10"
 	android:layout_width="fill_parent" android:layout_height="wrap_content">
 </EditText>
+
+
 
 </LinearLayout>
