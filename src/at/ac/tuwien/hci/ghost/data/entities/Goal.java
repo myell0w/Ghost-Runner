@@ -101,4 +101,9 @@ public class Goal extends Entity {
 	{
 		this.id = id;
 	}
+	
+	public void print()
+	{
+		System.out.println(id + ";" + period + ";" + progress + ";" + type + ";" + goalValue);
+	}
 }

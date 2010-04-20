@@ -9,7 +9,7 @@
 
 		<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:stretchColumns="1" android:layout_marginBottom="5dip" android:paddingLeft="13dip" android:paddingRight="13dip">
+			android:stretchColumns="1" android:layout_marginTop="2dip" android:layout_marginBottom="1dip" android:paddingLeft="13dip" android:paddingRight="13dip">
 			<TableRow>
 				<ImageButton android:id="@+id/prevMonth"
 					android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
 
 		<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:stretchColumns="1" android:layout_marginTop="2dip"
+			android:stretchColumns="1" android:layout_marginTop="1dip"
 			android:layout_marginLeft="15dip" android:layout_marginRight="15dip"
 			android:layout_marginBottom="10dip" android:background="@color/historyOverlay"
 			android:padding="5dip"

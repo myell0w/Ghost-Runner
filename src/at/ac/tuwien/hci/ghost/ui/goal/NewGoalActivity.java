@@ -112,6 +112,9 @@ public class NewGoalActivity extends Activity implements TextWatcher {
 		} catch(Exception e) {
 			Log.i(NewGoalActivity.class.toString(),"ERROR: during getText");
 		}
+		
+		goal.print();
+		goalDAO.update(goal);
 	}
 	
 	@Override

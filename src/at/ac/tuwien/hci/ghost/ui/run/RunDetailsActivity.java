@@ -1,6 +1,7 @@
 package at.ac.tuwien.hci.ghost.ui.run;
 
 import android.os.Bundle;
+import android.widget.TextView;
 import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
 import at.ac.tuwien.hci.ghost.util.Constants;
@@ -22,6 +23,9 @@ public class RunDetailsActivity extends MapActivity {
 
 		mapView = (MapView) findViewById(R.id.overviewMap);
 		mapView.setBuiltInZoomControls(true);
+		
+		TextView heading = (TextView)findViewById(R.id.runHeading);
+		heading.setText(run.getDate().toFullString());
 	}
 
 	@Override

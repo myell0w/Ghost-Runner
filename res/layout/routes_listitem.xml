@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
-    android:padding="6dip" style="@style/MainStyle">
+    android:padding="6dip">
     <ImageView
         android:id="@+id/routeIcon"
         android:layout_width="wrap_content"
