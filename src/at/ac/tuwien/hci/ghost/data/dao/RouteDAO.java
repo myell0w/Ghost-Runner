@@ -41,7 +41,7 @@ public class RouteDAO extends DataAccessObject {
 			{
 				if(cursor.moveToFirst())
 				{
-					route = new Route(cursor.getInt(0));
+					route = new Route(cursor.getLong(0));
 					route.setDistance(cursor.getFloat(1));
 					route.setName(cursor.getString(2));
 					route.setRunCount(cursor.getInt(3));
@@ -68,6 +68,13 @@ public class RouteDAO extends DataAccessObject {
 	@Override
 	public List<Entity> search(List<Entity> searchTerms) {
 		List<Entity> routes = new ArrayList<Entity>();
+		
+		/* TODO remove stub shit */
+		routes.add(new Route(1,"Route 66", 3.4f, 12));
+		routes.add(new Route(2,"Fun", 3.4f, 2));
+		routes.add(new Route(3,"Home Run", 1.4f));
+		routes.add(new Route(4,"Warm up", 2.4f, 32));
+		
 		try
 		{
 			Cursor cursor = null;
@@ -83,7 +90,7 @@ public class RouteDAO extends DataAccessObject {
 				{
 					do
 					{
-						Route route = new Route(cursor.getInt(0));
+						Route route = new Route(cursor.getLong(0));
 						route.setDistance(cursor.getFloat(1));
 						route.setName(cursor.getString(2));
 						route.setRunCount(cursor.getInt(3));

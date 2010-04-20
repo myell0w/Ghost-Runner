@@ -44,7 +44,7 @@ public class GoalDAO extends DataAccessObject {
 			{
 				if(cursor.moveToFirst())
 				{
-					goal = new Goal(cursor.getInt(0));
+					goal = new Goal(cursor.getLong(0));
 					goal.setPeriod(Period.Int2Period(cursor.getInt(1)));
 					goal.setProgress(cursor.getFloat(2));
 					goal.setType(Type.Int2Type(cursor.getInt(3)));
@@ -89,7 +89,7 @@ public class GoalDAO extends DataAccessObject {
 				{
 					do
 					{
-						Goal goal = new Goal(cursor.getInt(0));
+						Goal goal = new Goal(cursor.getLong(0));
 						goal.setPeriod(Period.Int2Period(cursor.getInt(1)));
 						goal.setProgress(cursor.getFloat(2));
 						goal.setType(Type.Int2Type(cursor.getInt(3)));
@@ -122,8 +122,6 @@ public class GoalDAO extends DataAccessObject {
 		try
 		{
 			Goal goal = (Goal)entity;
-			System.out.println("insert:");
-			goal.print();
 			ContentValues values = new ContentValues();
 			if(goal.getPeriod() != null)
 				values.put(Constants.DB_GOALS_COLUMN_PERIOD, goal.getPeriod().ordinal());
