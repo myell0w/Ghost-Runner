@@ -22,25 +22,25 @@ public class RouteAdapter extends ArrayAdapter<Route> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
-		
+
 		if (v == null) {
-			LayoutInflater vi = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(R.layout.routes_listitem, null);
 		}
-		
+
 		Route r = routes.get(position);
-		
+
 		if (r != null) {
 			TextView routeName = (TextView) v.findViewById(R.id.routeName);
 			TextView runCount = (TextView) v.findViewById(R.id.routeRunCount);
-			
+
 			if (routeName != null) {
 				routeName.setText(r.getName());
 			}
-			
+
 			if (runCount != null) {
-				runCount.setText(r.getDistance() + " " + getContext().getResources().getString(R.string.app_unitDistance) + ", " 
-							   + r.getRunCount() + " " + getContext().getResources().getString(R.string.routes_runs));
+				runCount.setText(r.getDistance() + " " + getContext().getResources().getString(R.string.app_unitDistance) + ", " + r.getRunCount() + " "
+						+ getContext().getResources().getString(R.string.routes_runs));
 			}
 		}
 		return v;

@@ -18,7 +18,7 @@ import at.ac.tuwien.hci.ghost.util.Constants;
 
 public class RoutesActivity extends ListActivity {
 	private static final int VIEW_ALL_RUNS = 1;
-	
+
 	/** all routes */
 	private List<Route> routes = null;
 	/** DAO for retrieving Routes */
@@ -38,7 +38,7 @@ public class RoutesActivity extends ListActivity {
 		// create adapter
 		adapter = new RouteAdapter(this, R.layout.routes_listitem, routes);
 
-		this.setContentView(R.layout.routes);        
+		this.setContentView(R.layout.routes);
 		this.setListAdapter(adapter);
 	}
 
@@ -47,7 +47,7 @@ public class RoutesActivity extends ListActivity {
 		List<Route> routes = new ArrayList<Route>(entites.size());
 
 		for (Entity e : entites) {
-			routes.add((Route)e);
+			routes.add((Route) e);
 		}
 
 		return routes;
@@ -56,20 +56,21 @@ public class RoutesActivity extends ListActivity {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		
+
 		Route r = routes.get(position);
-		
-		Intent allRunsIntent = new Intent(this, AllRunsOfRouteActivity.class); 
+
+		Intent allRunsIntent = new Intent(this, AllRunsOfRouteActivity.class);
 		allRunsIntent.putExtra(Constants.ROUTE, r);
-		
+
 		this.startActivityForResult(allRunsIntent, VIEW_ALL_RUNS);
 	}
-	
+
+	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		
+
 		switch (resultCode) {
-			//TODO
+		// TODO
 		}
 	}
 }

@@ -41,8 +41,7 @@
 			android:apiKey="Your Maps API Key goes here" />
 		<TextView android:id="@+id/calories" android:text="@string/app.calories"
 			style="@style/RunningInfoSmall" android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:gravity="center">
+			android:layout_height="wrap_content" android:gravity="center">
 		</TextView>
 	</LinearLayout>
 

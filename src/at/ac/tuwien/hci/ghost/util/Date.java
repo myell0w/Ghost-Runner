@@ -18,15 +18,14 @@ import java.util.GregorianCalendar;
  */
 
 public class Date implements Serializable {
-	/**the serial version UID	 */
+	/** the serial version UID */
 	private static final long serialVersionUID = 192026271093734748L;
-	
+
 	/** das gespeicherte Datum */
 	private GregorianCalendar date = null;
 	/** das Default-Format */
 	private static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-	private static SimpleDateFormat sdfFull = new SimpleDateFormat(
-			"EE, dd.MM.yyyy HH:mm");
+	private static SimpleDateFormat sdfFull = new SimpleDateFormat("EE, dd.MM.yyyy HH:mm");
 
 	/**
 	 * erzeugt ein Date-Objekt mit dem aktuellen Datum
@@ -86,9 +85,9 @@ public class Date implements Serializable {
 	public Date(long millis) {
 		set(millis);
 	}
-	
+
 	public Date(int day, int month, int year, int hour, int minute) {
-		set(day,month,year);
+		set(day, month, year);
 		setHour(hour);
 		setMinute(minute);
 	}
@@ -121,7 +120,7 @@ public class Date implements Serializable {
 	 *            Datum im Format dd.MM.yyyy oder yyyy-MM-dd
 	 */
 	public void set(String date) throws ParseException {
-			set(sdf.parse(date));
+		set(sdf.parse(date));
 	}
 
 	/**
@@ -195,26 +194,28 @@ public class Date implements Serializable {
 		// gespeichert ==> -1
 		this.date = new GregorianCalendar(year, month - 1, day);
 	}
-	
+
 	/**
 	 * Setzt die Stunde neu
 	 * 
-	 * @param hour die neue Stunde
+	 * @param hour
+	 *            die neue Stunde
 	 * @return
 	 */
 	public Date setHour(int hour) {
 		this.date.set(Calendar.HOUR, hour);
 		return this;
 	}
-	
+
 	/**
 	 * Setzt die Minute neu
 	 * 
-	 * @param minute die neue Minute
+	 * @param minute
+	 *            die neue Minute
 	 * @return
 	 */
 	public Date setMinute(int minute) {
-		this.date.set(Calendar.MINUTE,minute);
+		this.date.set(Calendar.MINUTE, minute);
 		return this;
 	}
 
@@ -250,11 +251,11 @@ public class Date implements Serializable {
 		this.date.set(Calendar.YEAR, year);
 		return this;
 	}
-	
+
 	public int getHour() {
 		return date.get(Calendar.HOUR);
 	}
-	
+
 	public int getMinute() {
 		return date.get(Calendar.MINUTE);
 	}

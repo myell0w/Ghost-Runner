@@ -3,7 +3,7 @@ package at.ac.tuwien.hci.ghost.util;
 public interface Constants {
 	public static final String ROUTE = "at.ac.tuwien.hci.ghost.Route";
 	public static final String RUN = "at.ac.tuwien.hci.ghost.Run";
-	
+
 	/** database constants */
 	public static final String DB_TABLE_GOALS = "Goals";
 	public static final String DB_GOALS_COLUMN_ID = "id";
@@ -26,7 +26,7 @@ public interface Constants {
 	public static final String DB_ROUTES_COLUMN_TYPE_NAME = "TEXT";
 	public static final String DB_ROUTES_COLUMN_TYPE_DISTANCE = "REAL";
 	public static final String DB_ROUTES_COLUMN_TYPE_RUNCOUNT = "INTEGER";
-	
+
 	public static final String DB_TABLE_RUNS = "Runs";
 	public static final String DB_RUNS_COLUMN_ID = "id";
 	public static final String DB_RUNS_COLUMN_DATE = "date";
@@ -44,10 +44,10 @@ public interface Constants {
 	public static final String DB_RUNS_COLUMN_TYPE_SPEED = "REAL";
 	public static final String DB_RUNS_COLUMN_TYPE_CALORIES = "INTEGER";
 	public static final String DB_RUNS_COLUMN_TYPE_ROUTEID = "INTEGER";
-	
+
 	/** menu constans */
 	public static final int MENU_SWITCH_VIEW = 101;
 	public static final int MENU_SETTINGS = 102;
 	public static final int MENU_WEATHER = 103;
 	public static final int MENU_NEW_GOAL = 104;
- }
+}

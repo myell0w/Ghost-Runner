@@ -23,44 +23,44 @@ public class GoalAdapter extends ArrayAdapter<Goal> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
-		
+
 		if (v == null) {
-			LayoutInflater vi = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(R.layout.goals_listitem, null);
 		}
-		
+
 		Goal g = goals.get(position);
-		
+
 		if (g != null) {
-			TextView goalDescription = (TextView)v.findViewById(R.id.goalDescription);
-			ProgressBar progress = (ProgressBar)v.findViewById(R.id.goalProgress);
-			
+			TextView goalDescription = (TextView) v.findViewById(R.id.goalDescription);
+			ProgressBar progress = (ProgressBar) v.findViewById(R.id.goalProgress);
+
 			if (goalDescription != null) {
 				goalDescription.setText(this.typeDescription(g));
 			}
-			
+
 			if (progress != null) {
 				progress.setProgress(g.getProgressPercentage());
 			}
 		}
 		return v;
 	}
-	
+
 	private String typeDescription(Goal goal) {
-		switch(goal.getType()) {
+		switch (goal.getType()) {
 		case CALORIES:
-			return getContext().getResources().getString(R.string.goals_calories) + ": " + (int)goal.getGoalValue() + " " +
-				   getContext().getResources().getString(R.string.app_unitCalories);
-			
+			return getContext().getResources().getString(R.string.goals_calories) + ": " + (int) goal.getGoalValue() + " "
+					+ getContext().getResources().getString(R.string.app_unitCalories);
+
 		case DISTANCE:
-			return getContext().getResources().getString(R.string.goals_distance) + ": " + goal.getGoalValue() + " " +
-			   getContext().getResources().getString(R.string.app_unitDistance);
-			
+			return getContext().getResources().getString(R.string.goals_distance) + ": " + goal.getGoalValue() + " "
+					+ getContext().getResources().getString(R.string.app_unitDistance);
+
 		case RUNS:
-			return getContext().getResources().getString(R.string.goals_runs) + ": " + (int)goal.getGoalValue();
-			
-			default:
-				return getContext().getResources().getString(R.string.goals_none);
+			return getContext().getResources().getString(R.string.goals_runs) + ": " + (int) goal.getGoalValue();
+
+		default:
+			return getContext().getResources().getString(R.string.goals_none);
 		}
 	}
 }

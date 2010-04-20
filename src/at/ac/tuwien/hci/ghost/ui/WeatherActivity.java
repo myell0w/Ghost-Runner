@@ -6,9 +6,9 @@ import at.ac.tuwien.hci.ghost.R;
 
 public class WeatherActivity extends Activity {
 	@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        
-        this.setContentView(R.layout.weather);
-    }
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		this.setContentView(R.layout.weather);
+	}
 }

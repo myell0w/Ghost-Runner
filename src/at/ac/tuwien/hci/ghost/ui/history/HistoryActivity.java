@@ -17,7 +17,7 @@ import at.ac.tuwien.hci.ghost.util.Constants;
 
 public class HistoryActivity extends ListActivity {
 	private static final int VIEW_RUN_DETAIL = 1;
-	
+
 	/** all goals */
 	private List<Run> runs = null;
 	/** DAO for retrieving Routes */
@@ -29,39 +29,40 @@ public class HistoryActivity extends ListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		// create dao-object
 		dao = new RunDAO(this);
 		// get all routes
 		runs = getRunsInMonth(3, 2010);
 		// create adapter
 		adapter = new HistoryAdapter(this, R.layout.history_listitem, runs);
-		
+
 		this.setListAdapter(adapter);
-		this.setContentView(R.layout.history);        
+		this.setContentView(R.layout.history);
 	}
 
 	private List<Run> getRunsInMonth(int month, int year) {
-		return ((RunDAO)dao).getAllRunsInMonth(month, year);
+		return ((RunDAO) dao).getAllRunsInMonth(month, year);
 	}
-	
-	 @Override
-		public void onListItemClick(ListView l, View v, int position, long id) {
-			super.onListItemClick(l, v, position, id);
-			
-			Run r = runs.get(position);
-			
-			Intent allRunsIntent = new Intent(this, RunDetailsActivity.class); 
-			allRunsIntent.putExtra(Constants.RUN, r);
-			
-			this.startActivityForResult(allRunsIntent, VIEW_RUN_DETAIL);
+
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+
+		Run r = runs.get(position);
+
+		Intent allRunsIntent = new Intent(this, RunDetailsActivity.class);
+		allRunsIntent.putExtra(Constants.RUN, r);
+
+		this.startActivityForResult(allRunsIntent, VIEW_RUN_DETAIL);
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		switch (resultCode) {
+		// TODO
 		}
-		
-		public void onActivityResult(int requestCode, int resultCode, Intent data) {
-			super.onActivityResult(requestCode, resultCode, data);
-			
-			switch (resultCode) {
-				//TODO
-			}
-		}
+	}
 }

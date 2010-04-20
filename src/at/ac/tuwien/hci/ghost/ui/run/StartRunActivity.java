@@ -13,7 +13,7 @@ import com.google.android.maps.MapView;
 public class StartRunActivity extends MapActivity {
 	private MapView mapView = null;
 	private Button startButton = null;
-	
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -22,14 +22,14 @@ public class StartRunActivity extends MapActivity {
 
 		mapView = (MapView) findViewById(R.id.overviewMap);
 		mapView.setBuiltInZoomControls(true);
-		
-		startButton = (Button)findViewById(R.id.startRunButton);
+
+		startButton = (Button) findViewById(R.id.startRunButton);
 		startButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				Intent runningInfoIntent = new Intent(StartRunActivity.this, RunningInfoActivity.class); 
-				
+				Intent runningInfoIntent = new Intent(StartRunActivity.this, RunningInfoActivity.class);
+
 				StartRunActivity.this.startActivity(runningInfoIntent);
-				
+
 			}
 		});
 	}

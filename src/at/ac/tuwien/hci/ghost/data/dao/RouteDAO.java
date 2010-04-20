@@ -16,172 +16,153 @@ public class RouteDAO extends DataAccessObject {
 	public RouteDAO(Context context) {
 		super(context);
 	}
-	
+
 	/**
-     * Returns a spefific route identified by id. Not found or error: null
-     * 
-     * @param id the id of the route
-     * @return the route or null if failed
-     */
+	 * Returns a spefific route identified by id. Not found or error: null
+	 * 
+	 * @param id
+	 *            the id of the route
+	 * @return the route or null if failed
+	 */
 	@Override
-	public Entity search(long id)
-	{
+	public Entity search(long id) {
 		Route route = null;
-		
+
 		List<Entity> routes = search(Constants.DB_ROUTES_COLUMN_ID + "=" + id, null);
-		if(routes != null && !routes.isEmpty())
+		if (routes != null && !routes.isEmpty())
 			route = (Route) routes.get(0);
-		
+
 		return route;
 	}
 
 	/**
-     * Returns all stored routes.
-     * Not found: empty list
-     * Error: null
-     * 
-     * @return list of routes
-     */
+	 * Returns all stored routes. Not found: empty list Error: null
+	 * 
+	 * @return list of routes
+	 */
 	@Override
 	public List<Entity> getAll() {
 		List<Entity> routes = null;
 		routes = search(null, null);
-		
+
 		/* TODO remove stub shit */
-		if(routes == null)
+		if (routes == null)
 			routes = new ArrayList<Entity>();
-		routes.add(new Route(1,"Route 66", 3.4f, 12));
-		routes.add(new Route(2,"Fun", 3.4f, 2));
-		routes.add(new Route(3,"Home Run", 1.4f));
-		routes.add(new Route(4,"Warm up", 2.4f, 32));
-		
+		routes.add(new Route(1, "Route 66", 3.4f, 12));
+		routes.add(new Route(2, "Fun", 3.4f, 2));
+		routes.add(new Route(3, "Home Run", 1.4f));
+		routes.add(new Route(4, "Warm up", 2.4f, 32));
+
 		return routes;
 	}
-	
+
 	/**
-     * Returns all stored routes that meet the criteria <i>selection</i>, order by <i>orderBy</i> 
-     * Not found: empty list
-     * Error: null
-     * 
-     * @param selection A filter declaring which rows to return, formatted as an SQL WHERE clause (excluding the WHERE itself). Passing null will return all rows for the given table.
-     * @param orderBy How to order the rows, formatted as an SQL ORDER BY clause (excluding the ORDER BY itself). Passing null will use the default sort order, which may be unordered.
-     * @return list of routes
-     */
+	 * Returns all stored routes that meet the criteria <i>selection</i>, order
+	 * by <i>orderBy</i> Not found: empty list Error: null
+	 * 
+	 * @param selection
+	 *            A filter declaring which rows to return, formatted as an SQL
+	 *            WHERE clause (excluding the WHERE itself). Passing null will
+	 *            return all rows for the given table.
+	 * @param orderBy
+	 *            How to order the rows, formatted as an SQL ORDER BY clause
+	 *            (excluding the ORDER BY itself). Passing null will use the
+	 *            default sort order, which may be unordered.
+	 * @return list of routes
+	 */
 	@Override
 	protected List<Entity> search(String selection, String orderBy) {
 		List<Entity> routes = new ArrayList<Entity>();
-		
-		try
-		{
+
+		try {
 			Cursor cursor = null;
-			cursor = ghostDB.query(Constants.DB_TABLE_ROUTES,
-									new String[] {Constants.DB_ROUTES_COLUMN_ID,
-									Constants.DB_ROUTES_COLUMN_DISTANCE,
-									Constants.DB_ROUTES_COLUMN_NAME,
-									Constants.DB_ROUTES_COLUMN_RUNCOUNT},
-									selection,
-									null, null, null,
-									orderBy);
-			if(cursor != null)
-			{
-				if(cursor.moveToFirst())
-				{
-					do
-					{
+			cursor = ghostDB.query(Constants.DB_TABLE_ROUTES, new String[] { Constants.DB_ROUTES_COLUMN_ID, Constants.DB_ROUTES_COLUMN_DISTANCE,
+					Constants.DB_ROUTES_COLUMN_NAME, Constants.DB_ROUTES_COLUMN_RUNCOUNT }, selection, null, null, null, orderBy);
+			if (cursor != null) {
+				if (cursor.moveToFirst()) {
+					do {
 						Route route = new Route(cursor.getLong(0));
 						route.setDistance(cursor.getFloat(1));
 						route.setName(cursor.getString(2));
 						route.setRunCount(cursor.getInt(3));
 
 						routes.add(route);
-					}
-					while(cursor.moveToNext());
+					} while (cursor.moveToNext());
 				}
 				cursor.close();
 			}
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			routes = null;
-			Log.e(RouteDAO.class.toString(),"Error search(): " + e.toString());
+			Log.e(RouteDAO.class.toString(), "Error search(): " + e.toString());
 		}
 		return routes;
 	}
-	
+
 	/**
-     * Inserts a specific route
-     * 
-     * @param entity the route to insert
-     * @return the generated autoincrement id or -1 if failed
-     */
+	 * Inserts a specific route
+	 * 
+	 * @param entity
+	 *            the route to insert
+	 * @return the generated autoincrement id or -1 if failed
+	 */
 	@Override
-	public long insert(Entity entity)
-	{
+	public long insert(Entity entity) {
 		long result;
-		try
-		{
-			Route route = (Route)entity;
+		try {
+			Route route = (Route) entity;
 			ContentValues values = new ContentValues();
 			values.put(Constants.DB_ROUTES_COLUMN_DISTANCE, route.getDistance());
-			if(route.getName() != null)
+			if (route.getName() != null)
 				values.put(Constants.DB_ROUTES_COLUMN_NAME, route.getName());
 			values.put(Constants.DB_ROUTES_COLUMN_RUNCOUNT, route.getRunCount());
 			result = ghostDB.insert(Constants.DB_TABLE_ROUTES, null, values);
-		}
-		catch(Exception e)
-		{
-			Log.e(RouteDAO.class.toString(),"Error insert(): " + e.toString());
+		} catch (Exception e) {
+			Log.e(RouteDAO.class.toString(), "Error insert(): " + e.toString());
 			result = -1;
 		}
 		return result;
 	}
-	
+
 	/**
-     * Deletes a spefific route identified by id. Not found or error: false
-     * 
-     * @param id the id of the route
-     * @return true, false if failed
-     */
+	 * Deletes a spefific route identified by id. Not found or error: false
+	 * 
+	 * @param id
+	 *            the id of the route
+	 * @return true, false if failed
+	 */
 	@Override
-	public boolean delete(long id)
-	{
+	public boolean delete(long id) {
 		boolean result = false;
-		try
-		{
-			result = ghostDB.delete(Constants.DB_TABLE_ROUTES, Constants.DB_ROUTES_COLUMN_ID + "=" + id , null) > 0;
-		}
-		catch(Exception e)
-		{
-			Log.e(RouteDAO.class.toString(),"Error delete(): " + e.toString());
+		try {
+			result = ghostDB.delete(Constants.DB_TABLE_ROUTES, Constants.DB_ROUTES_COLUMN_ID + "=" + id, null) > 0;
+		} catch (Exception e) {
+			Log.e(RouteDAO.class.toString(), "Error delete(): " + e.toString());
 			result = false;
 		}
 		return result;
 	}
 
 	/**
-     * Updates a spefific route identified by id of entity with the data stored in entity.
-     * Not found or error: false
-     * 
-     * @param entity the entity to update
-     * @return true, false if failed
-     */
+	 * Updates a spefific route identified by id of entity with the data stored
+	 * in entity. Not found or error: false
+	 * 
+	 * @param entity
+	 *            the entity to update
+	 * @return true, false if failed
+	 */
 	@Override
-	public boolean update(Entity entity)
-	{
+	public boolean update(Entity entity) {
 		boolean result = false;
-		try
-		{
-			Route route = (Route)entity;
+		try {
+			Route route = (Route) entity;
 			ContentValues values = new ContentValues();
 			values.put(Constants.DB_ROUTES_COLUMN_DISTANCE, route.getDistance());
-			if(route.getName() != null)
+			if (route.getName() != null)
 				values.put(Constants.DB_ROUTES_COLUMN_NAME, route.getName());
 			values.put(Constants.DB_ROUTES_COLUMN_RUNCOUNT, route.getRunCount());
-			result =  ghostDB.update(Constants.DB_TABLE_ROUTES, values, Constants.DB_ROUTES_COLUMN_ID + "=" + route.getID(), null) > 0;
-		}
-		catch(Exception e)
-		{
-			Log.e(RouteDAO.class.toString(),"Error update(): " + e.toString());
+			result = ghostDB.update(Constants.DB_TABLE_ROUTES, values, Constants.DB_ROUTES_COLUMN_ID + "=" + route.getID(), null) > 0;
+		} catch (Exception e) {
+			Log.e(RouteDAO.class.toString(), "Error update(): " + e.toString());
 			result = false;
 		}
 		return result;

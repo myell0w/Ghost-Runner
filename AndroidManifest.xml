@@ -28,9 +28,6 @@
         <activity android:name=".ui.run.RunningInfoActivity">
         </activity>
         
-        <activity android:name=".ui.run.RunningMapActivity">
-        </activity>
-        
         <activity android:name=".ui.history.HistoryActivity">
         </activity>
         

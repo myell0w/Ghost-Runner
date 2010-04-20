@@ -1,12 +1,11 @@
 package at.ac.tuwien.hci.ghost.data.entities;
 
-import java.util.List;
 
 /**
  * encapsulates a route
  * 
  * @author Matthias
- *
+ * 
  */
 public class Route extends Entity {
 	/** id of the route */
@@ -17,26 +16,27 @@ public class Route extends Entity {
 	private float distance = 0.0f;
 	/** number of runs on this route */
 	private int runCount = 0;
+
 	/** runs on this Route (optional) */
-	//private List<Run> runs = null;
-	
+	// private List<Run> runs = null;
+
 	public Route(long id, String name, float distance, int runCount) {
 		this.id = id;
 		this.name = name;
 		this.distance = distance;
 		this.runCount = runCount;
 	}
-	
+
 	public Route(long id, String name, float distance) {
-		this(id,name,distance,0);
+		this(id, name, distance, 0);
 	}
-	
+
 	public Route(long id, String name) {
-		this(id,name, 0.0f, 0);
+		this(id, name, 0.0f, 0);
 	}
-	
+
 	public Route(long id) {
-		this(id,"",0.f,0);
+		this(id, "", 0.f, 0);
 	}
 
 	public String getName() {
@@ -62,7 +62,7 @@ public class Route extends Entity {
 	public void setRunCount(int runCount) {
 		this.runCount = runCount;
 	}
-	
+
 	public void increaseRunCount() {
 		runCount++;
 	}
@@ -71,9 +71,9 @@ public class Route extends Entity {
 	public long getID() {
 		return id;
 	}
-	
-	public void setID(long id)
-	{
+
+	@Override
+	public void setID(long id) {
 		this.id = id;
 	}
 }

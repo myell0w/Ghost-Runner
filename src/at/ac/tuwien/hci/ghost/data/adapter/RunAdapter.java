@@ -22,25 +22,24 @@ public class RunAdapter extends ArrayAdapter<Run> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
-		
+
 		if (v == null) {
-			LayoutInflater vi = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(R.layout.allrunsofroute_listitem, null);
 		}
-		
+
 		Run r = runs.get(position);
-		
+
 		if (r != null) {
 			TextView runStats = (TextView) v.findViewById(R.id.runStat);
 			TextView runDate = (TextView) v.findViewById(R.id.runDate);
-			
+
 			if (runStats != null) {
-				String stats = r.getDistance() + " " + getContext().getString(R.string.app_unitDistance) + ", " +
-							   r.getTimeString() + " " + getContext().getString(R.string.app_unitTime) + ", " +
-							   r.getPaceString() + " " + getContext().getString(R.string.app_unitPace);
+				String stats = r.getDistance() + " " + getContext().getString(R.string.app_unitDistance) + ", " + r.getTimeString() + " "
+						+ getContext().getString(R.string.app_unitTime) + ", " + r.getPaceString() + " " + getContext().getString(R.string.app_unitPace);
 				runStats.setText(stats);
 			}
-			
+
 			if (runDate != null) {
 				runDate.setText(r.getDate().toFullString());
 			}

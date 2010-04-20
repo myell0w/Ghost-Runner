@@ -9,7 +9,7 @@ import at.ac.tuwien.hci.ghost.util.Constants;
 import at.ac.tuwien.hci.ghost.util.Date;
 
 public class DBOpenHelper extends SQLiteOpenHelper {
-	
+
 	private static final String DATABASE_NAME = "GHOST_DB";
 	private static final int DATABASE_VERSION = 1;
 
@@ -23,36 +23,27 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 		String createTableGoals = null;
 		String createTableRoutes = null;
 		String createTableRuns = null;
-		
-		createTableGoals = "CREATE TABLE IF NOT EXISTS " + Constants.DB_TABLE_GOALS + " (" +
-				   Constants.DB_GOALS_COLUMN_ID + " " + Constants.DB_GOALS_COLUMN_TYPE_ID + ", " +
-				   Constants.DB_GOALS_COLUMN_PROGRESS + " " + Constants.DB_GOALS_COLUMN_TYPE_PROGRESS + ", " +
-				   Constants.DB_GOALS_COLUMN_TYPE + " " + Constants.DB_GOALS_COLUMN_TYPE_TYPE + ", " +
-				   Constants.DB_GOALS_COLUMN_GOALVALUE + " " + Constants.DB_GOALS_COLUMN_TYPE_GOALVALUE + ", " +
-				   Constants.DB_GOALS_COLUMN_PERIOD + " " + Constants.DB_GOALS_COLUMN_TYPE_PERIOD +
-				   ");";
-		createTableRoutes = "CREATE TABLE IF NOT EXISTS " + Constants.DB_TABLE_ROUTES + " (" +
-		   Constants.DB_ROUTES_COLUMN_ID + " " + Constants.DB_ROUTES_COLUMN_TYPE_ID + ", " +
-		   Constants.DB_ROUTES_COLUMN_DISTANCE + " " + Constants.DB_ROUTES_COLUMN_TYPE_DISTANCE + ", " +
-		   Constants.DB_ROUTES_COLUMN_NAME + " " + Constants.DB_ROUTES_COLUMN_TYPE_NAME + ", " +
-		   Constants.DB_ROUTES_COLUMN_RUNCOUNT + " " + Constants.DB_ROUTES_COLUMN_TYPE_RUNCOUNT +
-		   ");";
-		createTableRuns = "CREATE TABLE IF NOT EXISTS " + Constants.DB_TABLE_RUNS + " (" +
-		   Constants.DB_RUNS_COLUMN_ID + " " + Constants.DB_RUNS_COLUMN_TYPE_ID + ", " +
-		   Constants.DB_RUNS_COLUMN_DATE + " " + Constants.DB_RUNS_COLUMN_TYPE_DATE + ", " +
-		   Constants.DB_RUNS_COLUMN_TIMEINSECONDS + " " + Constants.DB_RUNS_COLUMN_TYPE_TIMEINSECONDS + ", " +
-		   Constants.DB_RUNS_COLUMN_DISTANCE + " " + Constants.DB_RUNS_COLUMN_TYPE_DISTANCE + ", " +
-		   Constants.DB_RUNS_COLUMN_PACE + " " + Constants.DB_RUNS_COLUMN_TYPE_PACE + ", " +
-		   Constants.DB_RUNS_COLUMN_SPEED + " " + Constants.DB_RUNS_COLUMN_TYPE_SPEED + ", " +
-		   Constants.DB_RUNS_COLUMN_CALORIES + " " + Constants.DB_RUNS_COLUMN_TYPE_CALORIES + ", " +
-		   Constants.DB_RUNS_COLUMN_ROUTEID + " " + Constants.DB_RUNS_COLUMN_TYPE_ROUTEID +
-		   ");";
-		
+
+		createTableGoals = "CREATE TABLE IF NOT EXISTS " + Constants.DB_TABLE_GOALS + " (" + Constants.DB_GOALS_COLUMN_ID + " "
+				+ Constants.DB_GOALS_COLUMN_TYPE_ID + ", " + Constants.DB_GOALS_COLUMN_PROGRESS + " " + Constants.DB_GOALS_COLUMN_TYPE_PROGRESS + ", "
+				+ Constants.DB_GOALS_COLUMN_TYPE + " " + Constants.DB_GOALS_COLUMN_TYPE_TYPE + ", " + Constants.DB_GOALS_COLUMN_GOALVALUE + " "
+				+ Constants.DB_GOALS_COLUMN_TYPE_GOALVALUE + ", " + Constants.DB_GOALS_COLUMN_PERIOD + " " + Constants.DB_GOALS_COLUMN_TYPE_PERIOD + ");";
+		createTableRoutes = "CREATE TABLE IF NOT EXISTS " + Constants.DB_TABLE_ROUTES + " (" + Constants.DB_ROUTES_COLUMN_ID + " "
+				+ Constants.DB_ROUTES_COLUMN_TYPE_ID + ", " + Constants.DB_ROUTES_COLUMN_DISTANCE + " " + Constants.DB_ROUTES_COLUMN_TYPE_DISTANCE + ", "
+				+ Constants.DB_ROUTES_COLUMN_NAME + " " + Constants.DB_ROUTES_COLUMN_TYPE_NAME + ", " + Constants.DB_ROUTES_COLUMN_RUNCOUNT + " "
+				+ Constants.DB_ROUTES_COLUMN_TYPE_RUNCOUNT + ");";
+		createTableRuns = "CREATE TABLE IF NOT EXISTS " + Constants.DB_TABLE_RUNS + " (" + Constants.DB_RUNS_COLUMN_ID + " " + Constants.DB_RUNS_COLUMN_TYPE_ID
+				+ ", " + Constants.DB_RUNS_COLUMN_DATE + " " + Constants.DB_RUNS_COLUMN_TYPE_DATE + ", " + Constants.DB_RUNS_COLUMN_TIMEINSECONDS + " "
+				+ Constants.DB_RUNS_COLUMN_TYPE_TIMEINSECONDS + ", " + Constants.DB_RUNS_COLUMN_DISTANCE + " " + Constants.DB_RUNS_COLUMN_TYPE_DISTANCE + ", "
+				+ Constants.DB_RUNS_COLUMN_PACE + " " + Constants.DB_RUNS_COLUMN_TYPE_PACE + ", " + Constants.DB_RUNS_COLUMN_SPEED + " "
+				+ Constants.DB_RUNS_COLUMN_TYPE_SPEED + ", " + Constants.DB_RUNS_COLUMN_CALORIES + " " + Constants.DB_RUNS_COLUMN_TYPE_CALORIES + ", "
+				+ Constants.DB_RUNS_COLUMN_ROUTEID + " " + Constants.DB_RUNS_COLUMN_TYPE_ROUTEID + ");";
+
 		Log.i(DBOpenHelper.class.toString(), createTableGoals);
 		db.execSQL(createTableGoals);
 		db.execSQL(createTableRoutes);
 		db.execSQL(createTableRuns);
-		
+
 		/* TODO remove test records */
 		ContentValues values = new ContentValues();
 		values.put(Constants.DB_ROUTES_COLUMN_ID, 101);
@@ -60,9 +51,9 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 		values.put(Constants.DB_ROUTES_COLUMN_NAME, "Wilde Route");
 		values.put(Constants.DB_ROUTES_COLUMN_RUNCOUNT, 1);
 		db.insert(Constants.DB_TABLE_ROUTES, null, values);
-		
+
 		values = new ContentValues();
-		values.put(Constants.DB_RUNS_COLUMN_DATE, new Date(5,3,2010).getAsJavaDefaultDate().getTime());
+		values.put(Constants.DB_RUNS_COLUMN_DATE, new Date(5, 3, 2010).getAsJavaDefaultDate().getTime());
 		values.put(Constants.DB_RUNS_COLUMN_TIMEINSECONDS, 5);
 		values.put(Constants.DB_RUNS_COLUMN_DISTANCE, 6);
 		values.put(Constants.DB_RUNS_COLUMN_PACE, 7);
@@ -75,8 +66,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// TODO Delete all tables
-		Log.i(DBOpenHelper.class.toString(),"Upgrading database from version " + oldVersion + " to version " + newVersion + "." +
-		         "Data tables will be truncated.");
+		Log.i(DBOpenHelper.class.toString(), "Upgrading database from version " + oldVersion + " to version " + newVersion + "."
+				+ "Data tables will be truncated.");
 		db.execSQL("DROP TABLE IF EXISTS " + Constants.DB_TABLE_GOALS + ";");
 		db.execSQL("DROP TABLE IF EXISTS " + Constants.DB_TABLE_ROUTES + ";");
 		db.execSQL("DROP TABLE IF EXISTS " + Constants.DB_TABLE_RUNS + ";");

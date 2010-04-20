@@ -38,6 +38,7 @@
 	<string name="run.start">Start Run</string>
 	<string name="run.stop">Stop Run</string>
 	<string name="run.pause">Pause Run</string>
+	<string name="run.continue">Continue Run</string>
 	
 	<string name="run.map"> Show Map </string>
 	<string name="run.info"> Show Info </string>

@@ -16,13 +16,11 @@ import at.ac.tuwien.hci.ghost.data.dao.DataAccessObject;
 import at.ac.tuwien.hci.ghost.data.dao.GoalDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Goal;
-import at.ac.tuwien.hci.ghost.data.entities.Run;
 import at.ac.tuwien.hci.ghost.ui.WeatherActivity;
-import at.ac.tuwien.hci.ghost.ui.run.RunDetailsActivity;
 import at.ac.tuwien.hci.ghost.util.Constants;
 
 public class GoalsActivity extends ListActivity {
-	
+
 	/** menu constans */
 	private final int MENU_GOAL_ADD = 101;
 	private final int MENU_SETTINGS = 102;
@@ -47,30 +45,29 @@ public class GoalsActivity extends ListActivity {
 		// create adapter
 		adapter = new GoalAdapter(this, R.layout.goals_listitem, goals);
 
-		this.setContentView(R.layout.goals);        
+		this.setContentView(R.layout.goals);
 		this.setListAdapter(adapter);
 	}
-	
+
 	@Override
-	public void onResume()
-	{
+	public void onResume() {
 		super.onResume();
 		System.out.println("Resuming GOALS");
 		goals = getAllGoals();
 		adapter = new GoalAdapter(this, R.layout.goals_listitem, goals);
 		this.setListAdapter(adapter);
 	}
-	
+
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		
+
 		Goal g = goals.get(position);
-		
+
 		Intent newGoalIntent = new Intent(this, NewGoalActivity.class);
 		newGoalIntent.putExtra("newGoal", g);
-    	newGoalIntent.putExtra("actionType", NewGoalActivity.STATE_EDIT);
-    	this.startActivity(newGoalIntent);
+		newGoalIntent.putExtra("actionType", NewGoalActivity.STATE_EDIT);
+		this.startActivity(newGoalIntent);
 	}
 
 	private List<Goal> getAllGoals() {
@@ -78,47 +75,46 @@ public class GoalsActivity extends ListActivity {
 		List<Goal> goals = new ArrayList<Goal>(entites.size());
 
 		for (Entity e : entites) {
-			goals.add((Goal)e);
+			goals.add((Goal) e);
 		}
 
 		return goals;
 	}
-	
+
 	/* Creates the menu items */
-    public boolean onCreateOptionsMenu(Menu menu) {
-    	menu.add(0, MENU_GOAL_ADD, 0, getResources().getString(R.string.goals_new))
-    			.setIcon(android.R.drawable.ic_menu_add);
-    	menu.add(0, MENU_SETTINGS, 1, getResources().getString(R.string.app_settings))
-    			.setIcon(android.R.drawable.ic_menu_preferences);
-    	menu.add(0, MENU_WEATHER, 2, getResources().getString(R.string.app_weather))
-    			.setIcon(R.drawable.menu_weather);
-    	
-        return true;
-    }
-    
-    /* Handles menu item selections */
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case MENU_GOAL_ADD:
-        	Intent newGoalIntent = new Intent(this, NewGoalActivity.class);
-        	Goal goal= new Goal(1);
-        	long newId = ((GoalDAO)dao).insert(goal);
-        	goal.setID(newId);
-        	newGoalIntent.putExtra("newGoal", goal);
-        	newGoalIntent.putExtra("actionType", NewGoalActivity.STATE_INSERT);
-    		this.startActivity(newGoalIntent);
-        	//onResume();
-            return true;
-        case MENU_SETTINGS:
-        	// TODO code for doing settings for goals
-        	return true;
-        	
-        case Constants.MENU_WEATHER:
-        	Intent weatherIntent = new Intent(this, WeatherActivity.class); 
-    		this.startActivity(weatherIntent);
-    		
-        	return true;
-        }
-        return false;
-    }
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(0, MENU_GOAL_ADD, 0, getResources().getString(R.string.goals_new)).setIcon(android.R.drawable.ic_menu_add);
+		menu.add(0, MENU_SETTINGS, 1, getResources().getString(R.string.app_settings)).setIcon(android.R.drawable.ic_menu_preferences);
+		menu.add(0, MENU_WEATHER, 2, getResources().getString(R.string.app_weather)).setIcon(R.drawable.menu_weather);
+
+		return true;
+	}
+
+	/* Handles menu item selections */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case MENU_GOAL_ADD:
+			Intent newGoalIntent = new Intent(this, NewGoalActivity.class);
+			Goal goal = new Goal(1);
+			long newId = ((GoalDAO) dao).insert(goal);
+			goal.setID(newId);
+			newGoalIntent.putExtra("newGoal", goal);
+			newGoalIntent.putExtra("actionType", NewGoalActivity.STATE_INSERT);
+			this.startActivity(newGoalIntent);
+			// onResume();
+			return true;
+		case MENU_SETTINGS:
+			// TODO code for doing settings for goals
+			return true;
+
+		case Constants.MENU_WEATHER:
+			Intent weatherIntent = new Intent(this, WeatherActivity.class);
+			this.startActivity(weatherIntent);
+
+			return true;
+		}
+		return false;
+	}
 }
