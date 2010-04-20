@@ -25,18 +25,24 @@
 
 	<!-- unterer Block mit restlichen Infos -->
 	<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:background="@drawable/runninginfo">
-		<TextView android:id="@+id/routeInfo" android:text="@string/app.route" style="@style/RunningInfoSmall"
-			android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="3dip" android:gravity="center">
+		android:layout_height="wrap_content" android:orientation="vertical"
+		android:background="@drawable/runninginfo">
+		<TextView android:id="@+id/route" android:text="@string/app.route"
+			style="@style/RunningInfoSmall" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:layout_marginTop="3dip"
+			android:gravity="center">
 		</TextView>
-		<TextView android:id="@+id/speedInfo" android:layout_width="fill_parent"
-			android:layout_height="25dip">
-		</TextView>
-		<TextView android:id="@+id/caloriesInfo"
-			android:layout_width="fill_parent" android:layout_height="25dip">
-		</TextView>
-		<TextView android:id="@+id/remainingDistanceInfo"
-			android:layout_width="fill_parent" android:layout_height="25dip">
+		<com.google.android.maps.MapView
+			xmlns:android="http://schemas.android.com/apk/res/android"
+			android:id="@+id/overviewMap" android:layout_width="fill_parent"
+			android:layout_height="196dip" android:layout_marginTop="10dip"
+			android:layout_marginLeft="2dip" android:layout_marginRight="2dip"
+			android:layout_marginBottom="6dip" android:clickable="true"
+			android:apiKey="Your Maps API Key goes here" />
+		<TextView android:id="@+id/calories" android:text="@string/app.calories"
+			style="@style/RunningInfoSmall" android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center">
 		</TextView>
 	</LinearLayout>
 

@@ -1,18 +1,16 @@
 package at.ac.tuwien.hci.ghost.ui.run;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import at.ac.tuwien.hci.ghost.R;
-import at.ac.tuwien.hci.ghost.data.dao.GoalDAO;
-import at.ac.tuwien.hci.ghost.data.entities.Goal;
 import at.ac.tuwien.hci.ghost.ui.WeatherActivity;
-import at.ac.tuwien.hci.ghost.ui.goal.NewGoalActivity;
 import at.ac.tuwien.hci.ghost.util.Constants;
 
-public class RunningInfoActivity extends Activity {
+import com.google.android.maps.MapActivity;
+
+public class RunningInfoActivity extends MapActivity {
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -49,4 +47,10 @@ public class RunningInfoActivity extends Activity {
         }
         return false;
     }
+
+	@Override
+	protected boolean isRouteDisplayed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
