@@ -1,10 +1,12 @@
 package at.ac.tuwien.hci.ghost.data.dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import at.ac.tuwien.hci.ghost.util.Constants;
+import at.ac.tuwien.hci.ghost.util.Date;
 
 public class DBOpenHelper extends SQLiteOpenHelper {
 	
@@ -50,6 +52,24 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 		db.execSQL(createTableGoals);
 		db.execSQL(createTableRoutes);
 		db.execSQL(createTableRuns);
+		
+		/* TODO remove test records */
+		ContentValues values = new ContentValues();
+		values.put(Constants.DB_ROUTES_COLUMN_ID, 101);
+		values.put(Constants.DB_ROUTES_COLUMN_DISTANCE, 50);
+		values.put(Constants.DB_ROUTES_COLUMN_NAME, "Wilde Route");
+		values.put(Constants.DB_ROUTES_COLUMN_RUNCOUNT, 1);
+		db.insert(Constants.DB_TABLE_ROUTES, null, values);
+		
+		values = new ContentValues();
+		values.put(Constants.DB_RUNS_COLUMN_DATE, new Date(5,3,2010).getAsJavaDefaultDate().getTime());
+		values.put(Constants.DB_RUNS_COLUMN_TIMEINSECONDS, 5);
+		values.put(Constants.DB_RUNS_COLUMN_DISTANCE, 6);
+		values.put(Constants.DB_RUNS_COLUMN_PACE, 7);
+		values.put(Constants.DB_RUNS_COLUMN_SPEED, 8);
+		values.put(Constants.DB_RUNS_COLUMN_CALORIES, 9);
+		values.put(Constants.DB_RUNS_COLUMN_ROUTEID, 101);
+		db.insert(Constants.DB_TABLE_RUNS, null, values);
 	}
 
 	@Override

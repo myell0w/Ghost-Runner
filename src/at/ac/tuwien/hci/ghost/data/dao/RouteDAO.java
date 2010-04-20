@@ -23,57 +23,53 @@ public class RouteDAO extends DataAccessObject {
      * @param id the id of the route
      * @return the route or null if failed
      */
+	@Override
 	public Entity search(long id)
 	{
 		Route route = null;
-		try
-		{
-			Cursor cursor = null;
-			cursor = ghostDB.query(true,
-								Constants.DB_TABLE_ROUTES,
-								new String[] {Constants.DB_ROUTES_COLUMN_ID,
-								Constants.DB_ROUTES_COLUMN_DISTANCE,
-								Constants.DB_ROUTES_COLUMN_NAME,
-								Constants.DB_ROUTES_COLUMN_RUNCOUNT},
-								Constants.DB_ROUTES_COLUMN_ID + "=" + id,
-								null, null, null, null, null);
-			if(cursor != null)
-			{
-				if(cursor.moveToFirst())
-				{
-					route = new Route(cursor.getLong(0));
-					route.setDistance(cursor.getFloat(1));
-					route.setName(cursor.getString(2));
-					route.setRunCount(cursor.getInt(3));
-				}
-			}
-		}
-		catch(Exception e)
-		{
-			route = null;
-			Log.e(RouteDAO.class.toString(),"Error search(): " + e.toString());
-		}
+		
+		List<Entity> routes = search(Constants.DB_ROUTES_COLUMN_ID + "=" + id, null);
+		if(routes != null && !routes.isEmpty())
+			route = (Route) routes.get(0);
+		
 		return route;
 	}
 
 	/**
-     * Returns a list of routes that meet the criteria given in searchTerms.
-     * For detailed information ask Mr Tretter.
+     * Returns all stored routes.
      * Not found: empty list
      * Error: null
      * 
-     * @param searchTerms the search criteria
      * @return list of routes
      */
 	@Override
-	public List<Entity> search(List<Entity> searchTerms) {
-		List<Entity> routes = new ArrayList<Entity>();
+	public List<Entity> getAll() {
+		List<Entity> routes = null;
+		routes = search(null, null);
 		
 		/* TODO remove stub shit */
+		if(routes == null)
+			routes = new ArrayList<Entity>();
 		routes.add(new Route(1,"Route 66", 3.4f, 12));
 		routes.add(new Route(2,"Fun", 3.4f, 2));
 		routes.add(new Route(3,"Home Run", 1.4f));
 		routes.add(new Route(4,"Warm up", 2.4f, 32));
+		
+		return routes;
+	}
+	
+	/**
+     * Returns all stored routes that meet the criteria <i>selection</i>, order by <i>orderBy</i> 
+     * Not found: empty list
+     * Error: null
+     * 
+     * @param selection A filter declaring which rows to return, formatted as an SQL WHERE clause (excluding the WHERE itself). Passing null will return all rows for the given table.
+     * @param orderBy How to order the rows, formatted as an SQL ORDER BY clause (excluding the ORDER BY itself). Passing null will use the default sort order, which may be unordered.
+     * @return list of routes
+     */
+	@Override
+	protected List<Entity> search(String selection, String orderBy) {
+		List<Entity> routes = new ArrayList<Entity>();
 		
 		try
 		{
@@ -83,7 +79,9 @@ public class RouteDAO extends DataAccessObject {
 									Constants.DB_ROUTES_COLUMN_DISTANCE,
 									Constants.DB_ROUTES_COLUMN_NAME,
 									Constants.DB_ROUTES_COLUMN_RUNCOUNT},
-									null, null, null, null, null);
+									selection,
+									null, null, null,
+									orderBy);
 			if(cursor != null)
 			{
 				if(cursor.moveToFirst())
@@ -116,6 +114,7 @@ public class RouteDAO extends DataAccessObject {
      * @param entity the route to insert
      * @return the generated autoincrement id or -1 if failed
      */
+	@Override
 	public long insert(Entity entity)
 	{
 		long result;
@@ -143,6 +142,7 @@ public class RouteDAO extends DataAccessObject {
      * @param id the id of the route
      * @return true, false if failed
      */
+	@Override
 	public boolean delete(long id)
 	{
 		boolean result = false;
@@ -165,6 +165,7 @@ public class RouteDAO extends DataAccessObject {
      * @param entity the entity to update
      * @return true, false if failed
      */
+	@Override
 	public boolean update(Entity entity)
 	{
 		boolean result = false;

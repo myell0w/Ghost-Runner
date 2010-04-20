@@ -33,7 +33,7 @@ public class HistoryActivity extends ListActivity {
 		// create dao-object
 		dao = new RunDAO(this);
 		// get all routes
-		runs = getRunsInMonth(3);
+		runs = getRunsInMonth(3, 2010);
 		// create adapter
 		adapter = new HistoryAdapter(this, R.layout.history_listitem, runs);
 		
@@ -41,8 +41,8 @@ public class HistoryActivity extends ListActivity {
 		this.setContentView(R.layout.history);        
 	}
 
-	private List<Run> getRunsInMonth(int month) {
-		return ((RunDAO)dao).getAllRunsInMonth(month);
+	private List<Run> getRunsInMonth(int month, int year) {
+		return ((RunDAO)dao).getAllRunsInMonth(month, year);
 	}
 	
 	 @Override
