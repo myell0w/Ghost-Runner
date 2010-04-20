@@ -43,7 +43,7 @@ public class RoutesActivity extends ListActivity {
 	}
 
 	private List<Route> getAllRoutes() {
-		List<Entity> entites = dao.search(null);
+		List<Entity> entites = dao.getAll();
 		List<Route> routes = new ArrayList<Route>(entites.size());
 
 		for (Entity e : entites) {

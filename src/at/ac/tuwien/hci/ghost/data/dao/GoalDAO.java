@@ -25,53 +25,42 @@ public class GoalDAO extends DataAccessObject {
      * @param id the id of the goal
      * @return the goal or null if failed
      */
+	@Override
 	public Entity search(long id)
 	{
 		Goal goal = null;
-		try
-		{
-			Cursor cursor = null;
-			cursor = ghostDB.query(true,
-								Constants.DB_TABLE_GOALS,
-								new String[] {Constants.DB_GOALS_COLUMN_ID,
-								Constants.DB_GOALS_COLUMN_PERIOD,
-								Constants.DB_GOALS_COLUMN_PROGRESS,
-								Constants.DB_GOALS_COLUMN_TYPE,
-								Constants.DB_GOALS_COLUMN_GOALVALUE},
-								Constants.DB_GOALS_COLUMN_ID + "=" + id,
-								null, null, null, null, null);
-			if(cursor != null)
-			{
-				if(cursor.moveToFirst())
-				{
-					goal = new Goal(cursor.getInt(0));
-					goal.setPeriod(Period.Int2Period(cursor.getInt(1)));
-					goal.setProgress(cursor.getFloat(2));
-					goal.setType(Type.Int2Type(cursor.getInt(3)));
-					goal.setGoalValue(cursor.getFloat(4));
-				}
-			}
-		}
-		catch(Exception e)
-		{
-			goal = null;
-			Log.e(GoalDAO.class.toString(),"Error search(): " + e.toString());
-		}
+		
+		List<Entity> goals = search(Constants.DB_GOALS_COLUMN_ID + "=" + id, null);
+		if(goals != null && !goals.isEmpty())
+			goal = (Goal) goals.get(0);
+		
 		return goal;
 	}
-
+	
 	/**
-     * Returns a list of goals that meet the criteria given in searchTerms.
-     * For detailed information ask Mr Tretter.
+     * Returns all stored goals.
      * Not found: empty list
      * Error: null
      * 
-     * @param searchTerms the search criteria
      * @return list of goals
      */
 	@Override
-	public List<Entity> search(List<Entity> searchTerms) {
-		// TODO remove Stub-Implementation
+	public List<Entity> getAll() {
+		return search(null, null);
+	}
+	
+
+	/**
+     * Returns all stored goals that meet the criteria <i>selection</i>, order by <i>orderBy</i> 
+     * Not found: empty list
+     * Error: null
+     * 
+     * @param selection A filter declaring which rows to return, formatted as an SQL WHERE clause (excluding the WHERE itself). Passing null will return all rows for the given table.
+     * @param orderBy How to order the rows, formatted as an SQL ORDER BY clause (excluding the ORDER BY itself). Passing null will use the default sort order, which may be unordered.
+     * @return list of goals
+     */
+	@Override
+	protected List<Entity> search(String selection, String orderBy) {
 		List<Entity> goals = new ArrayList<Entity>();
 		try
 		{
@@ -82,14 +71,16 @@ public class GoalDAO extends DataAccessObject {
 					                             Constants.DB_GOALS_COLUMN_PROGRESS,
 					                             Constants.DB_GOALS_COLUMN_TYPE,
 					                             Constants.DB_GOALS_COLUMN_GOALVALUE},
-					               null, null, null, null, null);
+					               selection,
+					               null, null, null,
+					               orderBy);
 			if(cursor != null)
 			{
 				if(cursor.moveToFirst())
 				{
 					do
 					{
-						Goal goal = new Goal(cursor.getInt(0));
+						Goal goal = new Goal(cursor.getLong(0));
 						goal.setPeriod(Period.Int2Period(cursor.getInt(1)));
 						goal.setProgress(cursor.getFloat(2));
 						goal.setType(Type.Int2Type(cursor.getInt(3)));
@@ -116,14 +107,13 @@ public class GoalDAO extends DataAccessObject {
      * @param entity the goal to insert
      * @return the generated autoincrement id or -1 if failed
      */
+	@Override
 	public long insert(Entity entity)
 	{
 		long result;
 		try
 		{
 			Goal goal = (Goal)entity;
-			System.out.println("insert:");
-			goal.print();
 			ContentValues values = new ContentValues();
 			if(goal.getPeriod() != null)
 				values.put(Constants.DB_GOALS_COLUMN_PERIOD, goal.getPeriod().ordinal());
@@ -147,6 +137,7 @@ public class GoalDAO extends DataAccessObject {
      * @param id the id of the goal
      * @return true, false if failed
      */
+	@Override
 	public boolean delete(long id)
 	{
 		boolean result = false;
@@ -169,6 +160,7 @@ public class GoalDAO extends DataAccessObject {
      * @param entity the entity to update
      * @return true, false if failed
      */
+	@Override
 	public boolean update(Entity entity)
 	{
 		boolean result = false;

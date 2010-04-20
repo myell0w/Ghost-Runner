@@ -74,7 +74,7 @@ public class GoalsActivity extends ListActivity {
 	}
 
 	private List<Goal> getAllGoals() {
-		List<Entity> entites = dao.search(null);
+		List<Entity> entites = dao.getAll();
 		List<Goal> goals = new ArrayList<Goal>(entites.size());
 
 		for (Entity e : entites) {

@@ -40,8 +40,16 @@ public class Run extends Entity {
 		return date;
 	}
 	
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	
 	public long getTime() {
 		return timeInSeconds;
+	}
+	
+	public void setTime(long time) {
+		this.timeInSeconds = time;
 	}
 	
 	public String getTimeString() {
@@ -59,8 +67,18 @@ public class Run extends Entity {
 		return distance;
 	}
 	
+	public void setDistance(float distance)
+	{
+		this.distance = distance;
+	}
+	
 	public float getPace() {
 		return pace;
+	}
+	
+	public void setPace(float pace)
+	{
+		this.pace = pace;
 	}
 	
 	public String getPaceString() {
@@ -74,6 +92,11 @@ public class Run extends Entity {
 	
 	public float getSpeed() {
 		return speed;
+	}
+	
+	public void setSpeed(float speed)
+	{
+		this.speed = speed;
 	}
 
 	public int getCalories() {

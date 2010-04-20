@@ -29,7 +29,9 @@ public abstract class DataAccessObject {
 		ghostDB.close();
 	}
 	
-	abstract public List<Entity> search(List<Entity> searchTerms);
+	//abstract public List<Entity> search(List<Entity> searchTerms);
+	abstract protected List<Entity> search(String selection, String orderBy);
+	abstract public List<Entity> getAll();
 	abstract public Entity search(long id);
 	abstract public long insert(Entity entity);
 	abstract public boolean delete(long id);
