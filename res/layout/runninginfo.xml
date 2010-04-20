@@ -3,30 +3,31 @@
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
 	android:orientation="vertical">
 
+	<!-- oberer Block mit Pace, Zeit und Distanz -->
 	<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="100dip" android:background="@color/grayBackground"
-		android:layout_marginBottom="15dip" android:orientation="horizontal">
-		<TextView android:layout_height="fill_parent"
-			android:layout_weight="1" android:layout_width="0dip" android:text="@string/app.route">
-		</TextView>
+		android:layout_height="100dip" android:background="@drawable/runningheader"
+		android:layout_marginBottom="12dip" android:layout_marginTop="8dip"
+		android:orientation="horizontal">
 
-		<LinearLayout android:layout_height="fill_parent"
-			android:layout_weight="1" android:layout_width="0dip"
-			android:orientation="vertical">
-			<TextView android:layout_height="fill_parent"
-				android:layout_weight="1" android:layout_width="0dip" android:text="@string/app.route">
-			</TextView>
-			<TextView android:layout_height="fill_parent"
-				android:layout_weight="1" android:layout_width="0dip" android:text="@string/app.route">
-			</TextView>
-		</LinearLayout>
+		<TextView android:text="5:45\nmin/km" android:id="@+id/pace"
+			android:layout_width="0dip" android:layout_weight="1"
+			android:layout_height="fill_parent" android:gravity="center"
+			style="@style/RunningInfoSmall"></TextView>
+		<TextView android:text="01:03:34" android:id="@+id/elapsedTime"
+			android:layout_width="0dip" android:layout_weight="2"
+			android:layout_height="fill_parent" android:gravity="center"
+			style="@style/RunningInfoBig"></TextView>
+		<TextView android:text="3.45\nkm" android:id="@+id/distance"
+			android:layout_width="0dip" android:layout_weight="1"
+			android:layout_height="fill_parent" android:gravity="center"
+			style="@style/RunningInfoSmall"></TextView>
 	</LinearLayout>
 
+	<!-- unterer Block mit restlichen Infos -->
 	<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:background="@color/grayBackground"
-		style="@style/HistoryDetails">
-		<TextView android:id="@+id/routeInfo" android:text="@string/app.route"
-			android:layout_width="fill_parent" android:layout_height="25dip">
+		android:layout_height="wrap_content" android:background="@drawable/runninginfo">
+		<TextView android:id="@+id/routeInfo" android:text="@string/app.route" style="@style/RunningInfoSmall"
+			android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="3dip" android:gravity="center">
 		</TextView>
 		<TextView android:id="@+id/speedInfo" android:layout_width="fill_parent"
 			android:layout_height="25dip">
