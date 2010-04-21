@@ -92,6 +92,10 @@ public class Run extends Entity {
 	}
 
 	public String getPaceString() {
+		return Run.getPaceString(this.pace);
+	}
+	
+	public static String getPaceString(float pace) {
 		int minutes = (int) pace;
 		float secondsFactor = pace - minutes;
 		int seconds = Math.round(secondsFactor * 60);
