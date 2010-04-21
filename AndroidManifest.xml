@@ -5,6 +5,7 @@
       android:versionName="1.0">
       
       <uses-permission android:name="android.permission.INTERNET" />
+      <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
       
     <application android:icon="@drawable/icon" android:label="@string/app.name" android:theme="@style/GhostRunnerTheme">
     	<uses-library android:name="com.google.android.maps" />
@@ -19,13 +20,17 @@
         <activity android:name=".ui.WeatherActivity">
         </activity>
         
-        <activity android:name=".ui.run.StartRunActivity">
+        <activity android:name=".ui.PreferenceActivity">
+        </activity>
+        
+        <activity android:name=".ui.run.StartRunActivity" android:screenOrientation="portrait">
+        	
         </activity>
         
          <activity android:name=".ui.run.RunDetailsActivity">
         </activity>
         
-        <activity android:name=".ui.run.RunningInfoActivity">
+        <activity android:name=".ui.run.RunningInfoActivity" android:screenOrientation="portrait">
         </activity>
         
         <activity android:name=".ui.history.HistoryActivity">

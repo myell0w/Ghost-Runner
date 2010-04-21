@@ -16,6 +16,7 @@ import at.ac.tuwien.hci.ghost.data.dao.DataAccessObject;
 import at.ac.tuwien.hci.ghost.data.dao.GoalDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Goal;
+import at.ac.tuwien.hci.ghost.ui.PreferenceActivity;
 import at.ac.tuwien.hci.ghost.ui.WeatherActivity;
 import at.ac.tuwien.hci.ghost.util.Constants;
 
@@ -37,7 +38,7 @@ public class GoalsActivity extends ListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		System.out.println("FUCK");
+
 		// create dao-object
 		dao = new GoalDAO(this);
 		// get all routes
@@ -106,7 +107,8 @@ public class GoalsActivity extends ListActivity {
 			// onResume();
 			return true;
 		case MENU_SETTINGS:
-			// TODO code for doing settings for goals
+			Intent prefIntent = new Intent(this, PreferenceActivity.class);
+			this.startActivity(prefIntent);
 			return true;
 
 		case Constants.MENU_WEATHER:

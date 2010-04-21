@@ -20,6 +20,10 @@ public class RunTime {
 		else
 			return duration;
 	}
+	
+	public long getDurationInSeconds() {
+		return getDuration() / 1000;
+	}
 
 	public double getDisplayHours() {
 		return getDuration() / 1000.0 / 60.0 / 60.0;

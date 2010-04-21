@@ -1,5 +1,8 @@
 package at.ac.tuwien.hci.ghost.data.entities;
 
+import java.util.List;
+import java.util.Vector;
+
 import at.ac.tuwien.hci.ghost.util.Date;
 
 public class Run extends Entity {
@@ -21,6 +24,8 @@ public class Run extends Entity {
 	private int calories = 0;
 	/** the route of the run, or null */
 	private Route route = null;
+	/** all waypoints of the run */
+	private List<Waypoint> waypoints = null;
 
 	public Run(long id, Date date, long timeInSeconds, float distance, int calories, Route route) {
 		this.id = id;
@@ -30,12 +35,14 @@ public class Run extends Entity {
 
 		this.timeInSeconds = timeInSeconds;
 		this.distance = distance;
+		
+		this.waypoints = new Vector<Waypoint>();
 
 		updateSpeedAndPace();
 	}
 
 	public Run(long id) {
-		this.id = id;
+		this(id, null,0,0.f,0,null);
 	}
 
 	public Date getDate() {
@@ -132,5 +139,13 @@ public class Run extends Entity {
 	@Override
 	public void setID(long id) {
 		this.id = id;
+	}
+	
+	public void addWaypoint(Waypoint p) {
+		waypoints.add(p);
+	}
+	
+	public List<Waypoint> getWaypoints() {
+		return waypoints;
 	}
 }
