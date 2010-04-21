@@ -6,6 +6,8 @@ import java.util.List;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import at.ac.tuwien.hci.ghost.R;
@@ -15,6 +17,7 @@ import at.ac.tuwien.hci.ghost.data.dao.RouteDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
 import at.ac.tuwien.hci.ghost.util.Constants;
+import at.ac.tuwien.hci.ghost.util.Util;
 
 public class RoutesActivity extends ListActivity {
 	private static final int VIEW_ALL_RUNS = 1;
@@ -72,5 +75,27 @@ public class RoutesActivity extends ListActivity {
 		switch (resultCode) {
 		// TODO
 		}
+	}
+	
+	/* Creates the menu items */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		Util.onCreateOptionsMenu(this, menu);
+
+		return true;
+	}
+
+	/* Handles menu item selections */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (Util.onOptionsItemSelected(this, item)) {
+			return true;
+		}
+
+		switch (item.getItemId()) {
+		
+		}
+
+		return false;
 	}
 }

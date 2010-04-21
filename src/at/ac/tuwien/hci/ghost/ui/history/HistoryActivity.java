@@ -7,6 +7,8 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -14,11 +16,15 @@ import android.widget.TextView;
 import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.data.adapter.HistoryAdapter;
 import at.ac.tuwien.hci.ghost.data.dao.DataAccessObject;
+import at.ac.tuwien.hci.ghost.data.dao.GoalDAO;
 import at.ac.tuwien.hci.ghost.data.dao.RunDAO;
+import at.ac.tuwien.hci.ghost.data.entities.Goal;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
+import at.ac.tuwien.hci.ghost.ui.goal.NewGoalActivity;
 import at.ac.tuwien.hci.ghost.ui.run.RunDetailsActivity;
 import at.ac.tuwien.hci.ghost.util.Constants;
 import at.ac.tuwien.hci.ghost.util.Date;
+import at.ac.tuwien.hci.ghost.util.Util;
 
 public class HistoryActivity extends ListActivity {
 	private static final int VIEW_RUN_DETAIL = 1;
@@ -137,5 +143,27 @@ public class HistoryActivity extends ListActivity {
 		switch (resultCode) {
 		// TODO
 		}
+	}
+	
+	/* Creates the menu items */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		Util.onCreateOptionsMenu(this, menu);
+
+		return true;
+	}
+
+	/* Handles menu item selections */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (Util.onOptionsItemSelected(this, item)) {
+			return true;
+		}
+
+		switch (item.getItemId()) {
+		
+		}
+
+		return false;
 	}
 }

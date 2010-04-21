@@ -50,6 +50,8 @@
 	<string name="routes.runs">Runs</string>
 	<string name="routes.none">No Routes!</string>
 	<string name="routes.noRuns">No Runs!</string>
+	<string name="routes.delete">Delete Route</string>
+	
 
 	<!-- History -->
 	<string name="history.jan">January</string>

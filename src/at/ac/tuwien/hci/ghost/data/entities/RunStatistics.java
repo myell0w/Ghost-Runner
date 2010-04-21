@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import at.ac.tuwien.hci.ghost.observer.Observer;
 
-
 public class RunStatistics implements Observer<Waypoint> {
 	private Context context = null;
 	private float averageSpeed = 0.f;
@@ -24,11 +23,15 @@ public class RunStatistics implements Observer<Waypoint> {
 	public float getDistance() {
 		return distance;
 	}
+	
+	public float getDistanceInKm() {
+		return distance / 1000.f;
+	}
 
 	public RunTime getTime() {
 		return time;
 	}
-	
+
 	public long getDurationInSeconds() {
 		return time.getDurationInSeconds();
 	}
@@ -36,7 +39,7 @@ public class RunStatistics implements Observer<Waypoint> {
 	public float getAverageSpeed() {
 		return averageSpeed;
 	}
-	
+
 	public float getAveragePace() {
 		return averagePace;
 	}
@@ -58,13 +61,11 @@ public class RunStatistics implements Observer<Waypoint> {
 			
 			// TODO: make settings and read out settings
 			calculateCalories(prefs.getInt("weight",75),prefs.getInt("size", 180),prefs.getInt("age", 30),getDurationInSeconds()/3600.);
+
 		}
-		
-		numlocations++;
-		lastlocation = p;
 	}
 
 	private void calculateCalories(int weightInKg, int sizeInCm, int ageInYears, double durationInHours) {
-		calories = (float)((66.47 + (13.7 * weightInKg) + (5 * sizeInCm) - (6.8 * ageInYears)) * (durationInHours / 24.) * 7.5);
+		calories = (float) ((66.47 + (13.7 * weightInKg) + (5 * sizeInCm) - (6.8 * ageInYears)) * (durationInHours / 24.) * 7.5);
 	}
 }

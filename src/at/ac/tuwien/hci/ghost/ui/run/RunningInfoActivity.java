@@ -1,6 +1,5 @@
 package at.ac.tuwien.hci.ghost.ui.run;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,13 +12,11 @@ import at.ac.tuwien.hci.ghost.TimeManager;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
 import at.ac.tuwien.hci.ghost.data.entities.RunStatistics;
-import at.ac.tuwien.hci.ghost.data.entities.RunTime;
 import at.ac.tuwien.hci.ghost.gps.GPSListener;
 import at.ac.tuwien.hci.ghost.gps.GPSManager;
 import at.ac.tuwien.hci.ghost.observer.Observer;
-import at.ac.tuwien.hci.ghost.ui.WeatherActivity;
-import at.ac.tuwien.hci.ghost.util.Constants;
 import at.ac.tuwien.hci.ghost.util.Date;
+import at.ac.tuwien.hci.ghost.util.Util;
 
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
@@ -89,20 +86,25 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		timeManager.execute();
 	}
 	
+	/* Creates the menu items */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		Util.onCreateOptionsMenu(this, menu);
+
+		return true;
+	}
+
 	/* Handles menu item selections */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case Constants.MENU_SETTINGS:
-			// TODO code for doing settings for goals
-			return true;
-
-		case Constants.MENU_WEATHER:
-			Intent weatherIntent = new Intent(this, WeatherActivity.class);
-			this.startActivity(weatherIntent);
-
+		if (Util.onOptionsItemSelected(this, item)) {
 			return true;
 		}
+
+		switch (item.getItemId()) {
+		
+		}
+
 		return false;
 	}
 	
@@ -145,15 +147,6 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		
 	}
 
-	/* Creates the menu items */
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(0, Constants.MENU_SETTINGS, 1, getResources().getString(R.string.app_settings));
-		menu.add(0, Constants.MENU_WEATHER, 2, getResources().getString(R.string.app_weather));
-
-		return true;
-	}
-
 	@Override
 	protected boolean isRouteDisplayed() {
 		// TODO Auto-generated method stub
@@ -166,7 +159,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	private void updateRunStatistics() {
 		currentRun.setTime(statistics.getTime().getDuration());
 		currentRun.setCalories((int)statistics.getCalories());
-		currentRun.setDistance(statistics.getDistance());
+		currentRun.setDistance(statistics.getDistanceInKm());
 		currentRun.setPace(statistics.getAveragePace());
 		currentRun.setSpeed(statistics.getAverageSpeed());
 	}
@@ -178,7 +171,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		int hours = (int) statistics.getTime().getDisplayHours();
 		int minutes = (int) statistics.getTime().getDisplayMinutes();
 		int seconds = (int) statistics.getTime().getDisplaySeconds();
-		double distance = statistics.getDistance();
+		double distance = statistics.getDistanceInKm();
 		double calories = statistics.getCalories();
 		double pace = statistics.getAveragePace();
 

@@ -4,9 +4,8 @@
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
 	android:orientation="vertical">
 
-	<TextView android:text="@string/weather.header" 
-		android:layout_width="fill_parent"
-	   android:layout_height="wrap_content">
+	<TextView android:text="@string/weather.header" android:layout_width="fill_parent"
+	   android:layout_height="wrap_content" style="@style/Heading">
 	</TextView>
 
 	<ImageView android:id="@+id/goalImage" android:layout_width="wrap_content"

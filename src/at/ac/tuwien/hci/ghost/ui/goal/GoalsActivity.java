@@ -16,17 +16,10 @@ import at.ac.tuwien.hci.ghost.data.dao.DataAccessObject;
 import at.ac.tuwien.hci.ghost.data.dao.GoalDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Goal;
-import at.ac.tuwien.hci.ghost.ui.PreferenceActivity;
-import at.ac.tuwien.hci.ghost.ui.WeatherActivity;
 import at.ac.tuwien.hci.ghost.util.Constants;
+import at.ac.tuwien.hci.ghost.util.Util;
 
 public class GoalsActivity extends ListActivity {
-
-	/** menu constans */
-	private final int MENU_GOAL_ADD = 101;
-	private final int MENU_SETTINGS = 102;
-	private final int MENU_WEATHER = 103;
-
 	/** all goals */
 	private List<Goal> goals = null;
 	/** DAO for retrieving Routes */
@@ -85,9 +78,8 @@ public class GoalsActivity extends ListActivity {
 	/* Creates the menu items */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(0, MENU_GOAL_ADD, 0, getResources().getString(R.string.goals_new)).setIcon(android.R.drawable.ic_menu_add);
-		menu.add(0, MENU_SETTINGS, 1, getResources().getString(R.string.app_settings)).setIcon(android.R.drawable.ic_menu_preferences);
-		menu.add(0, MENU_WEATHER, 2, getResources().getString(R.string.app_weather)).setIcon(R.drawable.menu_weather);
+		menu.add(0, Constants.MENU_NEW_GOAL, 0, getResources().getString(R.string.goals_new)).setIcon(android.R.drawable.ic_menu_add);
+		Util.onCreateOptionsMenu(this, menu);
 
 		return true;
 	}
@@ -95,8 +87,12 @@ public class GoalsActivity extends ListActivity {
 	/* Handles menu item selections */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		if (Util.onOptionsItemSelected(this, item)) {
+			return true;
+		}
+
 		switch (item.getItemId()) {
-		case MENU_GOAL_ADD:
+		case Constants.MENU_NEW_GOAL:
 			Intent newGoalIntent = new Intent(this, NewGoalActivity.class);
 			Goal goal = new Goal(1);
 			long newId = ((GoalDAO) dao).insert(goal);
@@ -106,17 +102,8 @@ public class GoalsActivity extends ListActivity {
 			this.startActivity(newGoalIntent);
 			// onResume();
 			return true;
-		case MENU_SETTINGS:
-			Intent prefIntent = new Intent(this, PreferenceActivity.class);
-			this.startActivity(prefIntent);
-			return true;
-
-		case Constants.MENU_WEATHER:
-			Intent weatherIntent = new Intent(this, WeatherActivity.class);
-			this.startActivity(weatherIntent);
-
-			return true;
 		}
+
 		return false;
 	}
 }
