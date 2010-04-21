@@ -1,10 +1,13 @@
 package at.ac.tuwien.hci.ghost.ui.run;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
 import at.ac.tuwien.hci.ghost.util.Constants;
+import at.ac.tuwien.hci.ghost.util.Util;
 
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
@@ -49,4 +52,25 @@ public class RunDetailsActivity extends MapActivity {
 		return false;
 	}
 
+	/* Creates the menu items */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		Util.onCreateOptionsMenu(this, menu);
+
+		return true;
+	}
+
+	/* Handles menu item selections */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (Util.onOptionsItemSelected(this, item)) {
+			return true;
+		}
+
+		switch (item.getItemId()) {
+		
+		}
+
+		return false;
+	}
 }
