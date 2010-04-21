@@ -10,4 +10,8 @@
 		<item>Month</item>
 		<item>Year</item>
 	</array>
+	<array name="sex">
+		<item>Male</item>
+		<item>Female</item>
+	</array>
 </resources>

@@ -166,7 +166,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	private void updateRunStatistics() {
 		currentRun.setTime(statistics.getTime().getDuration());
 		currentRun.setCalories((int)statistics.getCalories());
-		currentRun.setDistance(statistics.getDistance());
+		currentRun.setDistance(statistics.getDistanceInKm());
 		currentRun.setPace(statistics.getAveragePace());
 		currentRun.setSpeed(statistics.getAverageSpeed());
 	}
@@ -178,7 +178,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		int hours = (int) statistics.getTime().getDisplayHours();
 		int minutes = (int) statistics.getTime().getDisplayMinutes();
 		int seconds = (int) statistics.getTime().getDisplaySeconds();
-		double distance = statistics.getDistance();
+		double distance = statistics.getDistanceInKm();
 		double calories = statistics.getCalories();
 		double pace = statistics.getAveragePace();
 
