@@ -4,16 +4,16 @@ import at.ac.tuwien.hci.ghost.observer.Observer;
 
 
 public class RunStatistics implements Observer<Waypoint> {
-	private double averageSpeed = 0.;
-	private double averagePace = 0.;
-	private double distance = 0;
-	private double calories = 0;
+	private float averageSpeed = 0.f;
+	private float averagePace = 0.f;
+	private float distance = 0;
+	private float calories = 0;
 	private RunTime time = new RunTime(0);
 	private int numlocations = 0;
 	private Waypoint lastlocation;
 
 	
-	public double getDistance() {
+	public float getDistance() {
 		return distance;
 	}
 
@@ -25,15 +25,15 @@ public class RunStatistics implements Observer<Waypoint> {
 		return time.getDurationInSeconds();
 	}
 
-	public double getAverageSpeed() {
+	public float getAverageSpeed() {
 		return averageSpeed;
 	}
 	
-	public double getAveragePace() {
+	public float getAveragePace() {
 		return averagePace;
 	}
 
-	public double getCalories() {
+	public float getCalories() {
 		return calories;
 	}
 
@@ -42,8 +42,8 @@ public class RunStatistics implements Observer<Waypoint> {
 		if (numlocations > 0) {
 			distance += p.distanceTo(lastlocation);
 			
-			averageSpeed = (distance * 1000.) / (getDurationInSeconds() / 3600.0);
-			averagePace = (getDurationInSeconds() / 60.) / (distance * 1000.);
+			averageSpeed = (distance * 1000.f) / (getDurationInSeconds() / 3600.f);
+			averagePace = (getDurationInSeconds() / 60.f) / (distance * 1000.f);
 			
 			// TODO: make settings and read out settings
 			calculateCalories(75,180,30,getDurationInSeconds()/3600.);
@@ -54,6 +54,6 @@ public class RunStatistics implements Observer<Waypoint> {
 	}
 
 	private void calculateCalories(int weightInKg, int sizeInCm, int ageInYears, double durationInHours) {
-		calories = (66.47 + (13.7 * weightInKg) + (5 * sizeInCm) - (6.8 * ageInYears)) * (durationInHours / 24.) * 7.5;
+		calories = (float)((66.47 + (13.7 * weightInKg) + (5 * sizeInCm) - (6.8 * ageInYears)) * (durationInHours / 24.) * 7.5);
 	}
 }

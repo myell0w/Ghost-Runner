@@ -12,6 +12,7 @@ import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.TimeManager;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
+import at.ac.tuwien.hci.ghost.data.entities.RunStatistics;
 import at.ac.tuwien.hci.ghost.data.entities.RunTime;
 import at.ac.tuwien.hci.ghost.gps.GPSListener;
 import at.ac.tuwien.hci.ghost.gps.GPSManager;
@@ -25,6 +26,8 @@ import com.google.android.maps.MapView;
 
 public class RunningInfoActivity extends MapActivity implements Observer<TimeManager> {
 	private Run currentRun = null;
+	/** statistics for current run */
+	private RunStatistics statistics = null;
 	private Route route = null;
 	private TimeManager timeManager = null;
 	private GPSManager gpsManager = null;
@@ -72,15 +75,16 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 
 		// initialize entities
 		currentRun = new Run(1, new Date(), 0, 0, 0, null);
+		statistics = new RunStatistics();
 
 		gpsListener = new GPSListener(currentRun);
 		gpsManager = new GPSManager(this);
 		gpsManager.addObserver(gpsListener);
-		gpsManager.addObserver(currentRun.getStatistics());
+		gpsManager.addObserver(statistics);
 		
 		timeManager = new TimeManager(this);
 
-		currentRun.getStatistics().getTime().start();
+		statistics.getTime().start();
 		timeManager.setEnabled(true);
 		timeManager.execute();
 	}
@@ -115,7 +119,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	}
 
 	protected void buttonPauseClicked(View v) {
-		if (currentRun.getStatistics().getTime().isPaused()) {
+		if (statistics.getTime().isPaused()) {
 			continueRun();
 		} else {
 			pauseRun();
@@ -127,12 +131,12 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	}
 
 	private void continueRun() {
-		currentRun.getStatistics().getTime().start();
+		statistics.getTime().start();
 		buttonPause.setText(getResources().getString(R.string.run_pause));
 	}
 
 	private void pauseRun() {
-		currentRun.getStatistics().getTime().pause();
+		statistics.getTime().pause();
 		buttonPause.setText(getResources().getString(R.string.run_continue));
 	}
 
@@ -157,22 +161,26 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	}
 
 	/**
-	 * updates the time-value in the run-class
+	 * updates the statistic-values in the run-class
 	 */
-	private void updateTime() {
-		currentRun.setTime(currentRun.getStatistics().getTime().getDuration());
+	private void updateRunStatistics() {
+		currentRun.setTime(statistics.getTime().getDuration());
+		currentRun.setCalories((int)statistics.getCalories());
+		currentRun.setDistance(statistics.getDistance());
+		currentRun.setPace(statistics.getAveragePace());
+		currentRun.setSpeed(statistics.getAverageSpeed());
 	}
 
 	/**
 	 * updates the User-Interface to show new values
 	 */
 	private void updateUI() {
-		int hours = (int) currentRun.getStatistics().getTime().getDisplayHours();
-		int minutes = (int) currentRun.getStatistics().getTime().getDisplayMinutes();
-		int seconds = (int) currentRun.getStatistics().getTime().getDisplaySeconds();
-		double distance = currentRun.getStatistics().getDistance();
-		double calories = currentRun.getStatistics().getCalories();
-		double pace = currentRun.getStatistics().getAveragePace();
+		int hours = (int) statistics.getTime().getDisplayHours();
+		int minutes = (int) statistics.getTime().getDisplayMinutes();
+		int seconds = (int) statistics.getTime().getDisplaySeconds();
+		double distance = statistics.getDistance();
+		double calories = statistics.getCalories();
+		double pace = statistics.getAveragePace();
 
 		textElapsedTime.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
 		textPace.setText(String.format("%02.2f", pace) + "\n" + getResources().getString(R.string.app_unitPace));
@@ -182,7 +190,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 
 	@Override
 	public void notify(TimeManager param) {
-		updateTime();
+		updateRunStatistics();
 		updateUI();
 	}
 }

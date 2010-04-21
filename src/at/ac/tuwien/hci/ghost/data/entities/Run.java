@@ -26,8 +26,6 @@ public class Run extends Entity {
 	private Route route = null;
 	/** all waypoints of the run */
 	private List<Waypoint> waypoints = null;
-	/** statistics for this run */
-	private RunStatistics statistics = null;
 
 	public Run(long id, Date date, long timeInSeconds, float distance, int calories, Route route) {
 		this.id = id;
@@ -39,7 +37,6 @@ public class Run extends Entity {
 		this.distance = distance;
 		
 		this.waypoints = new Vector<Waypoint>();
-		this.statistics = new RunStatistics();
 
 		updateSpeedAndPace();
 	}
@@ -150,9 +147,5 @@ public class Run extends Entity {
 	
 	public List<Waypoint> getWaypoints() {
 		return waypoints;
-	}
-	
-	public RunStatistics getStatistics() {
-		return statistics;
 	}
 }
