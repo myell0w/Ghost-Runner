@@ -19,11 +19,11 @@ public class RunStatistics implements Observer<Waypoint> {
 	public RunStatistics(Context context) {
 		this.context = context;
 	}
-	
+
 	public float getDistance() {
 		return distance;
 	}
-	
+
 	public float getDistanceInKm() {
 		return distance / 1000.f;
 	}
@@ -50,19 +50,25 @@ public class RunStatistics implements Observer<Waypoint> {
 
 	@Override
 	public void notify(Waypoint p) {
-		if (numlocations > 0) {
-			distance += p.distanceTo(lastlocation);
-			
-			averageSpeed = (distance * 1000.f) / (getDurationInSeconds() / 3600.f);
-			averagePace = (getDurationInSeconds() / 60.f) / (distance * 1000.f);
+		if (!time.isPaused()) {
+			if (numlocations > 0) {
+				distance += p.distanceTo(lastlocation);
 
-			// get the xml/preferences.xml preferences
-			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-			
-			// TODO: make settings and read out settings
-			calculateCalories(prefs.getInt("weight",75),prefs.getInt("size", 180),prefs.getInt("age", 30),getDurationInSeconds()/3600.);
+				averageSpeed = getDistanceInKm() / (getDurationInSeconds() / 3600.f);
 
+				averagePace = (getDurationInSeconds() / 60.f) / getDistanceInKm();
+
+				// get the xml/preferences.xml preferences
+				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+				// TODO: make settings and read out settings
+				//calculateCalories(prefs.getInt("weight", 75), prefs.getInt("size", 180), prefs.getInt("age", 30), getDurationInSeconds() / 3600.);
+				calculateCalories(75,189,30,getDurationInSeconds()/3600.);
+
+			}
 		}
+
+		numlocations++;
+		lastlocation = p;
 	}
 
 	private void calculateCalories(int weightInKg, int sizeInCm, int ageInYears, double durationInHours) {
