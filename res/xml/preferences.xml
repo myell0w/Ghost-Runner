@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory android:title="@string/pref.category1">
+		<EditTextPreference android:name="@string/pref.weight"
+			android:summary="@string/pref.weight.summary" android:defaultValue="75"
+			android:title="@string/pref.weight" android:key="weight" />
+
+		<EditTextPreference android:name="@string/pref.age"
+			android:summary="@string/pref.age.summary" android:defaultValue="30"
+			android:title="@string/pref.age" android:key="age" />
+
+		<EditTextPreference android:name="@string/pref.size"
+			android:summary="@string/pref.size.summary" android:defaultValue="180"
+			android:title="@string/pref.size" android:key="size" />
+
+		<!--
+			<ListPreference android:title="@string/pref.sex"
+			android:summary="@string/pref.sex.summary" android:key="sex"
+			android:defaultValue="male" android:entries="@array/listArray"
+			android:entryValues="@array/listValues" />
+		-->
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/pref.category2">
+		<EditTextPreference android:name="@string/pref.userName"
+			android:summary="@string/pref.userName.summary" android:defaultValue="My User"
+			android:title="@string/pref.userName" android:key="userName" />
+	</PreferenceCategory>
+
+</PreferenceScreen>

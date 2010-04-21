@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!-- =============================== STRINGS ================================================= -->
-<!-- Format: ActivityName.string_id, global Strings: app.string_id -->
+	<!--
+		=============================== STRINGS
+		=================================================
+	-->
+	<!-- Format: ActivityName.string_id, global Strings: app.string_id -->
 
-<!--  Global -->
+	<!--  Global -->
 
-    <string name="app.name">GhostRunner</string>
-	
+	<string name="app.name">GhostRunner</string>
+
 	<string name="app.tabRun">Run</string>
 	<string name="app.tabRoutes">Routes</string>
 	<string name="app.tabGoals">Goals</string>
 	<string name="app.tabHistory">History</string>
-	
+
 	<string name="app.settings">Settings</string>
 	<string name="app.weather">Weather</string>
-	
+
 	<string name="app.route">Route</string>
 	<string name="app.goal">Goal</string>
 	<string name="app.speed">Speed</string>
@@ -22,61 +25,76 @@
 	<string name="app.calories">Calories</string>
 	<string name="app.totalTime">Total Time</string>
 	<string name="app.totalDistance">Total Distance</string>
-    <string name="app.totalCalories">Total Calories</string>
-    <string name="app.averagePace">Average Pace</string>
-    <string name="app.averageSpeed">Average Speed</string>
-	
+	<string name="app.totalCalories">Total Calories</string>
+	<string name="app.averagePace">Average Pace</string>
+	<string name="app.averageSpeed">Average Speed</string>
+
 	<string name="app.unitTime">h</string>
 	<string name="app.unitDistance">km</string>
 	<string name="app.unitPace">min/km</string>
 	<string name="app.unitCalories">kcal</string>
 	<string name="app.unitSpeed">km/h</string>
-	
 
-<!-- Run -->
+
+	<!-- Run -->
 	<string name="run.gpsSignal">GPS Signal</string>
 	<string name="run.start">Start Run</string>
 	<string name="run.stop">Stop Run</string>
 	<string name="run.pause">Pause Run</string>
 	<string name="run.continue">Continue Run</string>
-	
+
 	<string name="run.map"> Show Map </string>
 	<string name="run.info"> Show Info </string>
 
-<!-- Routes -->
+	<!-- Routes -->
 	<string name="routes.runs">Runs</string>
 	<string name="routes.none">No Routes!</string>
 	<string name="routes.noRuns">No Runs!</string>
 
-<!-- History -->
-    <string name="history.jan">January</string>
-    <string name="history.feb">February</string>
-    <string name="history.mar">March</string>
-    <string name="history.apr">April</string>
-    <string name="history.may">May</string>
-    <string name="history.jun">June</string>
-    <string name="history.jul">July</string>
-    <string name="history.aug">August</string>
-    <string name="history.sep">September</string>
-    <string name="history.oct">October</string>
-    <string name="history.nov">November</string>
-    <string name="history.dec">December</string>
-    
-    <string name="history.noRoute">No Route</string>
+	<!-- History -->
+	<string name="history.jan">January</string>
+	<string name="history.feb">February</string>
+	<string name="history.mar">March</string>
+	<string name="history.apr">April</string>
+	<string name="history.may">May</string>
+	<string name="history.jun">June</string>
+	<string name="history.jul">July</string>
+	<string name="history.aug">August</string>
+	<string name="history.sep">September</string>
+	<string name="history.oct">October</string>
+	<string name="history.nov">November</string>
+	<string name="history.dec">December</string>
 
-<!-- Goals -->
+	<string name="history.noRoute">No Route</string>
+
+	<!-- Goals -->
 	<string name="goals.distance">Monthly Distance</string>
 	<string name="goals.calories">Monthly Calories</string>
 	<string name="goals.runs">Monthly Runs</string>
-	
+
 	<string name="goals.new">New Goal</string>
 	<string name="goals.none">No Goals!</string>
+	<string name="goals.delete">Delete Goal</string>
+	<string name="goals.discard">Discard</string>
+	<string name="goals.type">Type</string>
+	<string name="goals.value">Value</string>
 
-<!--  Weather -->
+	<!--  Weather -->
 	<string name="weather.header">Weatherinfo for today: </string>
 
-<string name="goals.delete">Delete Goal</string>
-<string name="goals.discard">Discard</string>
-<string name="goals.type">Type</string>
-<string name="goals.value">Value</string>
+	<!-- Preferences -->
+	<string name="pref.category1">Body info</string>
+	<string name="pref.category2">Sharing info</string>
+
+	<string name="pref.userName">Username</string>
+	<string name="pref.weight">Weight</string>
+	<string name="pref.age">Age</string>
+	<string name="pref.size">Size</string>
+	<string name="pref.sex">Sex</string>
+
+	<string name="pref.userName.summary">Your username for sharing Routes</string>
+	<string name="pref.weight.summary">Your weight in kg</string>
+	<string name="pref.age.summary">Your age in years</string>
+	<string name="pref.size.summary">your size in cm</string>
+	<string name="pref.sex.summary">your sex</string>
 </resources>

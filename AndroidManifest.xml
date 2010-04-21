@@ -20,6 +20,9 @@
         <activity android:name=".ui.WeatherActivity">
         </activity>
         
+        <activity android:name=".ui.PreferenceActivity">
+        </activity>
+        
         <activity android:name=".ui.run.StartRunActivity" android:screenOrientation="portrait">
         	
         </activity>
