@@ -13,6 +13,8 @@ import at.ac.tuwien.hci.ghost.TimeManager;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
 import at.ac.tuwien.hci.ghost.data.entities.RunTime;
+import at.ac.tuwien.hci.ghost.gps.GPSListener;
+import at.ac.tuwien.hci.ghost.gps.GPSManager;
 import at.ac.tuwien.hci.ghost.observer.Observer;
 import at.ac.tuwien.hci.ghost.ui.WeatherActivity;
 import at.ac.tuwien.hci.ghost.util.Constants;
@@ -24,8 +26,9 @@ import com.google.android.maps.MapView;
 public class RunningInfoActivity extends MapActivity implements Observer<TimeManager> {
 	private Run currentRun = null;
 	private Route route = null;
-	private RunTime runTime = null;
 	private TimeManager timeManager = null;
+	private GPSManager gpsManager = null;
+	private GPSListener gpsListener  = null;
 
 	private TextView textPace = null;
 	private TextView textElapsedTime = null;
@@ -70,38 +73,18 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		// initialize entities
 		currentRun = new Run(1, new Date(), 0, 0, 0, null);
 
-		runTime = new RunTime(0);
+		gpsListener = new GPSListener(currentRun);
+		gpsManager = new GPSManager(this);
+		gpsManager.addObserver(gpsListener);
+		gpsManager.addObserver(currentRun.getStatistics());
+		
 		timeManager = new TimeManager(this);
 
-		runTime.start();
+		currentRun.getStatistics().getTime().start();
 		timeManager.setEnabled(true);
 		timeManager.execute();
 	}
-
-	protected void buttonPauseClicked(View v) {
-		if (runTime.isPaused()) {
-			runTime.start();
-			buttonPause.setText(getResources().getString(R.string.run_pause));
-		} else {
-			runTime.pause();
-			buttonPause.setText(getResources().getString(R.string.run_continue));
-		}
-	}
-
-	protected void buttonStopClicked(View v) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/* Creates the menu items */
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(0, Constants.MENU_SETTINGS, 1, getResources().getString(R.string.app_settings));
-		menu.add(0, Constants.MENU_WEATHER, 2, getResources().getString(R.string.app_weather));
-
-		return true;
-	}
-
+	
 	/* Handles menu item selections */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -118,6 +101,54 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		}
 		return false;
 	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		
+		pauseRun();
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+	}
+
+	protected void buttonPauseClicked(View v) {
+		if (currentRun.getStatistics().getTime().isPaused()) {
+			continueRun();
+		} else {
+			pauseRun();
+		}
+	}
+	
+	protected void buttonStopClicked(View v) {
+		stopRun();
+	}
+
+	private void continueRun() {
+		currentRun.getStatistics().getTime().start();
+		buttonPause.setText(getResources().getString(R.string.run_pause));
+	}
+
+	private void pauseRun() {
+		currentRun.getStatistics().getTime().pause();
+		buttonPause.setText(getResources().getString(R.string.run_continue));
+	}
+
+	private void stopRun() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* Creates the menu items */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(0, Constants.MENU_SETTINGS, 1, getResources().getString(R.string.app_settings));
+		menu.add(0, Constants.MENU_WEATHER, 2, getResources().getString(R.string.app_weather));
+
+		return true;
+	}
 
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -129,18 +160,24 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	 * updates the time-value in the run-class
 	 */
 	private void updateTime() {
-		currentRun.setTime(runTime.getDuration());
+		currentRun.setTime(currentRun.getStatistics().getTime().getDuration());
 	}
 
 	/**
 	 * updates the User-Interface to show new values
 	 */
 	private void updateUI() {
-		int hours = (int) runTime.getDisplayHours();
-		int minutes = (int) runTime.getDisplayMinutes();
-		int seconds = (int) runTime.getDisplaySeconds();
+		int hours = (int) currentRun.getStatistics().getTime().getDisplayHours();
+		int minutes = (int) currentRun.getStatistics().getTime().getDisplayMinutes();
+		int seconds = (int) currentRun.getStatistics().getTime().getDisplaySeconds();
+		double distance = currentRun.getStatistics().getDistance();
+		double calories = currentRun.getStatistics().getCalories();
+		double pace = currentRun.getStatistics().getAveragePace();
 
 		textElapsedTime.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
+		textPace.setText(String.format("%02.2f", pace) + "\n" + getResources().getString(R.string.app_unitPace));
+		textDistance.setText(String.format("%2.2f", distance) + "\n" + getResources().getString(R.string.app_unitDistance));
+		textCalories.setText(getResources().getString(R.string.app_calories) + ": " + String.format("%2.0f", calories) + " " + getResources().getString(R.string.app_unitCalories));
 	}
 
 	@Override
