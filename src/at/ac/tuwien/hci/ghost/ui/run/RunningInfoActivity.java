@@ -75,7 +75,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 
 		// initialize entities
 		currentRun = new Run(1, new Date(), 0, 0, 0, null);
-		statistics = new RunStatistics();
+		statistics = new RunStatistics(this);
 
 		gpsListener = new GPSListener(currentRun);
 		gpsManager = new GPSManager(this);

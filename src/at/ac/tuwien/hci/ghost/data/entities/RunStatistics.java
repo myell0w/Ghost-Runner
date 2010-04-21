@@ -1,9 +1,14 @@
 package at.ac.tuwien.hci.ghost.data.entities;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import at.ac.tuwien.hci.ghost.observer.Observer;
 
 
 public class RunStatistics implements Observer<Waypoint> {
+	private Context context = null;
 	private float averageSpeed = 0.f;
 	private float averagePace = 0.f;
 	private float distance = 0;
@@ -12,6 +17,9 @@ public class RunStatistics implements Observer<Waypoint> {
 	private int numlocations = 0;
 	private Waypoint lastlocation;
 
+	public RunStatistics(Context context) {
+		this.context = context;
+	}
 	
 	public float getDistance() {
 		return distance;
@@ -44,9 +52,12 @@ public class RunStatistics implements Observer<Waypoint> {
 			
 			averageSpeed = (distance * 1000.f) / (getDurationInSeconds() / 3600.f);
 			averagePace = (getDurationInSeconds() / 60.f) / (distance * 1000.f);
+
+			// get the xml/preferences.xml preferences
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 			
 			// TODO: make settings and read out settings
-			calculateCalories(75,180,30,getDurationInSeconds()/3600.);
+			calculateCalories(prefs.getInt("weight",75),prefs.getInt("size", 180),prefs.getInt("age", 30),getDurationInSeconds()/3600.);
 		}
 		
 		numlocations++;
