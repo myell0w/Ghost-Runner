@@ -47,6 +47,7 @@
 	<string name="routes.runs">Runs</string>
 	<string name="routes.none">No Routes!</string>
 	<string name="routes.noRuns">No Runs!</string>
+	
 
 <!-- History -->
     <string name="history.jan">January</string>
@@ -79,4 +80,5 @@
 <string name="goals.discard">Discard</string>
 <string name="goals.type">Type</string>
 <string name="goals.value">Value</string>
+<string name="routes.delete">Delete Route</string>
 </resources>

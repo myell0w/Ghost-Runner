@@ -26,6 +26,21 @@ public class RunDetailsActivity extends MapActivity {
 
 		TextView heading = (TextView) findViewById(R.id.runHeading);
 		heading.setText(run.getDate().toFullString());
+		
+		TextView detailTotalTime = (TextView) findViewById(R.id.detailTotalTime);
+		detailTotalTime.setText(run.getTimeString() + " " + getResources().getString(R.string.app_unitTime));
+		
+		TextView detailTotalDistance = (TextView) findViewById(R.id.detailTotalDistance);
+		detailTotalDistance.setText(run.getDistance() + " " + getResources().getString(R.string.app_unitDistance));
+		
+		TextView detailAveragePace = (TextView) findViewById(R.id.detailAveragePace);
+		detailAveragePace.setText(run.getPaceString() + " " + getResources().getString(R.string.app_unitPace));
+		
+		TextView detailAverageSpeed = (TextView) findViewById(R.id.detailAverageSpeed);
+		detailAverageSpeed.setText(run.getSpeed() + " " + getResources().getString(R.string.app_unitSpeed));
+		
+		TextView detailCalories = (TextView) findViewById(R.id.detailTotalCalories);
+		detailCalories.setText(run.getCalories() + " " + getResources().getString(R.string.app_unitCalories));
 	}
 
 	@Override
