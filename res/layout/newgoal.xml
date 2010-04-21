@@ -26,4 +26,8 @@ android:paddingTop="2dip"></TextView>
 
 
 
+
+<SeekBar android:id="@+id/seekGoal" android:layout_height="wrap_content" android:layout_width="fill_parent"></SeekBar>
+
+<TextView android:id="@+id/textGoalValue" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
 </LinearLayout>
