@@ -26,6 +26,7 @@ public class StartRunActivity extends MapActivity {
 	private DataAccessObject dao = null;
 	private List<Entity> routes = null;
 	private ArrayAdapter<Route> routeAdapter = null;
+	private ArrayAdapter<String> trainingAdapter = null;
 	private Spinner selectedRoute = null;
 	private Spinner selectedGoal = null;
 	private MapView mapView = null;
@@ -54,6 +55,15 @@ public class StartRunActivity extends MapActivity {
 		}
 		
 		selectedRoute.setAdapter(routeAdapter);
+		
+		trainingAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+		trainingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		
+		trainingAdapter.add("5 km Workout");
+		trainingAdapter.add("30 min Run");
+		trainingAdapter.add("The 500kcal-Burner");
+		
+		selectedGoal.setAdapter(trainingAdapter);
 
 		startButton = (Button) findViewById(R.id.startRunButton);
 		startButton.setOnClickListener(new OnClickListener() {

@@ -64,4 +64,13 @@
 	<item name="android:textColor">@color/heading</item>
 	<item name="android:textStyle">bold</item>
 </style>
+
+<style name="GoalValue">
+	<item name="android:textSize">17sp</item>
+	<item name="android:layout_width">fill_parent</item>
+	<item name="android:layout_height">fill_parent</item>
+	<item name="android:gravity">center</item>
+	<item name="android:textColor">@color/heading</item>
+	<item name="android:textStyle">bold</item>
+</style>
 </resources>
