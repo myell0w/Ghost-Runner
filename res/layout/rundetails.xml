@@ -36,5 +36,5 @@
 	<com.google.android.maps.MapView
 		xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/overviewMap"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:clickable="true" android:apiKey="Your Maps API Key goes here" />
+		android:clickable="true" android:apiKey="0-bK8OSSsc8vA0MbFNnmjAouKmhopTsMpioHHZQ" />
 </LinearLayout> 
