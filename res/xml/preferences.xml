@@ -16,7 +16,7 @@
 
 			<ListPreference android:title="@string/pref.sex"
 			android:summary="@string/pref.sex.summary" android:key="sex"
-			android:defaultValue="male" android:entries="@array/sex"
+			android:defaultValue="Male" android:entries="@array/sex"
 			android:entryValues="@array/sex" />
 		
 	</PreferenceCategory>

@@ -4,6 +4,8 @@ import android.location.Location;
 import at.ac.tuwien.hci.ghost.util.Date;
 
 public class Waypoint extends Entity {
+	private static final long serialVersionUID = 906509558162487110L;
+	
 	private long id;
 	private Location location;
 	private float speed;

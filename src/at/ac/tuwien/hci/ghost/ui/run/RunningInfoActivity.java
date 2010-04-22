@@ -1,6 +1,7 @@
 package at.ac.tuwien.hci.ghost.ui.run;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,12 +10,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.TimeManager;
+import at.ac.tuwien.hci.ghost.data.dao.RunDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
 import at.ac.tuwien.hci.ghost.data.entities.RunStatistics;
 import at.ac.tuwien.hci.ghost.gps.GPSListener;
 import at.ac.tuwien.hci.ghost.gps.GPSManager;
 import at.ac.tuwien.hci.ghost.observer.Observer;
+import at.ac.tuwien.hci.ghost.util.Constants;
 import at.ac.tuwien.hci.ghost.util.Date;
 import at.ac.tuwien.hci.ghost.util.Util;
 
@@ -29,6 +32,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	private TimeManager timeManager = null;
 	private GPSManager gpsManager = null;
 	private GPSListener gpsListener  = null;
+	private RunDAO runDAO = null;
 
 	private TextView textPace = null;
 	private TextView textElapsedTime = null;
@@ -45,6 +49,9 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.runninginfo);
 
+		runDAO = new RunDAO(this);
+		route = (Route)getIntent().getExtras().get(Constants.ROUTE);
+		
 		// get view outlets
 		textPace = (TextView) findViewById(R.id.pace);
 		textElapsedTime = (TextView) findViewById(R.id.elapsedTime);
@@ -56,6 +63,12 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 
 		map = (MapView) findViewById(R.id.overviewMap);
 		map.setBuiltInZoomControls(true);
+		
+		if (route != null) {
+			textRoute.setText(getResources().getString(R.string.app_route) + ": " + route.getName());
+		} else {
+			textRoute.setText(getResources().getString(R.string.app_route) + ": " + getResources().getString(R.string.app_none));
+		}
 
 		// add onClickListener
 		buttonStop.setOnClickListener(new OnClickListener() {
@@ -71,7 +84,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		});
 
 		// initialize entities
-		currentRun = new Run(1, new Date(), 0, 0, 0, null);
+		currentRun = new Run(1, new Date(), 0, 0, 0, route);
 		statistics = new RunStatistics(this);
 
 		gpsListener = new GPSListener(currentRun);
@@ -143,8 +156,12 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	}
 
 	private void stopRun() {
-		// TODO Auto-generated method stub
+		statistics.getTime().pause();
+		runDAO.insert(currentRun);
 		
+		Log.i(getClass().getName(), "Run saved: " + currentRun);
+		
+		this.finish();
 	}
 
 	@Override
@@ -157,7 +174,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	 * updates the statistic-values in the run-class
 	 */
 	private void updateRunStatistics() {
-		currentRun.setTime(statistics.getTime().getDuration());
+		currentRun.setTime(statistics.getTime().getDurationInSeconds());
 		currentRun.setCalories((int)statistics.getCalories());
 		currentRun.setDistance(statistics.getDistanceInKm());
 		currentRun.setPace(statistics.getAveragePace());

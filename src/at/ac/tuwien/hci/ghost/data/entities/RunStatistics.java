@@ -1,9 +1,10 @@
 package at.ac.tuwien.hci.ghost.data.entities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
+import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.observer.Observer;
 
 public class RunStatistics implements Observer<Waypoint> {
@@ -60,10 +61,34 @@ public class RunStatistics implements Observer<Waypoint> {
 
 				// get the xml/preferences.xml preferences
 				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-				// TODO: make settings and read out settings
-				//calculateCalories(prefs.getInt("weight", 75), prefs.getInt("size", 180), prefs.getInt("age", 30), getDurationInSeconds() / 3600.);
-				calculateCalories(75,189,30,getDurationInSeconds()/3600.);
 
+				String sWeight = prefs.getString("weight", "75");
+				String sSex = prefs.getString("sex", "Male");
+				String sSize = prefs.getString("size", "180");
+				String sAge = prefs.getString("age", "30");
+
+				boolean male = sSex.equals("Male");
+				int weight;
+				int size;
+				int age;
+
+				try {
+					weight = Integer.parseInt(sWeight);
+				} catch (Exception ex) {
+					weight = 75;
+				}
+				try {
+					size = Integer.parseInt(sSize);
+				} catch (Exception ex) {
+					size = 180;
+				}
+				try {
+					age = Integer.parseInt(sAge);
+				} catch (Exception ex) {
+					age = 30;
+				}
+
+				calculateCalories(male, weight, size, age, getDurationInSeconds() / 3600.);
 			}
 		}
 
@@ -71,7 +96,11 @@ public class RunStatistics implements Observer<Waypoint> {
 		lastlocation = p;
 	}
 
-	private void calculateCalories(int weightInKg, int sizeInCm, int ageInYears, double durationInHours) {
-		calories = (float) ((66.47 + (13.7 * weightInKg) + (5 * sizeInCm) - (6.8 * ageInYears)) * (durationInHours / 24.) * 7.5);
+	private void calculateCalories(boolean male, int weightInKg, int sizeInCm, int ageInYears, double durationInHours) {
+		if (male) {
+			calories = (float) ((66.47 + (13.7 * weightInKg) + (5 * sizeInCm) - (6.8 * ageInYears)) * (durationInHours / 24.) * 7.5);
+		} else {
+			calories = (float) ((65.51 + (9.6 * weightInKg) + (1.8 * sizeInCm) - (4.7 * ageInYears)) * (durationInHours / 24.) * 7.5);
+		}
 	}
 }

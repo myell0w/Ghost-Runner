@@ -16,6 +16,7 @@ import at.ac.tuwien.hci.ghost.data.dao.DataAccessObject;
 import at.ac.tuwien.hci.ghost.data.dao.RouteDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
+import at.ac.tuwien.hci.ghost.util.Constants;
 import at.ac.tuwien.hci.ghost.util.Util;
 
 import com.google.android.maps.MapActivity;
@@ -25,6 +26,7 @@ public class StartRunActivity extends MapActivity {
 	private DataAccessObject dao = null;
 	private List<Entity> routes = null;
 	private ArrayAdapter<Route> routeAdapter = null;
+	private ArrayAdapter<String> trainingAdapter = null;
 	private Spinner selectedRoute = null;
 	private Spinner selectedGoal = null;
 	private MapView mapView = null;
@@ -53,6 +55,15 @@ public class StartRunActivity extends MapActivity {
 		}
 		
 		selectedRoute.setAdapter(routeAdapter);
+		
+		trainingAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+		trainingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		
+		trainingAdapter.add("5 km Workout");
+		trainingAdapter.add("30 min Run");
+		trainingAdapter.add("The 500kcal-Burner");
+		
+		selectedGoal.setAdapter(trainingAdapter);
 
 		startButton = (Button) findViewById(R.id.startRunButton);
 		startButton.setOnClickListener(new OnClickListener() {
@@ -91,7 +102,11 @@ public class StartRunActivity extends MapActivity {
 	}
 
 	private void startRun() {
+		Route r = (Route)selectedRoute.getSelectedItem();
 		Intent runningInfoIntent = new Intent(this, RunningInfoActivity.class);
+		
+		runningInfoIntent.putExtra(Constants.ROUTE, r);
+		
 		this.startActivity(runningInfoIntent);
 	}
 
