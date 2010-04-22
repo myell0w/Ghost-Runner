@@ -44,8 +44,26 @@ public interface Constants {
 	public static final String DB_RUNS_COLUMN_TYPE_SPEED = "REAL";
 	public static final String DB_RUNS_COLUMN_TYPE_CALORIES = "INTEGER";
 	public static final String DB_RUNS_COLUMN_TYPE_ROUTEID = "INTEGER";
+	
+	public static final String DB_TABLE_WAYPOINTS = "Waypoints";
+	public static final String DB_WAYPOINTS_COLUMN_ID = "id";
+	public static final String DB_WAYPOINTS_COLUMN_TIME = "time";
+	public static final String DB_WAYPOINTS_COLUMN_SPEED = "speed";
+	public static final String DB_WAYPOINTS_COLUMN_LATITUDE = "latitude";
+	public static final String DB_WAYPOINTS_COLUMN_LONGITUDE = "longitude";
+	public static final String DB_WAYPOINTS_COLUMN_ALTITUDE = "altitude";
+	public static final String DB_WAYPOINTS_COLUMN_ROUTEID = "routeid";
+	public static final String DB_WAYPOINTS_COLUMN_RUNID = "runid";
+	public static final String DB_WAYPOINTS_COLUMN_TYPE_ID = "INTEGER PRIMARY KEY";
+	public static final String DB_WAYPOINTS_COLUMN_TYPE_TIME = "INTEGER";
+	public static final String DB_WAYPOINTS_COLUMN_TYPE_SPEED = "REAL";
+	public static final String DB_WAYPOINTS_COLUMN_TYPE_LATITUDE = "REAL";
+	public static final String DB_WAYPOINTS_COLUMN_TYPE_LONGITUDE = "REAL";
+	public static final String DB_WAYPOINTS_COLUMN_TYPE_ALTITUDE = "REAL";
+	public static final String DB_WAYPOINTS_COLUMN_TYPE_ROUTEID = "INTEGER";
+	public static final String DB_WAYPOINTS_COLUMN_TYPE_RUNID = "INTEGER";
 
-	/** menu constans */
+	/** menu constants */
 	public static final int MENU_SWITCH_VIEW = 101;
 	public static final int MENU_SETTINGS = 102;
 	public static final int MENU_WEATHER = 103;

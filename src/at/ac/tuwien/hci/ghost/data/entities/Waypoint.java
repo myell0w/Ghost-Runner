@@ -3,7 +3,8 @@ package at.ac.tuwien.hci.ghost.data.entities;
 import android.location.Location;
 import at.ac.tuwien.hci.ghost.util.Date;
 
-public class Waypoint {
+public class Waypoint extends Entity {
+	private long id;
 	private Location location;
 	private float speed;
 	private Date timestamp;
@@ -11,6 +12,11 @@ public class Waypoint {
 	public Waypoint(Location location) {
 		this.location = location;
 		timestamp = new Date(location.getTime());
+	}
+	
+	public Waypoint(long id)
+	{
+		this(new Location("GhostRunner"));
 	}
 
 	public void calculateSpeed(Waypoint previousLocation) {
@@ -66,9 +72,19 @@ public class Waypoint {
 	public Date getTimestamp() {
 		return timestamp;
 	}
+	
+	public void setTimestamp(Date timestamp)
+	{
+		this.timestamp = timestamp;
+	}
 
 	public float getSpeed() {
 		return speed;
+	}
+	
+	public void setSpeed(float speed)
+	{
+		this.speed = speed;
 	}
 
 	public long getUnixTime() {
@@ -77,6 +93,16 @@ public class Waypoint {
 
 	public double distanceTo(Waypoint dest) {
 		return location.distanceTo(dest.getLocation());
+	}
+	
+	@Override
+	public long getID() {
+		return id;
+	}
+
+	@Override
+	public void setID(long id) {
+		this.id = id;
 	}
 
 	public String toString() {
