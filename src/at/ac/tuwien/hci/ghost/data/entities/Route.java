@@ -76,4 +76,8 @@ public class Route extends Entity {
 	public void setID(long id) {
 		this.id = id;
 	}
+	
+	public String toString() {
+		return getName();
+	}
 }
