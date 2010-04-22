@@ -18,6 +18,7 @@
 	<string name="app.settings">Settings</string>
 	<string name="app.weather">Weather</string>
 
+	<string name="app.none">None</string>
 	<string name="app.route">Route</string>
 	<string name="app.goal">Goal</string>
 	<string name="app.speed">Speed</string>

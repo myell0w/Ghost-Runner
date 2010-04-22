@@ -87,12 +87,14 @@ public class GPSManager implements Subject<Waypoint>, Observer<Waypoint> {
 
 	@Override
 	public void notify(Waypoint p) {
-		if (waypoints.size() > 0)
+		// distance between two locations must be bigger than 1 meter
+		if (!waypoints.isEmpty()) {
 			p.calculateSpeed(this.getLastKnownLocation());
+		}
 
-		waypoints.add(p);
-
-		notifyAll(p);
+		if (waypoints.isEmpty() || p.distanceTo(this.getLastKnownLocation()) > 1) {
+			waypoints.add(p);
+			notifyAll(p);
+		}
 	}
-
 }

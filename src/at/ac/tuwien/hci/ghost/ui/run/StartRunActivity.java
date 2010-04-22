@@ -16,6 +16,7 @@ import at.ac.tuwien.hci.ghost.data.dao.DataAccessObject;
 import at.ac.tuwien.hci.ghost.data.dao.RouteDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
+import at.ac.tuwien.hci.ghost.util.Constants;
 import at.ac.tuwien.hci.ghost.util.Util;
 
 import com.google.android.maps.MapActivity;
@@ -91,7 +92,11 @@ public class StartRunActivity extends MapActivity {
 	}
 
 	private void startRun() {
+		Route r = (Route)selectedRoute.getSelectedItem();
 		Intent runningInfoIntent = new Intent(this, RunningInfoActivity.class);
+		
+		runningInfoIntent.putExtra(Constants.ROUTE, r);
+		
 		this.startActivity(runningInfoIntent);
 	}
 

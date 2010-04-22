@@ -148,4 +148,8 @@ public class Run extends Entity {
 	public List<Waypoint> getWaypoints() {
 		return waypoints;
 	}
+	
+	public String toString() {
+		return date.toFullString() + ", " + this.getTimeString() + ", " + this.getPaceString();
+	}
 }
