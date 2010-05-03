@@ -1,54 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="at.ac.tuwien.hci.ghost"
-      android:versionCode="1"
-      android:versionName="1.0">
-      
-      <uses-permission android:name="android.permission.INTERNET" />
-      <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-      
-    <application android:icon="@drawable/icon" android:label="@string/app.name" android:theme="@style/GhostRunnerTheme" android:debuggable="true">
-    	<uses-library android:name="com.google.android.maps" />
-    
-        <activity android:name=".ui.MainTabActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        
-        <activity android:name=".ui.WeatherActivity">
-        </activity>
-        
-        <activity android:name=".ui.PreferenceActivity">
-        </activity>
-        
-        <activity android:name=".ui.run.StartRunActivity" android:screenOrientation="portrait">
-        	
-        </activity>
-        
-         <activity android:name=".ui.run.RunDetailsActivity">
-        </activity>
-        
-        <activity android:name=".ui.run.RunningInfoActivity" android:screenOrientation="portrait">
-        </activity>
-        
-        <activity android:name=".ui.history.HistoryActivity">
-        </activity>
-        
-        <activity android:name=".ui.route.RoutesActivity">
-        </activity>
-        
-        <activity android:name=".ui.route.AllRunsOfRouteActivity">
-        </activity>
-        
-        <activity android:name=".ui.goal.GoalsActivity">
-        </activity>
-        
-        <activity android:name=".ui.goal.NewGoalActivity">
-        </activity>
+	package="at.ac.tuwien.hci.ghost" android:versionCode="1"
+	android:versionName="1.0">
 
-    </application>
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	
+	<uses-sdk android:minSdkVersion="4" />
+
+	<application android:icon="@drawable/icon" android:label="@string/app.name"
+		android:theme="@style/GhostRunnerTheme" android:debuggable="true">
+		<uses-library android:name="com.google.android.maps" />
+
+		<activity android:name=".ui.MainTabActivity" android:screenOrientation="portrait">
+			 <intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+
+		<activity android:name=".ui.WeatherActivity">
+		</activity>
+
+		<activity android:name=".ui.PreferenceActivity">
+		</activity>
+
+		<activity android:name=".ui.run.StartRunActivity"
+			android:screenOrientation="portrait">
+
+		</activity>
+
+		<activity android:name=".ui.run.RunDetailsActivity">
+		</activity>
+
+		<activity android:name=".ui.run.RunningInfoActivity"
+			android:screenOrientation="portrait">
+		</activity>
+
+		<activity android:name=".ui.history.HistoryActivity">
+		</activity>
+
+		<activity android:name=".ui.route.RoutesActivity">
+		</activity>
+
+		<activity android:name=".ui.route.AllRunsOfRouteActivity">
+		</activity>
+
+		<activity android:name=".ui.goal.GoalsActivity">
+		</activity>
+
+		<activity android:name=".ui.goal.NewGoalActivity">
+		</activity>
+
+	</application>
 
 
 </manifest> 

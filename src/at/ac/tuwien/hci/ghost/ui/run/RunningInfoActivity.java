@@ -2,6 +2,7 @@ package at.ac.tuwien.hci.ghost.ui.run;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -136,6 +137,15 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		super.onResume();
 	}
 
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+	        stopRun();
+	    }
+	    
+	    return super.onKeyDown(keyCode, event);
+	}
+	
 	protected void buttonPauseClicked(View v) {
 		if (statistics.getTime().isPaused()) {
 			continueRun();

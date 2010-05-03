@@ -36,7 +36,13 @@
 	<string name="app.unitPace">min/km</string>
 	<string name="app.unitCalories">kcal</string>
 	<string name="app.unitSpeed">km/h</string>
-
+	
+	
+	<!-- Audio Outputs -->
+	<string name="audio.startRun">Activity Started!</string>
+	<string name="audio.pauseRun">Activity Paused!</string>
+	<string name="audio.stopRun">Activity Finished!</string>
+	
 
 	<!-- Run -->
 	<string name="run.gpsSignal">GPS Signal</string>
