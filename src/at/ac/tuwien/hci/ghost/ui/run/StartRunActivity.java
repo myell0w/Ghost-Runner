@@ -23,6 +23,7 @@ import at.ac.tuwien.hci.ghost.util.Util;
 
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
 
 public class StartRunActivity extends MapActivity {
 	private DataAccessObject dao = null;
@@ -33,7 +34,6 @@ public class StartRunActivity extends MapActivity {
 	private Spinner selectedGoal = null;
 	private Button startButton = null;
 	private MapView mapView = null;
-	private CurrentLocationOverlay currentLocationOverlay = null;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -46,8 +46,7 @@ public class StartRunActivity extends MapActivity {
 		mapView = (MapView) findViewById(R.id.overviewMap);
 		mapView.setBuiltInZoomControls(true);
 		
-		currentLocationOverlay = new CurrentLocationOverlay(StartRunActivity.this, mapView);
-    	mapView.getOverlays().add(currentLocationOverlay);
+		mapView.getOverlays().add(new CurrentLocationOverlay(this, mapView));
 		
 		selectedRoute = (Spinner)findViewById(R.id.selectedRoute);
 		selectedGoal = (Spinner)findViewById(R.id.selectedGoal);
@@ -66,8 +65,17 @@ public class StartRunActivity extends MapActivity {
 		selectedRoute.setOnItemSelectedListener(new OnItemSelectedListener() {
 		    @Override
 		    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-		        if (selectedRoute.getSelectedItem().equals(Route.getEmptyRoute())) {
-		       
+		        List<Overlay> overlays = mapView.getOverlays();
+		        Route r = (Route)selectedRoute.getSelectedItem();
+		        
+		        for (Overlay o : overlays) {
+		        	if (o instanceof RouteOverlay) {
+		        		mapView.getOverlays().remove(o);
+		        	}
+		        }
+		    	
+		    	if (!r.equals(Route.getEmptyRoute())) {
+		    		mapView.getOverlays().add(new RouteOverlay(r, null, mapView));
 		        }
 		    }
 

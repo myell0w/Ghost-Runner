@@ -42,8 +42,6 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	private MapView mapView = null;
 	private Button buttonStop = null;
 	private Button buttonPause = null;
-	private CurrentLocationOverlay currentLocationOverlay = null;
-	private RouteOverlay routeOverlay = null;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -89,11 +87,8 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		currentRun = new Run(1, new Date(), 0, 0, 0, route);
 		statistics = new RunStatistics(this);
 		
-		currentLocationOverlay = new CurrentLocationOverlay(this, mapView);
-		mapView.getOverlays().add(currentLocationOverlay);
-		routeOverlay = new RouteOverlay(currentRun, mapView);
-		mapView.getOverlays().add(routeOverlay);
-
+		mapView.getOverlays().add(new CurrentLocationOverlay(this, mapView));
+		mapView.getOverlays().add(new RouteOverlay(route, currentRun, mapView));
 
 		gpsListener = new GPSListener(currentRun, mapView);
 		gpsManager = new GPSManager(this);

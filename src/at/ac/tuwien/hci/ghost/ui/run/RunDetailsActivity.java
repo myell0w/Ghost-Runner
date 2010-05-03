@@ -26,6 +26,7 @@ public class RunDetailsActivity extends MapActivity {
 
 		mapView = (MapView) findViewById(R.id.overviewMap);
 		mapView.setBuiltInZoomControls(true);
+		mapView.getOverlays().add(new RouteOverlay(run.getRoute(), run, mapView));
 
 		TextView heading = (TextView) findViewById(R.id.runHeading);
 		heading.setText(run.getDate().toFullString());

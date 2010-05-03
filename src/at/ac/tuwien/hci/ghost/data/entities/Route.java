@@ -1,5 +1,8 @@
 package at.ac.tuwien.hci.ghost.data.entities;
 
+import java.util.List;
+import java.util.Vector;
+
 
 /**
  * encapsulates a route
@@ -20,6 +23,8 @@ public class Route extends Entity {
 	private float distance = 0.0f;
 	/** number of runs on this route */
 	private int runCount = 0;
+	/** all waypoints of the route */
+	private List<Waypoint> waypoints = null;
 
 	/** runs on this Route (optional) */
 	// private List<Run> runs = null;
@@ -33,6 +38,8 @@ public class Route extends Entity {
 		this.name = name;
 		this.distance = distance;
 		this.runCount = runCount;
+		
+		waypoints = new Vector<Waypoint>();
 	}
 
 	public Route(long id, String name, float distance) {
@@ -87,5 +94,9 @@ public class Route extends Entity {
 	
 	public String toString() {
 		return getName();
+	}
+
+	public List<Waypoint> getWaypoints() {
+		return waypoints;
 	}
 }
