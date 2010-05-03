@@ -38,7 +38,7 @@
 			android:layout_height="196dip" android:layout_marginTop="10dip"
 			android:layout_marginLeft="2dip" android:layout_marginRight="2dip"
 			android:layout_marginBottom="6dip" android:clickable="true"
-			android:apiKey="0-bK8OSSsc8vA0MbFNnmjAouKmhopTsMpioHHZQ" />
+			android:apiKey="@string/app.mapKey" />
 		<TextView android:id="@+id/calories" android:text="@string/app.calories"
 			style="@style/RunningInfoSmall" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:gravity="center">

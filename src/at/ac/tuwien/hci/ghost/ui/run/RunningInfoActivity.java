@@ -39,9 +39,11 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	private TextView textDistance = null;
 	private TextView textRoute = null;
 	private TextView textCalories = null;
-	private MapView map = null;
+	private MapView mapView = null;
 	private Button buttonStop = null;
 	private Button buttonPause = null;
+	private CurrentLocationOverlay currentLocationOverlay = null;
+	private RouteOverlay routeOverlay = null;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -61,8 +63,8 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		buttonStop = (Button) findViewById(R.id.stopRunButton);
 		buttonPause = (Button) findViewById(R.id.pauseRunButton);
 
-		map = (MapView) findViewById(R.id.overviewMap);
-		map.setBuiltInZoomControls(true);
+		mapView = (MapView) findViewById(R.id.overviewMap);
+		mapView.setBuiltInZoomControls(true);
 		
 		if (route != null) {
 			textRoute.setText(getResources().getString(R.string.app_route) + ": " + route.getName());
@@ -86,8 +88,14 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		// initialize entities
 		currentRun = new Run(1, new Date(), 0, 0, 0, route);
 		statistics = new RunStatistics(this);
+		
+		currentLocationOverlay = new CurrentLocationOverlay(this, mapView);
+		mapView.getOverlays().add(currentLocationOverlay);
+		routeOverlay = new RouteOverlay(currentRun, mapView);
+		mapView.getOverlays().add(routeOverlay);
 
-		gpsListener = new GPSListener(currentRun);
+
+		gpsListener = new GPSListener(currentRun, mapView);
 		gpsManager = new GPSManager(this);
 		gpsManager.addObserver(gpsListener);
 		gpsManager.addObserver(statistics);

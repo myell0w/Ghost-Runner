@@ -9,6 +9,7 @@
 	<!--  Global -->
 
 	<string name="app.name">GhostRunner</string>
+	<string name="app.mapKey">0wJX1d5k44xaJGN8HcVAOCITMkj4Zd8uE_JWlFg</string>
 
 	<string name="app.tabRun">Run</string>
 	<string name="app.tabRoutes">Routes</string>

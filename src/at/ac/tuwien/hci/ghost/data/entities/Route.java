@@ -8,6 +8,10 @@ package at.ac.tuwien.hci.ghost.data.entities;
  * 
  */
 public class Route extends Entity {
+	private static final long serialVersionUID = -2108531992111612435L;
+
+	private static Route emptyRoute = new Route(-1,"None",-1.f,-1);
+	
 	/** id of the route */
 	private long id = -1;
 	/** name of the route */
@@ -19,6 +23,10 @@ public class Route extends Entity {
 
 	/** runs on this Route (optional) */
 	// private List<Run> runs = null;
+	
+	public static Route getEmptyRoute() {
+		return emptyRoute;
+	}
 
 	public Route(long id, String name, float distance, int runCount) {
 		this.id = id;

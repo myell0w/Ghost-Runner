@@ -8,9 +8,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.AdapterView.OnItemSelectedListener;
 import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.data.dao.DataAccessObject;
 import at.ac.tuwien.hci.ghost.data.dao.RouteDAO;
@@ -29,8 +31,9 @@ public class StartRunActivity extends MapActivity {
 	private ArrayAdapter<String> trainingAdapter = null;
 	private Spinner selectedRoute = null;
 	private Spinner selectedGoal = null;
-	private MapView mapView = null;
 	private Button startButton = null;
+	private MapView mapView = null;
+	private CurrentLocationOverlay currentLocationOverlay = null;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -43,6 +46,9 @@ public class StartRunActivity extends MapActivity {
 		mapView = (MapView) findViewById(R.id.overviewMap);
 		mapView.setBuiltInZoomControls(true);
 		
+		currentLocationOverlay = new CurrentLocationOverlay(StartRunActivity.this, mapView);
+    	mapView.getOverlays().add(currentLocationOverlay);
+		
 		selectedRoute = (Spinner)findViewById(R.id.selectedRoute);
 		selectedGoal = (Spinner)findViewById(R.id.selectedGoal);
 		
@@ -50,11 +56,27 @@ public class StartRunActivity extends MapActivity {
 		routeAdapter = new ArrayAdapter<Route>(this, android.R.layout.simple_spinner_item);
 		routeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		
+		routeAdapter.add(Route.getEmptyRoute());
+		
 		for (Entity e : routes) {
 			routeAdapter.add((Route)e);
 		}
 		
 		selectedRoute.setAdapter(routeAdapter);
+		selectedRoute.setOnItemSelectedListener(new OnItemSelectedListener() {
+		    @Override
+		    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+		        if (selectedRoute.getSelectedItem().equals(Route.getEmptyRoute())) {
+		       
+		        }
+		    }
+
+		    @Override
+		    public void onNothingSelected(AdapterView<?> parentView) {
+		        // your code here
+		    }
+
+		});
 		
 		trainingAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
 		trainingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
