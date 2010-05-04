@@ -1,6 +1,5 @@
 package at.ac.tuwien.hci.ghost.gps;
 
-import android.util.Log;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
 import at.ac.tuwien.hci.ghost.data.entities.Waypoint;
 import at.ac.tuwien.hci.ghost.observer.Observer;
@@ -19,9 +18,6 @@ public class GPSListener implements Observer<Waypoint> {
 
 	@Override
 	public void notify(Waypoint p) {
-		// calculate geopoint
-		GeoPoint geopoint = new GeoPoint((int) (p.getLatitudeDegrees() * 1E6), (int) (p.getLongitudeDegrees() * 1E6));
-		
 		// run set, add new waypoint
 		if (run != null) {
 			run.addWaypoint(p);
@@ -29,7 +25,7 @@ public class GPSListener implements Observer<Waypoint> {
 		
 		// map set, center new waypoint and redraw map to show new line
 		if (mapView != null) {
-			mapView.getController().animateTo(geopoint);
+			mapView.getController().animateTo(p.getGeoPoint());
 			mapView.postInvalidate();
 		}
 	}

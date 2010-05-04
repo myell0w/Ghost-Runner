@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Vector;
 
 import android.content.Context;
+import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,7 +15,7 @@ import at.ac.tuwien.hci.ghost.observer.Observer;
 import at.ac.tuwien.hci.ghost.observer.Subject;
 
 public class GPSManager implements Subject<Waypoint>, Observer<Waypoint> {
-	private static final double MIN_DISTANCE_IN_METER_BETWEEN_2_WAYPOINTS = 1;
+	private static final double MIN_DISTANCE_IN_METER_BETWEEN_2_WAYPOINTS = 2;
 	
 	/** Context of the GPSManager */
 	private Context context;
@@ -24,7 +25,7 @@ public class GPSManager implements Subject<Waypoint>, Observer<Waypoint> {
 	private List<Waypoint> waypoints = new Vector<Waypoint>();
 	/** Contains all registered status receivers */
 	private List<Observer<Waypoint>> observers = new Vector<Observer<Waypoint>>();
-
+	/** listens for GPS Location updates */
 	private LocationListener locationListener;
 
 	public GPSManager(Context ctx) {
@@ -32,7 +33,7 @@ public class GPSManager implements Subject<Waypoint>, Observer<Waypoint> {
 
 		locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
-		locationListener = new MyLocationManager(this);
+		locationListener = new MyLocationListener(this);
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 	}
 
@@ -42,11 +43,15 @@ public class GPSManager implements Subject<Waypoint>, Observer<Waypoint> {
 		else
 			return null;
 	}
-
-	private class MyLocationManager implements LocationListener {
+	
+	public void stop() {
+		locationManager.removeUpdates(locationListener);
+	}
+	
+	private class MyLocationListener implements LocationListener {
 		private Observer<Waypoint> gpsRecorder;
 
-		public MyLocationManager(Observer<Waypoint> gpsRecorder) {
+		public MyLocationListener(Observer<Waypoint> gpsRecorder) {
 			this.gpsRecorder = gpsRecorder;
 		}
 

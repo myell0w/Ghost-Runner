@@ -71,4 +71,8 @@ public interface Constants {
 	
 	/** Map Zoom Level */
 	public static final int DEFAULT_ZOOM_LEVEL = 15;
+	
+	/** GPS Accuracy Levels */
+	public static final float GPS_ACCURACY_BAD = 40;
+	public static final float GPS_ACCURACY_MEDIUM = 20;
 }

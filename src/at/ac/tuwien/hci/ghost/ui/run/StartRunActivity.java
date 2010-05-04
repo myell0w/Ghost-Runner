@@ -2,7 +2,6 @@ package at.ac.tuwien.hci.ghost.ui.run;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 import android.content.Intent;
 import android.media.AudioManager;
@@ -24,6 +23,10 @@ import at.ac.tuwien.hci.ghost.data.dao.DataAccessObject;
 import at.ac.tuwien.hci.ghost.data.dao.RouteDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
+import at.ac.tuwien.hci.ghost.data.entities.Waypoint;
+import at.ac.tuwien.hci.ghost.gps.GPSListener;
+import at.ac.tuwien.hci.ghost.gps.GPSManager;
+import at.ac.tuwien.hci.ghost.observer.Observer;
 import at.ac.tuwien.hci.ghost.util.Constants;
 import at.ac.tuwien.hci.ghost.util.Util;
 
@@ -31,7 +34,7 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 
-public class StartRunActivity extends MapActivity implements OnInitListener {
+public class StartRunActivity extends MapActivity implements OnInitListener, Observer<Waypoint> {
 	private DataAccessObject dao = null;
 	private List<Entity> routes = null;
 	private ArrayAdapter<Route> routeAdapter = null;
@@ -40,7 +43,8 @@ public class StartRunActivity extends MapActivity implements OnInitListener {
 	private Spinner selectedGoal = null;
 	private Button startButton = null;
 	private MapView mapView = null;
-	private TextToSpeech tts;
+	private TextToSpeech tts = null;
+	private GPSManager gpsManager = null;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -60,6 +64,9 @@ public class StartRunActivity extends MapActivity implements OnInitListener {
 		mapView.getController().setZoom(Constants.DEFAULT_ZOOM_LEVEL);
 
 		mapView.getOverlays().add(new CurrentLocationOverlay(this, mapView));
+		
+		gpsManager = new GPSManager(this);
+		gpsManager.addObserver(this);
 
 		selectedRoute = (Spinner) findViewById(R.id.selectedRoute);
 		selectedGoal = (Spinner) findViewById(R.id.selectedGoal);
@@ -150,7 +157,9 @@ public class StartRunActivity extends MapActivity implements OnInitListener {
 
 		runningInfoIntent.putExtra(Constants.ROUTE, r);
 
+		gpsManager.stop();
 		tts.speak(getResources().getString(R.string.audio_startRun), TextToSpeech.QUEUE_FLUSH, null);
+		
 		this.startActivity(runningInfoIntent);
 	}
 
@@ -179,6 +188,28 @@ public class StartRunActivity extends MapActivity implements OnInitListener {
 		} else {
 			// Initialization failed.
 			Log.e(getClass().getName(), "Could not initialize TextToSpeech.");
+		}
+	}
+
+	@Override
+	public void notify(Waypoint p) {
+		mapView.getController().animateTo(p.getGeoPoint());
+		
+		if (p.getLocation().hasAccuracy()) {
+			float accuracy = p.getLocation().getAccuracy();
+			
+			Log.i(getClass().getName(),"New Location with Accuracy " + accuracy);
+			
+			if (accuracy > Constants.GPS_ACCURACY_BAD) {
+				startButton.setTextColor(R.color.noGps);
+			} else if (accuracy > Constants.GPS_ACCURACY_MEDIUM) {
+				startButton.setTextColor(R.color.mediumGps);
+			} else {
+				startButton.setTextColor(R.color.goodGps);
+			}
+			
+		} else {
+			startButton.setTextColor(R.color.noGps);
 		}
 	}
 }

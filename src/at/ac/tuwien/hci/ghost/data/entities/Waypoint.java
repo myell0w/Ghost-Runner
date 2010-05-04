@@ -1,5 +1,7 @@
 package at.ac.tuwien.hci.ghost.data.entities;
 
+import com.google.android.maps.GeoPoint;
+
 import android.location.Location;
 import at.ac.tuwien.hci.ghost.util.Date;
 
@@ -105,5 +107,9 @@ public class Waypoint extends Entity {
 
 	public String toString() {
 		return "Latitude: " + location.getLatitude() + ", Longitude: " + location.getLongitude();
+	}
+
+	public GeoPoint getGeoPoint() {
+		return new GeoPoint((int) (getLatitudeDegrees() * 1E6), (int) (getLongitudeDegrees() * 1E6));
 	}
 }

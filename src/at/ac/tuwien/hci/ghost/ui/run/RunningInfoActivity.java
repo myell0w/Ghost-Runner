@@ -171,7 +171,11 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 
 	private void stopRun() {
 		statistics.getTime().pause();
+		updateRunStatistics();
+		
 		runDAO.insert(currentRun);
+		
+		gpsManager.stop();
 		
 		Log.i(getClass().getName(), "Run saved: " + currentRun);
 		
