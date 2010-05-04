@@ -68,4 +68,7 @@ public interface Constants {
 	public static final int MENU_SETTINGS = 102;
 	public static final int MENU_WEATHER = 103;
 	public static final int MENU_NEW_GOAL = 104;
+	
+	/** Map Zoom Level */
+	public static final int DEFAULT_ZOOM_LEVEL = 15;
 }

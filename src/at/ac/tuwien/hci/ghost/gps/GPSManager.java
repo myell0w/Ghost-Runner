@@ -8,13 +8,16 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import at.ac.tuwien.hci.ghost.data.entities.Waypoint;
 import at.ac.tuwien.hci.ghost.observer.Observer;
 import at.ac.tuwien.hci.ghost.observer.Subject;
 
 public class GPSManager implements Subject<Waypoint>, Observer<Waypoint> {
+	private static final double MIN_DISTANCE_IN_METER_BETWEEN_2_WAYPOINTS = 1;
+	
+	/** Context of the GPSManager */
 	private Context context;
-
 	/** The associated location manager */
 	private LocationManager locationManager;
 	/** Contains all recorded GPS points */
@@ -92,9 +95,11 @@ public class GPSManager implements Subject<Waypoint>, Observer<Waypoint> {
 			p.calculateSpeed(this.getLastKnownLocation());
 		}
 
-		if (waypoints.isEmpty() || p.distanceTo(this.getLastKnownLocation()) > 1) {
+		if (waypoints.isEmpty() || p.distanceTo(this.getLastKnownLocation()) > MIN_DISTANCE_IN_METER_BETWEEN_2_WAYPOINTS) {
 			waypoints.add(p);
 			notifyAll(p);
+			
+			Log.i(getClass().getName(), "New Waypoint: " + p + ", distance: " + p.distanceTo(this.getLastKnownLocation()));
 		}
 	}
 }

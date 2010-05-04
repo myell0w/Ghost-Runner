@@ -14,7 +14,7 @@ public class RunTime {
 	}
 
 	/** Gets the complete elapsed time in ms */
-	public long getDuration() {
+	public long getDurationInMilliSeconds() {
 		if (isStarted)
 			return duration + (System.currentTimeMillis() - startingTime);
 		else
@@ -22,11 +22,11 @@ public class RunTime {
 	}
 	
 	public long getDurationInSeconds() {
-		return getDuration() / 1000;
+		return getDurationInMilliSeconds() / 1000;
 	}
 
 	public double getDisplayHours() {
-		return getDuration() / 1000.0 / 60.0 / 60.0;
+		return getDurationInMilliSeconds() / 1000.0 / 60.0 / 60.0;
 	}
 
 	public double getDisplayMinutes() {
@@ -43,7 +43,7 @@ public class RunTime {
 
 	/** Pauses the timer */
 	public void pause() {
-		duration = getDuration();
+		duration = getDurationInMilliSeconds();
 		isStarted = false;
 	}
 

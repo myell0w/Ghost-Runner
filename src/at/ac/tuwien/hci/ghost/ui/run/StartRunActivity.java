@@ -57,6 +57,7 @@ public class StartRunActivity extends MapActivity implements OnInitListener {
 
 		mapView = (MapView) findViewById(R.id.overviewMap);
 		mapView.setBuiltInZoomControls(true);
+		mapView.getController().setZoom(Constants.DEFAULT_ZOOM_LEVEL);
 
 		mapView.getOverlays().add(new CurrentLocationOverlay(this, mapView));
 

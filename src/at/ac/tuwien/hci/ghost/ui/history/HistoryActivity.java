@@ -104,7 +104,7 @@ public class HistoryActivity extends ListActivity {
 		float totalDistance=0, totalTimeInSeconds=0;
 		int totalCalories=0;
 		for(Run r:ret) {
-			totalDistance += r.getDistance();
+			totalDistance += r.getDistanceInKm();
 			totalTimeInSeconds += r.getTime();
 			totalCalories += r.getCalories();
 		}

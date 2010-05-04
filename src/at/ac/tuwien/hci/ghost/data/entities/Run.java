@@ -15,7 +15,7 @@ public class Run extends Entity {
 	/** total time of the run in seconds */
 	private long timeInSeconds = 0L;
 	/** total distance of the run */
-	private float distance = 0.f;
+	private float distanceInKm = 0.f;
 	/** average pace of the run */
 	private float pace = 0.f;
 	/** average speed of the run */
@@ -27,14 +27,14 @@ public class Run extends Entity {
 	/** all waypoints of the run */
 	private List<Waypoint> waypoints = null;
 
-	public Run(long id, Date date, long timeInSeconds, float distance, int calories, Route route) {
+	public Run(long id, Date date, long timeInSeconds, float distanceInKm, int calories, Route route) {
 		this.id = id;
 		this.date = date;
 		this.calories = calories;
 		this.route = route;
 
 		this.timeInSeconds = timeInSeconds;
-		this.distance = distance;
+		this.distanceInKm = distanceInKm;
 		
 		this.waypoints = new Vector<Waypoint>();
 
@@ -57,7 +57,7 @@ public class Run extends Entity {
 		return timeInSeconds;
 	}
 
-	public void setTime(long time) {
+	public void setTimeInSeconds(long time) {
 		this.timeInSeconds = time;
 	}
 
@@ -72,12 +72,12 @@ public class Run extends Entity {
 		return hours + ":" + minutesString + ":" + secondsString;
 	}
 
-	public float getDistance() {
-		return distance;
+	public float getDistanceInKm() {
+		return distanceInKm;
 	}
 
-	public void setDistance(float distance) {
-		this.distance = distance;
+	public void setDistanceInKm(float distance) {
+		this.distanceInKm = distance;
 	}
 
 	public float getPace() {
@@ -90,15 +90,6 @@ public class Run extends Entity {
 
 	public String getPaceString() {
 		return Run.getPaceString(this.pace);
-	}
-	
-	public static String getPaceString(float pace) {
-		int minutes = (int) pace;
-		float secondsFactor = pace - minutes;
-		int seconds = Math.round(secondsFactor * 60);
-		String secondsString = seconds < 10 ? "0" + seconds : String.valueOf(seconds);
-
-		return minutes + ":" + secondsString;
 	}
 
 	public float getSpeed() {
@@ -125,12 +116,6 @@ public class Run extends Entity {
 		this.route = route;
 	}
 
-	private void updateSpeedAndPace() {
-		this.speed = distance / (timeInSeconds / 3600.f);
-		this.pace = (timeInSeconds / 60.f) / distance;
-
-	}
-
 	@Override
 	public long getID() {
 		return id;
@@ -151,5 +136,21 @@ public class Run extends Entity {
 	
 	public String toString() {
 		return date.toFullString() + ", " + this.getTimeString() + ", " + this.getPaceString();
+	}
+	
+	private void updateSpeedAndPace() {
+		if (timeInSeconds / 3600.f > 0)
+			this.speed = distanceInKm / (timeInSeconds / 3600.f);
+		if (distanceInKm > 0)
+			this.pace = (timeInSeconds / 60.f) / distanceInKm;
+	}
+	
+	public static String getPaceString(float pace) {
+		int minutes = (int) pace;
+		float secondsFactor = pace - minutes;
+		int seconds = Math.round(secondsFactor * 60);
+		String secondsString = seconds < 10 ? "0" + seconds : String.valueOf(seconds);
+
+		return minutes + ":" + secondsString;
 	}
 }

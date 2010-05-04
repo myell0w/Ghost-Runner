@@ -35,7 +35,7 @@ public class RunAdapter extends ArrayAdapter<Run> {
 			TextView runDate = (TextView) v.findViewById(R.id.runDate);
 
 			if (runStats != null) {
-				String stats = r.getDistance() + " " + getContext().getString(R.string.app_unitDistance) + ", " + r.getTimeString() + " "
+				String stats = r.getDistanceInKm() + " " + getContext().getString(R.string.app_unitDistance) + ", " + r.getTimeString() + " "
 						+ getContext().getString(R.string.app_unitTime) + ", " + r.getPaceString() + " " + getContext().getString(R.string.app_unitPace);
 				runStats.setText(stats);
 			}

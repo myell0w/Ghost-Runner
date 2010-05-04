@@ -32,8 +32,6 @@ public class GPSListener implements Observer<Waypoint> {
 			mapView.getController().animateTo(geopoint);
 			mapView.postInvalidate();
 		}
-
-		Log.i(getClass().getName(), "New Waypoint: " + p);
 	}
 
 }

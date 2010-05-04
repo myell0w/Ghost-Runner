@@ -3,8 +3,6 @@ package at.ac.tuwien.hci.ghost.data.entities;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
-import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.observer.Observer;
 
 public class RunStatistics implements Observer<Waypoint> {
@@ -13,15 +11,15 @@ public class RunStatistics implements Observer<Waypoint> {
 	private float averagePace = 0.f;
 	private float distance = 0;
 	private float calories = 0;
+	private int locationCount = 0;
 	private RunTime time = new RunTime(0);
-	private int numlocations = 0;
-	private Waypoint lastlocation;
+	private Waypoint lastLocation;
 
 	public RunStatistics(Context context) {
 		this.context = context;
 	}
 
-	public float getDistance() {
+	public float getDistanceInMeter() {
 		return distance;
 	}
 
@@ -35,6 +33,14 @@ public class RunStatistics implements Observer<Waypoint> {
 
 	public long getDurationInSeconds() {
 		return time.getDurationInSeconds();
+	}
+	
+	public float getDurationInMinutes() {
+		return getDurationInSeconds() / 60.f;
+	}
+	
+	public float getDurationInHours() {
+		return getDurationInSeconds() / 3600.f;
 	}
 
 	public float getAverageSpeed() {
@@ -52,12 +58,11 @@ public class RunStatistics implements Observer<Waypoint> {
 	@Override
 	public void notify(Waypoint p) {
 		if (!time.isPaused()) {
-			if (numlocations > 0) {
-				distance += p.distanceTo(lastlocation);
+			if (locationCount > 0) {
+				distance += p.distanceTo(lastLocation);
 
-				averageSpeed = getDistanceInKm() / (getDurationInSeconds() / 3600.f);
-
-				averagePace = (getDurationInSeconds() / 60.f) / getDistanceInKm();
+				averageSpeed = getDistanceInKm() / getDurationInHours();
+				averagePace = getDurationInMinutes() / getDistanceInKm();
 
 				// get the xml/preferences.xml preferences
 				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -68,9 +73,7 @@ public class RunStatistics implements Observer<Waypoint> {
 				String sAge = prefs.getString("age", "30");
 
 				boolean male = sSex.equals("Male");
-				int weight;
-				int size;
-				int age;
+				int weight, size, age;
 
 				try {
 					weight = Integer.parseInt(sWeight);
@@ -88,12 +91,12 @@ public class RunStatistics implements Observer<Waypoint> {
 					age = 30;
 				}
 
-				calculateCalories(male, weight, size, age, getDurationInSeconds() / 3600.);
+				calculateCalories(male, weight, size, age, getDurationInHours());
 			}
 		}
 
-		numlocations++;
-		lastlocation = p;
+		locationCount++;
+		lastLocation = p;
 	}
 
 	private void calculateCalories(boolean male, int weightInKg, int sizeInCm, int ageInYears, double durationInHours) {

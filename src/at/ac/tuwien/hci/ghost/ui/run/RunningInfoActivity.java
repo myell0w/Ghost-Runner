@@ -64,6 +64,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 
 		mapView = (MapView) findViewById(R.id.overviewMap);
 		mapView.setBuiltInZoomControls(true);
+		mapView.getController().setZoom(Constants.DEFAULT_ZOOM_LEVEL);
 		
 		if (route != null) {
 			textRoute.setText(getResources().getString(R.string.app_route) + ": " + route.getName());
@@ -187,9 +188,9 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	 * updates the statistic-values in the run-class
 	 */
 	private void updateRunStatistics() {
-		currentRun.setTime(statistics.getTime().getDurationInSeconds());
+		currentRun.setTimeInSeconds(statistics.getTime().getDurationInSeconds());
 		currentRun.setCalories((int)statistics.getCalories());
-		currentRun.setDistance(statistics.getDistanceInKm());
+		currentRun.setDistanceInKm(statistics.getDistanceInKm());
 		currentRun.setPace(statistics.getAveragePace());
 		currentRun.setSpeed(statistics.getAverageSpeed());
 	}

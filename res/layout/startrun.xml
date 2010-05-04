@@ -1,37 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 
- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical">
-
-	<LinearLayout 
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content" 
-		android:layout_marginBottom="10dip"
-		android:orientation="vertical">
-
-		<Spinner android:id="@+id/selectedRoute" 
-		    android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
-		</Spinner>
-
-		<Spinner android:id="@+id/selectedGoal" 
-		         android:layout_width="fill_parent"
-			     android:layout_height="wrap_content">
-		</Spinner>
-
-		<Button android:id="@+id/startRunButton" android:layout_width="fill_parent"
-			android:layout_height="50dip"
-			android:text="@string/run.start">
-		</Button>
-
-	
-</LinearLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical">
 
 	<com.google.android.maps.MapView
-		xmlns:android="http://schemas.android.com/apk/res/android" 
-		android:id="@+id/overviewMap"
-		android:layout_width="fill_parent" 
-		android:layout_height="fill_parent"
-		android:clickable="true" 
-		android:apiKey="@string/app.mapKey" />
+		xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/overviewMap"
+		android:layout_width="fill_parent" android:layout_height="0dip"
+		android:layout_weight="5" android:clickable="true" android:apiKey="@string/app.mapKey" android:layout_marginBottom="10dip"/>
+
+	<Spinner android:id="@+id/selectedRoute" android:layout_width="fill_parent"
+		android:layout_height="0dip" android:layout_weight="1">
+	</Spinner>
+
+	<Spinner android:id="@+id/selectedGoal" android:layout_width="fill_parent"
+		android:layout_height="0dip" android:layout_weight="1">
+	</Spinner>
+
+	<Button android:id="@+id/startRunButton" android:layout_width="fill_parent"
+		android:layout_height="0dip" android:layout_weight="1" android:text="@string/run.start">
+	</Button>
+
+	<!--
+		<com.google.android.maps.MapView
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/overviewMap" android:layout_width="fill_parent"
+		android:layout_height="0dip" android:layout_weight="1"
+		android:clickable="true" android:apiKey="@string/app.mapKey" />
+
+		<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="0dip" android:layout_weight="1"
+		android:layout_marginTop="10dip" android:orientation="vertical">
+
+		<Spinner android:id="@+id/selectedRoute"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"> </Spinner> <Spinner
+		android:id="@+id/selectedGoal" android:layout_width="fill_parent"
+		android:layout_height="wrap_content"> </Spinner> <Button
+		android:id="@+id/startRunButton" android:layout_width="fill_parent"
+		android:layout_height="50dip" android:text="@string/run.start">
+		</Button> </LinearLayout>
+	-->
 </LinearLayout> 

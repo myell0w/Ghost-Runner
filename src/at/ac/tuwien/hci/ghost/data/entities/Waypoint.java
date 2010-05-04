@@ -5,7 +5,7 @@ import at.ac.tuwien.hci.ghost.util.Date;
 
 public class Waypoint extends Entity {
 	private static final long serialVersionUID = 906509558162487110L;
-	
+
 	private long id;
 	private Location location;
 	private float speed;
@@ -15,9 +15,8 @@ public class Waypoint extends Entity {
 		this.location = location;
 		timestamp = new Date(location.getTime());
 	}
-	
-	public Waypoint(long id)
-	{
+
+	public Waypoint(long id) {
 		this(new Location("GhostRunner"));
 	}
 
@@ -25,12 +24,11 @@ public class Waypoint extends Entity {
 		if (location.hasSpeed())
 			speed = location.getSpeed();
 		else {
-			double diff = (double) (getTimestamp().getAsJavaDefaultDate()
-					.getTime() - previousLocation.getTimestamp()
-					.getAsJavaDefaultDate().getTime());
-			double distance = location.distanceTo(previousLocation
-					.getLocation());
-			speed = (float) (distance / diff * 3600.0);
+			double diff = (double) (getTimestamp().getAsJavaDefaultDate().getTime() - 
+									previousLocation.getTimestamp().getAsJavaDefaultDate().getTime());
+			double distance = location.distanceTo(previousLocation.getLocation());
+			
+			speed = (float) (distance / (diff / 1000.0));
 		}
 
 	}
@@ -74,18 +72,16 @@ public class Waypoint extends Entity {
 	public Date getTimestamp() {
 		return timestamp;
 	}
-	
-	public void setTimestamp(Date timestamp)
-	{
+
+	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
 
 	public float getSpeed() {
 		return speed;
 	}
-	
-	public void setSpeed(float speed)
-	{
+
+	public void setSpeed(float speed) {
 		this.speed = speed;
 	}
 
@@ -96,7 +92,7 @@ public class Waypoint extends Entity {
 	public double distanceTo(Waypoint dest) {
 		return location.distanceTo(dest.getLocation());
 	}
-	
+
 	@Override
 	public long getID() {
 		return id;
@@ -108,7 +104,6 @@ public class Waypoint extends Entity {
 	}
 
 	public String toString() {
-		return "Latitude: " + location.getLatitude() + ", Longitude: "
-				+ location.getLongitude();
+		return "Latitude: " + location.getLatitude() + ", Longitude: " + location.getLongitude();
 	}
 }

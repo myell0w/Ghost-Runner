@@ -88,8 +88,8 @@ public class RunDAO extends DataAccessObject {
 					do {
 						Run run = new Run(cursor.getLong(0));
 						run.setDate(new Date(cursor.getLong(1)));
-						run.setTime(cursor.getLong(2));
-						run.setDistance(cursor.getFloat(3));
+						run.setTimeInSeconds(cursor.getLong(2));
+						run.setDistanceInKm(cursor.getFloat(3));
 						run.setPace(cursor.getFloat(4));
 						run.setSpeed(cursor.getFloat(5));
 						run.setCalories(cursor.getInt(6));
@@ -149,7 +149,7 @@ public class RunDAO extends DataAccessObject {
 			if (run.getDate() != null)
 				values.put(Constants.DB_RUNS_COLUMN_DATE, run.getDate().getAsJavaDefaultDate().getTime());
 			values.put(Constants.DB_RUNS_COLUMN_TIMEINSECONDS, run.getTime());
-			values.put(Constants.DB_RUNS_COLUMN_DISTANCE, run.getDistance());
+			values.put(Constants.DB_RUNS_COLUMN_DISTANCE, run.getDistanceInKm());
 			values.put(Constants.DB_RUNS_COLUMN_PACE, run.getPace());
 			values.put(Constants.DB_RUNS_COLUMN_SPEED, run.getSpeed());
 			values.put(Constants.DB_RUNS_COLUMN_CALORIES, run.getCalories());
@@ -199,7 +199,7 @@ public class RunDAO extends DataAccessObject {
 			if (run.getDate() != null)
 				values.put(Constants.DB_RUNS_COLUMN_DATE, run.getDate().getAsJavaDefaultDate().getTime());
 			values.put(Constants.DB_RUNS_COLUMN_TIMEINSECONDS, run.getTime());
-			values.put(Constants.DB_RUNS_COLUMN_DISTANCE, run.getDistance());
+			values.put(Constants.DB_RUNS_COLUMN_DISTANCE, run.getDistanceInKm());
 			values.put(Constants.DB_RUNS_COLUMN_PACE, run.getPace());
 			values.put(Constants.DB_RUNS_COLUMN_SPEED, run.getSpeed());
 			values.put(Constants.DB_RUNS_COLUMN_CALORIES, run.getCalories());

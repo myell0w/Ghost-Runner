@@ -35,7 +35,7 @@ public class RunDetailsActivity extends MapActivity {
 		detailTotalTime.setText(run.getTimeString() + " " + getResources().getString(R.string.app_unitTime));
 		
 		TextView detailTotalDistance = (TextView) findViewById(R.id.detailTotalDistance);
-		detailTotalDistance.setText(run.getDistance() + " " + getResources().getString(R.string.app_unitDistance));
+		detailTotalDistance.setText(run.getDistanceInKm() + " " + getResources().getString(R.string.app_unitDistance));
 		
 		TextView detailAveragePace = (TextView) findViewById(R.id.detailAveragePace);
 		detailAveragePace.setText(run.getPaceString() + " " + getResources().getString(R.string.app_unitPace));
