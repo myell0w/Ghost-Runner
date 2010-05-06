@@ -11,6 +11,7 @@
 	<application android:icon="@drawable/icon" android:label="@string/app.name"
 		android:theme="@style/GhostRunnerTheme" android:debuggable="true">
 		<uses-library android:name="com.google.android.maps" />
+		<uses-library android:name="android.test.runner" />
 
 		<activity android:name=".ui.MainTabActivity" android:screenOrientation="portrait">
 			 <intent-filter>
@@ -53,6 +54,9 @@
 		</activity>
 
 	</application>
+	
+	<instrumentation android:name="android.test.InstrumentationTestRunner"
+       android:targetPackage="at.ac.tuwien.hci.ghost" android:label="Tests for My App" />
 
 
 </manifest> 
