@@ -107,6 +107,10 @@ public class Run extends Entity {
 	public void setCalories(int calories) {
 		this.calories = calories;
 	}
+	
+	public boolean hasRoute() {
+		return route != null && !route.equals(Route.getEmptyRoute());
+	}
 
 	public Route getRoute() {
 		return route;
@@ -152,5 +156,14 @@ public class Run extends Entity {
 		String secondsString = seconds < 10 ? "0" + seconds : String.valueOf(seconds);
 
 		return minutes + ":" + secondsString;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Run) {
+			return getID() == ((Run)o).getID();
+		}
+		
+		return false;
 	}
 }

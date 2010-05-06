@@ -13,7 +13,7 @@ import java.util.Vector;
 public class Route extends Entity {
 	private static final long serialVersionUID = -2108531992111612435L;
 
-	private static Route emptyRoute = new Route(-1,"No Route",-1.f,-1);
+	private static Route emptyRoute = new Route(-999,"No Route",-1.f,-1);
 	
 	/** id of the route */
 	private long id = -1;
@@ -98,5 +98,14 @@ public class Route extends Entity {
 
 	public List<Waypoint> getWaypoints() {
 		return waypoints;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Route) {
+			return getID() == ((Route)o).getID();
+		}
+		
+		return false;
 	}
 }

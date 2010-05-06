@@ -1,9 +1,9 @@
 package at.ac.tuwien.hci.ghost.data.entities;
 
-import com.google.android.maps.GeoPoint;
-
 import android.location.Location;
 import at.ac.tuwien.hci.ghost.util.Date;
+
+import com.google.android.maps.GeoPoint;
 
 public class Waypoint extends Entity {
 	private static final long serialVersionUID = 906509558162487110L;
@@ -111,5 +111,14 @@ public class Waypoint extends Entity {
 
 	public GeoPoint getGeoPoint() {
 		return new GeoPoint((int) (getLatitudeDegrees() * 1E6), (int) (getLongitudeDegrees() * 1E6));
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Waypoint) {
+			return getID() == ((Waypoint)o).getID();
+		}
+		
+		return false;
 	}
 }

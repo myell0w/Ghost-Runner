@@ -9,4 +9,6 @@ public abstract class Entity implements Serializable {
 	public abstract long getID();
 
 	public abstract void setID(long id);
+	
+	public abstract boolean equals(Object o);
 }

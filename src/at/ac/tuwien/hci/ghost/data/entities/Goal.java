@@ -106,4 +106,13 @@ public class Goal extends Entity {
 	public void print() {
 		System.out.println(id + ";" + period + ";" + progress + ";" + type + ";" + goalValue);
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Goal) {
+			return getID() == ((Goal)o).getID();
+		}
+		
+		return false;
+	}
 }
