@@ -96,6 +96,9 @@ public class RunDAO extends DataAccessObject {
 						if (!cursor.isNull(7)) {
 							run.setRoute((Route) routeDAO.search(cursor.getLong(7)));
 						}
+						else { // set route object to empty route
+							run.setRoute(Route.getEmptyRoute());
+						}
 
 						runs.add(run);
 					} while (cursor.moveToNext());
@@ -153,7 +156,7 @@ public class RunDAO extends DataAccessObject {
 			values.put(Constants.DB_RUNS_COLUMN_PACE, run.getPace());
 			values.put(Constants.DB_RUNS_COLUMN_SPEED, run.getSpeed());
 			values.put(Constants.DB_RUNS_COLUMN_CALORIES, run.getCalories());
-			if (run.getRoute() != null)
+			if (run.getRoute() != null && !run.getRoute().equals(Route.getEmptyRoute())) // do not insert empty route
 				values.put(Constants.DB_RUNS_COLUMN_ROUTEID, run.getRoute().getID());
 			result = ghostDB.insert(Constants.DB_TABLE_RUNS, null, values);
 		} catch (Exception e) {
@@ -203,7 +206,7 @@ public class RunDAO extends DataAccessObject {
 			values.put(Constants.DB_RUNS_COLUMN_PACE, run.getPace());
 			values.put(Constants.DB_RUNS_COLUMN_SPEED, run.getSpeed());
 			values.put(Constants.DB_RUNS_COLUMN_CALORIES, run.getCalories());
-			if (run.getRoute() != null)
+			if (run.getRoute() != null && !run.getRoute().equals(Route.getEmptyRoute())) // do not update empty route
 				values.put(Constants.DB_RUNS_COLUMN_ROUTEID, run.getRoute().getID());
 			result = ghostDB.update(Constants.DB_TABLE_RUNS, values, Constants.DB_RUNS_COLUMN_ID + "=" + run.getID(), null) > 0;
 		} catch (Exception e) {
