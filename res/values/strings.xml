@@ -10,6 +10,9 @@
 
 	<string name="app.name">GhostRunner</string>
 	<string name="app.mapKey">0wJX1d5k44xaJGN8HcVAOCITMkj4Zd8uE_JWlFg</string>
+	
+	<string name="app.save">Save</string>
+	<string name="app.discard">Discard</string>
 
 	<string name="app.tabRun">Run</string>
 	<string name="app.tabRoutes">Routes</string>
@@ -76,6 +79,7 @@
 
 	<!-- Run -->
 	<string name="run.gpsSignal">GPS Signal</string>
+	<string name="run.gpsWait">Waiting for GPS Signal...</string>
 	<string name="run.start">Start Run</string>
 	<string name="run.stop">Stop Run</string>
 	<string name="run.pause">Pause Run</string>
@@ -83,6 +87,12 @@
 
 	<string name="run.map"> Show Map </string>
 	<string name="run.info"> Show Info </string>
+	
+	<string name="run.save">Save your run?</string>
+	<string name="run.saveAsRoute">Also save run as route ...</string>
+	
+	<string name="run.selectRoute">Select a Route</string>
+	<string name="run.selectGoal">Select a Goal</string>
 
 	<!-- Routes -->
 	<string name="routes.runs">Runs</string>
@@ -124,7 +134,7 @@
 
 	<!-- Preferences -->
 	<string name="pref.category1">Body info</string>
-	<string name="pref.category2">Sharing info</string>
+	<string name="pref.category2">General statistics</string>
 
 	<string name="pref.userName">Username</string>
 	<string name="pref.weight">Weight</string>
