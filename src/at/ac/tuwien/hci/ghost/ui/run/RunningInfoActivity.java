@@ -15,8 +15,10 @@ import at.ac.tuwien.hci.ghost.data.dao.RunDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
 import at.ac.tuwien.hci.ghost.data.entities.RunStatistics;
+import at.ac.tuwien.hci.ghost.gps.CurrentLocationOverlay;
 import at.ac.tuwien.hci.ghost.gps.GPSListener;
 import at.ac.tuwien.hci.ghost.gps.GPSManager;
+import at.ac.tuwien.hci.ghost.gps.RouteOverlay;
 import at.ac.tuwien.hci.ghost.observer.Observer;
 import at.ac.tuwien.hci.ghost.util.Constants;
 import at.ac.tuwien.hci.ghost.util.Date;
@@ -86,7 +88,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		});
 
 		// initialize entities
-		currentRun = new Run(1, new Date(), 0, 0, 0, route);
+		currentRun = new Run(1, new Date(), 0, 0, 0, route, null);
 		statistics = new RunStatistics(this);
 		
 		mapView.getOverlays().add(new CurrentLocationOverlay(this, mapView));

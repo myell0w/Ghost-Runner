@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
@@ -31,9 +32,18 @@ public class HistoryAdapter extends ArrayAdapter<Run> {
 		Run r = runs.get(position);
 
 		if (r != null) {
+			ImageView runIcon = (ImageView) v.findViewById(R.id.runIcon);
 			TextView runDate = (TextView) v.findViewById(R.id.runDate);
 			TextView runStats = (TextView) v.findViewById(R.id.runStat);
 
+			if (runIcon != null) {
+				int imageId = r.getPerformanceImageResourceId();
+				
+				if (imageId != -1) {
+					runIcon.setImageResource(imageId);
+				}
+			}
+			
 			if (runDate != null) {
 				String date = r.getDate().toString() + ": ";
 

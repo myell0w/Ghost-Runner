@@ -19,6 +19,6 @@
 
 	<Button android:id="@+id/startRunButton" android:layout_width="fill_parent"
 		android:layout_height="0dip" android:layout_weight="3" android:text="@string/run.start" style="@style/StartRunButton"
-		android:paddingTop="2dip" android:paddingBottom="2dip">
+		android:paddingTop="2dip" android:paddingBottom="2dip" android:enabled="false">
 	</Button>
 </LinearLayout> 

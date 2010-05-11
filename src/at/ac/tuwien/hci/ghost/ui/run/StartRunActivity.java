@@ -24,8 +24,10 @@ import at.ac.tuwien.hci.ghost.data.dao.RouteDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
 import at.ac.tuwien.hci.ghost.data.entities.Waypoint;
+import at.ac.tuwien.hci.ghost.gps.CurrentLocationOverlay;
 import at.ac.tuwien.hci.ghost.gps.GPSListener;
 import at.ac.tuwien.hci.ghost.gps.GPSManager;
+import at.ac.tuwien.hci.ghost.gps.RouteOverlay;
 import at.ac.tuwien.hci.ghost.observer.Observer;
 import at.ac.tuwien.hci.ghost.util.Constants;
 import at.ac.tuwien.hci.ghost.util.Util;
@@ -202,10 +204,13 @@ public class StartRunActivity extends MapActivity implements OnInitListener, Obs
 			
 			if (accuracy > Constants.GPS_ACCURACY_BAD) {
 				startButton.setTextColor(R.color.noGps);
+				startButton.setEnabled(false);
 			} else if (accuracy > Constants.GPS_ACCURACY_MEDIUM) {
 				startButton.setTextColor(R.color.mediumGps);
+				startButton.setEnabled(true);
 			} else {
 				startButton.setTextColor(R.color.goodGps);
+				startButton.setEnabled(true);
 			}
 			
 		} else {

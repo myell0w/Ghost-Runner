@@ -1,4 +1,4 @@
-package at.ac.tuwien.hci.ghost.ui.run;
+package at.ac.tuwien.hci.ghost.gps;
 
 import java.util.List;
 import java.util.Vector;
@@ -67,7 +67,7 @@ public class RouteOverlay extends com.google.android.maps.Overlay {
 
 			paint.setColor(color);
 			paint.setStyle(Paint.Style.STROKE);
-			paint.setStrokeWidth(3);
+			paint.setStrokeWidth(6);
 
 			for (int i = 0; i < points.size(); i++) {
 				Point point = new Point();

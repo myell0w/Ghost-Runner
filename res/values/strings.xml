@@ -39,10 +39,39 @@
 	
 	
 	<!-- Audio Outputs -->
+	<string name="audio.unitHours">hours</string>
+	<string name="audio.unitMinutes">minutes</string>
+	<string name="audio.unitSeconds">seconds</string>
+	<string name="audio.unitDistance">kilometers</string>
+	<string name="audio.unitPace">minutes per kilometer</string>
+	<string name="audio.unitCalories">kilocalories</string>
+	<string name="audio.unitSpeed">kilometer per hour</string>
+	
 	<string name="audio.startRun">Activity Started!</string>
 	<string name="audio.pauseRun">Activity Paused!</string>
 	<string name="audio.stopRun">Activity Finished!</string>
 	
+	<string name="audio.lastRun.1">Your last run was </string>
+	<string name="audio.lastRun.2">days ago! </string>
+	
+	<string name="audio.goalDistance.1">You have completed  </string>
+	<string name="audio.goalDistance.2">percent of your desired monthly distance! </string>
+	<string name="audio.goalRuns.1">You have completed  </string>
+	<string name="audio.goalRuns.2">percent of your desired monthly runs! </string>
+	<string name="audio.goalCalories.1">You have completed  </string>
+	<string name="audio.goalCalories.2">percent of your desired monthly calories! </string>
+	
+	<string name="audio.ghostBehind.1">You are </string>
+	<string name="audio.ghostBehind.2">behind your best ghost-run! </string>
+	<string name="audio.ghostAhead.1">You are </string>
+	<string name="audio.ghostAhead.2">ahead of your best ghost-run! </string>
+	<string name="audio.ghostEqual.1">You are matching your best ghost-run! </string>
+	
+	<string name="audio.averagePace">Average pace: </string>
+	<string name="audio.averageSpeed">Average speed: </string>
+	<string name="audio.currentDistance">Current distance: </string>
+	
+	<string name="audio.motivation1">Well done!</string>
 
 	<!-- Run -->
 	<string name="run.gpsSignal">GPS Signal</string>
