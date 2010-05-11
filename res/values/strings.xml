@@ -53,6 +53,7 @@
 	
 	<string name="audio.lastRun.1">Your last run was </string>
 	<string name="audio.lastRun.2">days ago! </string>
+	<string name="audio.lastRunNone">You haven't completed any runs yet!</string>
 	
 	<string name="audio.goalDistance.1">You have completed  </string>
 	<string name="audio.goalDistance.2">percent of your desired monthly distance! </string>
@@ -130,10 +131,12 @@
 	<string name="pref.age">Age</string>
 	<string name="pref.size">Size</string>
 	<string name="pref.sex">Sex</string>
+	<string name="pref.speakStats">Speak statistics</string>
 
 	<string name="pref.userName.summary">Your username for sharing Routes</string>
 	<string name="pref.weight.summary">Your weight in kg</string>
 	<string name="pref.age.summary">Your age in years</string>
-	<string name="pref.size.summary">your size in cm</string>
-	<string name="pref.sex.summary">your sex</string>
+	<string name="pref.size.summary">Your size in cm</string>
+	<string name="pref.sex.summary">Your sex</string>
+	<string name="pref.speakStats.summary">Speak statistics at startup</string>
 </resources>

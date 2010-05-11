@@ -14,14 +14,18 @@
 			android:summary="@string/pref.size.summary" android:defaultValue="180"
 			android:title="@string/pref.size" android:key="size" />
 
-			<ListPreference android:title="@string/pref.sex"
+		<ListPreference android:title="@string/pref.sex"
 			android:summary="@string/pref.sex.summary" android:key="sex"
 			android:defaultValue="Male" android:entries="@array/sex"
 			android:entryValues="@array/sex" />
-		
+
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="@string/pref.category2">
+		<CheckBoxPreference android:name="@string/pref.speakStats" android:title="@string/pref.speakStats"
+			android:defaultValue="true" android:summary="@string/pref.speakStats.summary"
+			android:key="speakStats" />
+			
 		<EditTextPreference android:name="@string/pref.userName"
 			android:summary="@string/pref.userName.summary" android:defaultValue="My User"
 			android:title="@string/pref.userName" android:key="userName" />

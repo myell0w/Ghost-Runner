@@ -317,6 +317,27 @@ public class Date implements Serializable {
 	}
 
 	/**
+	 * Berechnet die Tagesdifferenz zum Ÿbergebenen Datum
+	 * 
+	 * @param d
+	 *            Ein Datum beliebiges Datum
+	 * @return Anzahl an Tagen die zwischen dem Datum und d liegen
+	 */
+	public long getDayDifference(Date d) {
+		Calendar start = date.before(d.date) ? date : d.date;
+		Calendar end = date.before(d.date) ? d.date : date;
+		Calendar date = (Calendar) start.clone();
+		long daysBetween = 0;
+
+		while (date.before(end)) {
+			date.add(Calendar.DAY_OF_MONTH, 1);
+			daysBetween++;
+		}
+		
+		return daysBetween;
+	}
+
+	/**
 	 * String-Darstellung im Default-Format
 	 */
 	@Override
