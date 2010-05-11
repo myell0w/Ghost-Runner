@@ -1,5 +1,6 @@
 package at.ac.tuwien.hci.ghost.ui;
 
+import java.util.List;
 import java.util.Locale;
 
 import android.content.Intent;
@@ -11,7 +12,10 @@ import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
 import android.widget.TabHost;
 import at.ac.tuwien.hci.ghost.R;
+import at.ac.tuwien.hci.ghost.data.dao.GoalDAO;
 import at.ac.tuwien.hci.ghost.data.dao.RunDAO;
+import at.ac.tuwien.hci.ghost.data.entities.Entity;
+import at.ac.tuwien.hci.ghost.data.entities.Goal;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
 import at.ac.tuwien.hci.ghost.ui.goal.GoalsActivity;
 import at.ac.tuwien.hci.ghost.ui.history.HistoryActivity;
@@ -78,23 +82,51 @@ public class MainTabActivity extends android.app.TabActivity implements OnInitLi
 	}
 
 	private void sayStatsAndMotivation() {
-		RunDAO dao = new RunDAO(this);
-		Run lastCompletedRun = dao.getLastCompletedRun();
+		RunDAO runDAO = new RunDAO(this);
+		GoalDAO goalDAO = new GoalDAO(this);
+		Run lastCompletedRun = runDAO.getLastCompletedRun();
 		String lastRunString = "";
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		
+
 		if (prefs.getBoolean("speakStats", true)) {
 			if (lastCompletedRun != null) {
 				long dayDifference = lastCompletedRun.getDate().getDayDifference(new Date());
-				lastRunString = getResources().getString(R.string.audio_lastRun_1) + " " + dayDifference + 
-								" " + getResources().getString(R.string.audio_lastRun_2);
+				lastRunString = getResources().getString(R.string.audio_lastRun_1) + " " + dayDifference + " "
+						+ getResources().getString(R.string.audio_lastRun_2);
 			} else {
 				lastRunString = getResources().getString(R.string.audio_lastRunNone);
 			}
-			
+
 			mTts.speak(lastRunString, TextToSpeech.QUEUE_FLUSH, null);
-			
-			//TODO: speak goal progress
+
+			// TODO: speak goal progress
+			List<Entity> goals = goalDAO.getAll();
+
+			for (Entity e : goals) {
+				if (e instanceof Goal) {
+					Goal g = (Goal) e;
+
+					switch (g.getType()) {
+						case RUNS:
+							mTts.speak(getResources().getString(R.string.audio_goalRuns_1) 
+									   + " " +  g.getProgress() + " " + 
+									   getResources().getString(R.string.audio_goalRuns_2), TextToSpeech.QUEUE_ADD, null);
+							break;
+						
+						case DISTANCE:
+							mTts.speak(getResources().getString(R.string.audio_goalDistance_1) 
+									   + " " +  g.getProgress() + " " + 
+									   getResources().getString(R.string.audio_goalDistance_2), TextToSpeech.QUEUE_ADD, null);
+							break;
+							
+						case CALORIES:
+							mTts.speak(getResources().getString(R.string.audio_goalCalories_1) 
+									   + " " +  g.getProgress() + " " + 
+									   getResources().getString(R.string.audio_goalCalories_2), TextToSpeech.QUEUE_ADD, null);
+							break;
+					}
+				}
+			}
 		}
 	}
 }
