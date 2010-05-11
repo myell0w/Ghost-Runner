@@ -91,8 +91,8 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		currentRun = new Run(1, new Date(), 0, 0, 0, route, null);
 		statistics = new RunStatistics(this);
 
-		mapView.getOverlays().add(new CurrentLocationOverlay(this, mapView));
 		mapView.getOverlays().add(new RouteOverlay(route, currentRun, mapView));
+		mapView.getOverlays().add(new CurrentLocationOverlay(this, mapView));
 
 		gpsListener = new GPSListener(currentRun, mapView);
 		gpsManager = new GPSManager(this);

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Vector;
 
 import android.content.Context;
-import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -15,7 +14,7 @@ import at.ac.tuwien.hci.ghost.observer.Observer;
 import at.ac.tuwien.hci.ghost.observer.Subject;
 
 public class GPSManager implements Subject<Waypoint>, Observer<Waypoint> {
-	private static final double MIN_DISTANCE_IN_METER_BETWEEN_2_WAYPOINTS = 2;
+	private static final double MIN_DISTANCE_IN_METER_BETWEEN_2_WAYPOINTS = 7;
 	
 	/** Context of the GPSManager */
 	private Context context;
