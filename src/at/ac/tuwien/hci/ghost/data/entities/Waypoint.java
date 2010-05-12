@@ -121,4 +121,12 @@ public class Waypoint extends Entity {
 		
 		return false;
 	}
+	
+	public boolean hasAccuracy() {
+		return location.hasAccuracy();
+	}
+
+	public float getAccuracy() {
+		return location.getAccuracy();
+	}
 }

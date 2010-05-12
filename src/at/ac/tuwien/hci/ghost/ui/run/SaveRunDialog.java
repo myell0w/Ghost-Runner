@@ -62,7 +62,7 @@ public class SaveRunDialog extends Dialog {
 			if (routeName != null) {
 				routeName.setVisibility(View.VISIBLE);
 				txtRouteName.setVisibility(View.VISIBLE);
-				routeName.setText(this.getContext().getResources().getString(R.string.routes_defaultName) + " " + new Date().toString("dd.MM.yy"));
+				routeName.setText(this.getContext().getResources().getString(R.string.routes_defaultName) + " " + new Date().toString("dd.MM.yyyy"));
 
 			}
 		}
@@ -79,8 +79,8 @@ public class SaveRunDialog extends Dialog {
 						routeName.setVisibility(View.VISIBLE);
 						txtRouteName.setVisibility(View.VISIBLE);
 					} else {
-						routeName.setVisibility(View.INVISIBLE);
-						txtRouteName.setVisibility(View.INVISIBLE);
+						routeName.setVisibility(View.GONE);
+						txtRouteName.setVisibility(View.GONE);
 					}
 				}
 			});

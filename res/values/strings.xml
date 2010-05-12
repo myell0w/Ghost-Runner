@@ -80,6 +80,7 @@
 	<!-- Run -->
 	<string name="run.gpsSignal">GPS Signal</string>
 	<string name="run.gpsWait">Waiting for GPS Signal...</string>
+	<string name="run.gpsStartAndWait">Start when GPS available</string>
 	<string name="run.start">Start Run</string>
 	<string name="run.stop">Stop Run</string>
 	<string name="run.pause">Pause Run</string>
@@ -102,7 +103,7 @@
 	<string name="routes.noRuns">No Runs!</string>
 	<string name="routes.delete">Delete Route</string>
 	<string name="routes.name">Routename:</string>
-	<string name="routes.defaultName">New</string>
+	<string name="routes.defaultName">Route</string>
 	
 	
 

@@ -7,17 +7,16 @@
 
 	<TableRow>
 		<TextView android:id="@+id/textSaveAsRoute" android:text="@string/run.saveAsRoute"
-			android:layout_marginLeft="15dip" android:layout_gravity="center_vertical" />
-		<CheckBox android:id="@+id/saveAsRoute"
-			 android:layout_marginLeft="10dip" />
+			android:layout_marginLeft="15dip" android:layout_gravity="center_vertical|right" />
+		<CheckBox android:id="@+id/saveAsRoute" android:layout_marginLeft="13dip" />
 	</TableRow>
 
 	<TableRow>
 		<TextView android:id="@+id/textRouteName" android:text="@string/routes.name"
-			android:layout_marginLeft="15dip" android:layout_gravity="center_vertical" />
+			android:layout_marginLeft="15dip" android:layout_gravity="center_vertical|right" />
 		<EditText android:id="@+id/routeName"
-			android:layout_marginLeft="10dip" android:layout_marginRight="5dip" android:layout_gravity="center_vertical"
-			android:text="@string/routes.defaultName" android:selectAllOnFocus="true" />
+			android:layout_marginLeft="13dip" android:layout_marginRight="5dip" android:layout_gravity="center_vertical|left"
+			android:layout_width="fill_parent" android:text="@string/routes.defaultName" android:selectAllOnFocus="true" />
 	</TableRow>
 
 	<TableRow android:layout_marginTop="15dip">

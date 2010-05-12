@@ -1,6 +1,10 @@
 package at.ac.tuwien.hci.ghost.ui.run;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +18,7 @@ import at.ac.tuwien.hci.ghost.TimeManager;
 import at.ac.tuwien.hci.ghost.data.dao.RunDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
+import at.ac.tuwien.hci.ghost.data.entities.Waypoint;
 import at.ac.tuwien.hci.ghost.gps.CurrentLocationOverlay;
 import at.ac.tuwien.hci.ghost.gps.GPSListener;
 import at.ac.tuwien.hci.ghost.gps.GPSManager;
@@ -46,6 +51,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	private MapView mapView = null;
 	private Button buttonStop = null;
 	private Button buttonPause = null;
+	private ProgressDialog progressDialog = null;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -101,10 +107,61 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		gpsManager.addObserver(statistics);
 
 		timeManager = new TimeManager(this);
+		
+		updateUI();
 
+		if (getIntent().getExtras().getFloat(Constants.GPS_SIGNAL) < Constants.GPS_ACCURACY_BAD) {
+			startTracking();
+		} else {
+			showWaitingDialog();
+		}
+	}
+
+	private void startTracking() {
+		// remove temporary observer
+		gpsManager.removeObserver(0);
+		
 		statistics.getTime().start();
 		timeManager.setEnabled(true);
 		timeManager.execute();
+	}
+
+	/**
+	 * Shows a progressdialog, as long as there is no acceptable gps-signal strength
+	 */
+	private void showWaitingDialog() {
+		progressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.run_gpsWait), true);
+		// user can cancel with back-button
+		progressDialog.setCancelable(true);
+		
+		// if the user cancels, finish activity
+		progressDialog.setOnCancelListener(new OnCancelListener() {
+			@Override
+			public void onCancel(DialogInterface dialog) {
+				gpsManager.stop();
+				
+				RunningInfoActivity.this.finish();
+			}	
+		});
+		
+		// listen for new gps-waypoints and check current accuracy
+		gpsManager.addObserver(new Observer<Waypoint>() {
+			@Override
+			public void notify(Waypoint p) {
+				if (progressDialog.isShowing()) {
+					Log.i(getClass().getName(), "Waiting for GPS: current Accuracy: " + p.getAccuracy());
+					
+					// acceptable accuracy found?
+					if (p.hasAccuracy() && p.getAccuracy() < Constants.GPS_ACCURACY_BAD) {
+						// close dialog
+						progressDialog.dismiss();
+						// start gps-tracking
+						startTracking();
+					}	
+				}
+			}
+			
+		});
 	}
 
 	/* Creates the menu items */
@@ -133,7 +190,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	public void onPause() {
 		super.onPause();
 
-		pauseRun();
+		//pauseRun();
 	}
 
 	@Override
@@ -177,8 +234,8 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		updateRunStatistics();
 		gpsManager.stop();
 
-		SaveRunDialog dialog = new SaveRunDialog(this, currentRun, this); 
-        dialog.show(); 
+		SaveRunDialog dialog = new SaveRunDialog(this, currentRun, this);
+		dialog.show();
 	}
 
 	@Override
@@ -226,16 +283,16 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	public void readyToFinishActivity(boolean saveRun, boolean saveRunAsRoute, String routeName) {
 		if (saveRun) {
 			runDAO.insert(currentRun);
-			
+
 			// Show notification
 			Toast toast = Toast.makeText(this, getResources().getString(R.string.run_saved), Toast.LENGTH_LONG);
 			toast.show();
 		}
-		
+
 		if (saveRunAsRoute && routeName != null) {
 			// TODO: save run as route
 		}
-		
+
 		finish();
 	}
 }

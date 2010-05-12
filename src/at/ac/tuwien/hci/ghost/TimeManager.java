@@ -24,15 +24,15 @@ public class TimeManager extends AsyncTask<Void, Void, Void> implements Subject<
 	/** The interval of the timer interrupts */
 	private int interval = 100;
 	/** Observer for the timer */
-	private List<Observer<TimeManager>> observer = null;
+	private List<Observer<TimeManager>> observers = null;
 	/** Lock combined ui condition */
 	private final Lock uiLock = new ReentrantLock();
 	/** signals if the ui callback has been processed */
 	private final Condition uiCond = uiLock.newCondition();
 
 	public TimeManager(Observer<TimeManager> callback) {
-		this.observer = new Vector<Observer<TimeManager>>();
-		this.observer.add(callback);
+		this.observers = new Vector<Observer<TimeManager>>();
+		this.observers.add(callback);
 	}
 
 	public boolean getEnabled() {
@@ -104,13 +104,13 @@ public class TimeManager extends AsyncTask<Void, Void, Void> implements Subject<
 
 	@Override
 	public void addObserver(Observer<TimeManager> o) {
-		observer.add(o);
+		observers.add(o);
 
 	}
 
 	@Override
 	public void notifyAll(TimeManager event) {
-		for (Observer<TimeManager> o : this.observer) {
+		for (Observer<TimeManager> o : this.observers) {
 			o.notify(event);
 		}
 
@@ -118,7 +118,12 @@ public class TimeManager extends AsyncTask<Void, Void, Void> implements Subject<
 
 	@Override
 	public void removeObserver(Observer<TimeManager> o) {
-		observer.remove(o);
+		observers.remove(o);
+	}
+	
+	@Override
+	public void removeObserver(int index) {
+		observers.remove(index);
 	}
 
 }

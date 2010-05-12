@@ -74,34 +74,44 @@ public class GPSManager implements Subject<Waypoint>, Observer<Waypoint> {
 	}
 
 	@Override
-	public void addObserver(Observer<Waypoint> o) {
-		observers.add(o);
-	}
-
-	@Override
-	public void notifyAll(Waypoint event) {
-		for (Observer<Waypoint> o : observers) {
-			o.notify(event);
+	public synchronized void addObserver(Observer<Waypoint> o) {
+		synchronized (observers) {
+			observers.add(o);
 		}
 	}
 
 	@Override
-	public void removeObserver(Observer<Waypoint> o) {
-		observers.remove(o);
+	public synchronized void notifyAll(Waypoint event) {
+		synchronized (observers) {
+			for (Observer<Waypoint> o : observers) {
+				o.notify(event);
+			}
+		}
 	}
 
 	@Override
-	public void notify(Waypoint p) {
+	public synchronized void removeObserver(Observer<Waypoint> o) {
+		synchronized (observers) {
+			observers.remove(o);
+		}
+	}
+
+	@Override
+	public synchronized void removeObserver(int index) {
+		synchronized (observers) {
+			observers.remove(index);
+		}
+	}
+
+	@Override
+	public synchronized void notify(Waypoint p) {
 		if (!waypoints.isEmpty()) {
 			p.calculateSpeed(this.getLastKnownLocation());
 		}
 
-		// if (waypoints.isEmpty() || p.distanceTo(this.getLastKnownLocation())
-		// > MIN_DISTANCE_IN_METER_BETWEEN_2_WAYPOINTS) {
 		waypoints.add(p);
 		notifyAll(p);
 
-		Log.i(getClass().getName(), "New Waypoint: " + p + ", distance: " + p.distanceTo(this.getLastKnownLocation()));
-		// }
+		Log.i(getClass().getName(), "New Waypoint: " + p);
 	}
 }
