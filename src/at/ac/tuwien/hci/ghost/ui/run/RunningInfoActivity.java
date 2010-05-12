@@ -177,7 +177,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		updateRunStatistics();
 		gpsManager.stop();
 
-		SaveRunDialog dialog = new SaveRunDialog(this, true, this); 
+		SaveRunDialog dialog = new SaveRunDialog(this, currentRun, this); 
         dialog.show(); 
 	}
 

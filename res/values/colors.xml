@@ -2,15 +2,15 @@
 
 <resources>
 	<color name="heading">#DDDDDD</color>
-	<color name="listHeading">#CCCCCC</color>
-	<color name="listDetail">#AAAAAA</color>
+	<color name="listHeading">#DDDDDD</color>
+	<color name="listDetail">#CCCCCC</color>
 	<color name="normalText">#AAAAAA</color>
 	<color name="grayBackground">#bcb5b7</color>
 	<color name="historyOverlay">#e7e7e7</color>
 	<color name="historyMonth">#fdfdfd</color>
 	<color name="noGps">#b20a0a</color>
-	<color name="mediumGps">#000077</color>
+	<color name="mediumGps">#ffff00</color>
 	<color name="goodGps">#007700</color>
 	<color name="stop">#007700</color>
-	<color name="pause">#000077</color>	
+	<color name="pause">#ffff00</color>	
 </resources>

@@ -47,8 +47,8 @@ public class HistoryAdapter extends ArrayAdapter<Run> {
 			if (runDate != null) {
 				String date = r.getDate().toString() + ": ";
 
-				if (r.getRoute() != null) {
-					date += getContext().getString(R.string.app_route) + " " + r.getRoute().getName();
+				if (r.hasRoute()) {
+					date += r.getRoute().getName();
 				} else {
 					date += getContext().getString(R.string.history_noRoute);
 				}
@@ -57,7 +57,7 @@ public class HistoryAdapter extends ArrayAdapter<Run> {
 			}
 
 			if (runStats != null) {
-				String stats = r.getDistanceInKm() + " " + getContext().getString(R.string.app_unitDistance) + ", " + r.getTimeString() + " "
+				String stats = String.format("%.2f", r.getDistanceInKm()) + " " + getContext().getString(R.string.app_unitDistance) + ", " + r.getTimeString() + " "
 						+ getContext().getString(R.string.app_unitTime) + ", " + r.getPaceString() + " " + getContext().getString(R.string.app_unitPace);
 				runStats.setText(stats);
 			}

@@ -45,7 +45,7 @@ public class RunAdapter extends ArrayAdapter<Run> {
 			}
 
 			if (runStats != null) {
-				String stats = r.getDistanceInKm() + " " + getContext().getString(R.string.app_unitDistance) + ", " + r.getTimeString() + " "
+				String stats = String.format("%.2f",r.getDistanceInKm()) + " " + getContext().getString(R.string.app_unitDistance) + ", " + r.getTimeString() + " "
 						+ getContext().getString(R.string.app_unitTime) + ", " + r.getPaceString() + " " + getContext().getString(R.string.app_unitPace);
 				runStats.setText(stats);
 			}

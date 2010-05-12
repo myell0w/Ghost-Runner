@@ -32,6 +32,8 @@ public class MainTabActivity extends android.app.TabActivity implements OnInitLi
 
 		// Initialize text-to-speech. This is an asynchronous operation.
 		mTts = new TextToSpeech(this, this);
+		// change formatting of numbers
+		Locale.setDefault(Locale.US);
 
 		final TabHost tabHost = getTabHost();
 		tabHost.addTab(tabHost.newTabSpec("TabRun").setIndicator(this.getResources().getText(R.string.app_tabRun),

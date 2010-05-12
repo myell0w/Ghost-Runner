@@ -205,7 +205,7 @@ public class StartRunActivity extends MapActivity implements OnInitListener, Obs
 			if (accuracy > Constants.GPS_ACCURACY_BAD) {
 				startButton.setTextColor(R.color.noGps);
 				startButton.setText(R.string.run_gpsWait);
-				startButton.setEnabled(false);
+				startButton.setEnabled(true); //TODO: false
 			} else if (accuracy > Constants.GPS_ACCURACY_MEDIUM) {
 				startButton.setTextColor(R.color.mediumGps);
 				startButton.setText(R.string.run_start);
@@ -218,7 +218,7 @@ public class StartRunActivity extends MapActivity implements OnInitListener, Obs
 		} else {
 			startButton.setTextColor(R.color.noGps);
 			startButton.setText(R.string.run_gpsWait);
-			startButton.setEnabled(false);
+			startButton.setEnabled(true); //TODO: false
 		}
 		
 		// redraw button
