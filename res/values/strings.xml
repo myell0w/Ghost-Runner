@@ -89,7 +89,9 @@
 	<string name="run.info"> Show Info </string>
 	
 	<string name="run.save">Save your run?</string>
-	<string name="run.saveAsRoute">Also save run as route ...</string>
+	<string name="run.saveAsRoute"> Save as route</string>
+	<string name="run.saved">Run was saved!</string>
+	
 	
 	<string name="run.selectRoute">Select a Route</string>
 	<string name="run.selectGoal">Select a Goal</string>
@@ -99,6 +101,9 @@
 	<string name="routes.none">No Routes!</string>
 	<string name="routes.noRuns">No Runs!</string>
 	<string name="routes.delete">Delete Route</string>
+	<string name="routes.name">Routename:</string>
+	<string name="routes.defaultName">New</string>
+	
 	
 
 	<!-- History -->

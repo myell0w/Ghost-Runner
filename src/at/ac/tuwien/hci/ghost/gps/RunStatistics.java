@@ -1,8 +1,10 @@
-package at.ac.tuwien.hci.ghost.data.entities;
+package at.ac.tuwien.hci.ghost.gps;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import at.ac.tuwien.hci.ghost.data.entities.RunTime;
+import at.ac.tuwien.hci.ghost.data.entities.Waypoint;
 import at.ac.tuwien.hci.ghost.observer.Observer;
 
 public class RunStatistics implements Observer<Waypoint> {

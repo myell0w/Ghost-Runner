@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android" 
-     android:orientation="vertical" android:stretchColumns="0" 
-     android:layout_gravity="center_vertical|center_horizontal" 
-     android:layout_height="wrap_content" android:layout_width="wrap_content"> 
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:stretchColumns="1"
+	android:layout_gravity="center_vertical|center_horizontal"
+	android:layout_height="wrap_content" android:layout_width="wrap_content">
 
-     <TableRow> 
-          <TextView android:text="@string/run.saveAsRoute" 
-               android:layout_marginLeft="10dip" 
-               android:layout_gravity="center_vertical" /> 
-          <CheckBox android:id="@+id/saveAsRoute" android:layout_gravity="right|top" android:layout_marginRight="10dip" /> 
-     </TableRow> 
-     
-      <TableRow android:layout_marginTop="15dip"> 
-          <Button android:id="@+id/buttonSave" android:text="@string/app.save" 
-               android:layout_height="wrap_content" android:layout_width="0dip" android:layout_weight="1" />
-          <Button android:id="@+id/buttonDiscard" android:text="@string/app.discard" 
-               android:layout_height="wrap_content" android:layout_width="0dip" android:layout_weight="1" />
-     </TableRow> 
+	<TableRow>
+		<TextView android:text="@string/run.saveAsRoute"
+			android:layout_marginLeft="10dip" android:layout_gravity="center_vertical" />
+		<CheckBox android:id="@+id/saveAsRoute"
+			android:layout_gravity="right|top" android:layout_marginRight="10dip" />
+	</TableRow>
+
+	<TableRow>
+		<TextView android:text="@string/routes.name"
+			android:layout_marginLeft="10dip" android:layout_gravity="center_vertical" />
+		<EditText android:id="@+id/routeName"
+			android:layout_marginLeft="10dip" android:layout_gravity="center_vertical"
+			android:text="@string/routes.defaultName" android:selectAllOnFocus="true" />
+	</TableRow>
+
+	<TableRow android:layout_marginTop="15dip">
+		<Button android:id="@+id/buttonSave" android:text="@string/app.save"
+			android:layout_height="wrap_content" android:layout_width="0dip"
+			android:layout_weight="1" />
+		<Button android:id="@+id/buttonDiscard" android:text="@string/app.discard"
+			android:layout_height="wrap_content" android:layout_width="0dip"
+			android:layout_weight="1" />
+	</TableRow>
 </TableLayout> 

@@ -220,5 +220,8 @@ public class StartRunActivity extends MapActivity implements OnInitListener, Obs
 			startButton.setText(R.string.run_gpsWait);
 			startButton.setEnabled(false);
 		}
+		
+		// redraw button
+		startButton.invalidate();
 	}
 }

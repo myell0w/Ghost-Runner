@@ -79,4 +79,16 @@
 	<item name="android:textStyle">bold</item>
 	<item name="android:textColor">@color/noGps</item>
 </style>
+
+<style name="StopRunButton">
+	<item name="android:textSize">17sp</item>
+	<item name="android:textStyle">bold</item>
+	<item name="android:textColor">@color/stop</item>
+</style>
+
+<style name="PauseRunButton">
+	<item name="android:textSize">17sp</item>
+	<item name="android:textStyle">bold</item>
+	<item name="android:textColor">@color/pause</item>
+</style>
 </resources>

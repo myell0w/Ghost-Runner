@@ -11,4 +11,6 @@
 	<color name="noGps">#b20a0a</color>
 	<color name="mediumGps">#ffead043</color>
 	<color name="goodGps">#ff00ff00</color>
+	<color name="stop">#007700</color>
+	<color name="pause">#444400</color>	
 </resources>

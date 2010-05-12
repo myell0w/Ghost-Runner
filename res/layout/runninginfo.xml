@@ -49,10 +49,10 @@
 		android:layout_height="wrap_content" android_orientation="horizontal"
 		android:layout_marginTop="7dip">
 		<Button android:id="@+id/stopRunButton" android:layout_height="wrap_content"
-			android:layout_width="0dp" android:layout_weight="1" android:text="@string/run.stop">
+			android:layout_width="0dp" android:layout_weight="1" android:text="@string/run.stop" style="@style/StopRunButton">
 		</Button>
 		<Button android:id="@+id/pauseRunButton" android:layout_height="wrap_content"
-			android:layout_width="0dp" android:layout_weight="1" android:text="@string/run.pause">
+			android:layout_width="0dp" android:layout_weight="1" android:text="@string/run.pause" style="@style/PauseRunButton">
 		</Button>
 	</LinearLayout>
 

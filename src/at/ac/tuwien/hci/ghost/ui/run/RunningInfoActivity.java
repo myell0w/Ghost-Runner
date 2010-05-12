@@ -8,16 +8,17 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.TimeManager;
 import at.ac.tuwien.hci.ghost.data.dao.RunDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
-import at.ac.tuwien.hci.ghost.data.entities.RunStatistics;
 import at.ac.tuwien.hci.ghost.gps.CurrentLocationOverlay;
 import at.ac.tuwien.hci.ghost.gps.GPSListener;
 import at.ac.tuwien.hci.ghost.gps.GPSManager;
 import at.ac.tuwien.hci.ghost.gps.RouteOverlay;
+import at.ac.tuwien.hci.ghost.gps.RunStatistics;
 import at.ac.tuwien.hci.ghost.observer.Observer;
 import at.ac.tuwien.hci.ghost.ui.run.SaveRunDialog.ReadyListener;
 import at.ac.tuwien.hci.ghost.util.Constants;
@@ -222,12 +223,16 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	}
 
 	@Override
-	public void readyToFinishActivity(boolean saveRun, boolean saveRunAsRoute) {
+	public void readyToFinishActivity(boolean saveRun, boolean saveRunAsRoute, String routeName) {
 		if (saveRun) {
 			runDAO.insert(currentRun);
+			
+			// Show notification
+			Toast toast = Toast.makeText(this, getResources().getString(R.string.run_saved), Toast.LENGTH_LONG);
+			toast.show();
 		}
 		
-		if (saveRunAsRoute) {
+		if (saveRunAsRoute && routeName != null) {
 			// TODO: save run as route
 		}
 		
