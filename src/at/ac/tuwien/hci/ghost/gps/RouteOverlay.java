@@ -68,7 +68,24 @@ public class RouteOverlay extends com.google.android.maps.Overlay {
 
 			paint.setColor(color);
 			paint.setStyle(Paint.Style.STROKE);
-			paint.setStrokeWidth(8);
+			
+			// set width depending on zoom level
+			if (mv.getZoomLevel() < 13) {
+				paint.setStrokeWidth(3);
+			} else if (mv.getZoomLevel() == 13) {
+				paint.setStrokeWidth(5);
+			} else if (mv.getZoomLevel() == 14) {
+				paint.setStrokeWidth(7);
+			} else if (mv.getZoomLevel() == 15) {
+				paint.setStrokeWidth(9);
+			} else if (mv.getZoomLevel() == 16) {
+				paint.setStrokeWidth(11);
+			} else if (mv.getZoomLevel() == 17) {
+				paint.setStrokeWidth(13);
+			} else {
+				paint.setStrokeWidth(15);
+			}
+
 			paint.setStrokeCap(Paint.Cap.ROUND);
 			paint.setStrokeJoin(Paint.Join.ROUND);
 
