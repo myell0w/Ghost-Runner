@@ -1,5 +1,8 @@
 package at.ac.tuwien.hci.ghost.ui.run;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -9,15 +12,20 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.TimeManager;
 import at.ac.tuwien.hci.ghost.data.dao.RunDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
-import at.ac.tuwien.hci.ghost.data.entities.RunStatistics;
+import at.ac.tuwien.hci.ghost.data.entities.Waypoint;
+import at.ac.tuwien.hci.ghost.gps.CurrentLocationOverlay;
 import at.ac.tuwien.hci.ghost.gps.GPSListener;
 import at.ac.tuwien.hci.ghost.gps.GPSManager;
+import at.ac.tuwien.hci.ghost.gps.RouteOverlay;
+import at.ac.tuwien.hci.ghost.gps.RunStatistics;
 import at.ac.tuwien.hci.ghost.observer.Observer;
+import at.ac.tuwien.hci.ghost.ui.run.SaveRunDialog.ReadyListener;
 import at.ac.tuwien.hci.ghost.util.Constants;
 import at.ac.tuwien.hci.ghost.util.Date;
 import at.ac.tuwien.hci.ghost.util.Util;
@@ -25,14 +33,14 @@ import at.ac.tuwien.hci.ghost.util.Util;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 
-public class RunningInfoActivity extends MapActivity implements Observer<TimeManager> {
+public class RunningInfoActivity extends MapActivity implements Observer<TimeManager>, ReadyListener {
 	private Run currentRun = null;
 	/** statistics for current run */
 	private RunStatistics statistics = null;
 	private Route route = null;
 	private TimeManager timeManager = null;
 	private GPSManager gpsManager = null;
-	private GPSListener gpsListener  = null;
+	private GPSListener gpsListener = null;
 	private RunDAO runDAO = null;
 
 	private TextView textPace = null;
@@ -43,6 +51,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	private MapView mapView = null;
 	private Button buttonStop = null;
 	private Button buttonPause = null;
+	private ProgressDialog progressDialog = null;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -51,8 +60,8 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		setContentView(R.layout.runninginfo);
 
 		runDAO = new RunDAO(this);
-		route = (Route)getIntent().getExtras().get(Constants.ROUTE);
-		
+		route = (Route) getIntent().getExtras().get(Constants.ROUTE);
+
 		// get view outlets
 		textPace = (TextView) findViewById(R.id.pace);
 		textElapsedTime = (TextView) findViewById(R.id.elapsedTime);
@@ -65,7 +74,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		mapView = (MapView) findViewById(R.id.overviewMap);
 		mapView.setBuiltInZoomControls(true);
 		mapView.getController().setZoom(Constants.DEFAULT_ZOOM_LEVEL);
-		
+
 		if (route != null) {
 			textRoute.setText(getResources().getString(R.string.app_route) + ": " + route.getName());
 		} else {
@@ -86,24 +95,75 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		});
 
 		// initialize entities
-		currentRun = new Run(1, new Date(), 0, 0, 0, route);
+		currentRun = new Run(1, new Date(), 0, 0, 0, route, null);
 		statistics = new RunStatistics(this);
-		
-		mapView.getOverlays().add(new CurrentLocationOverlay(this, mapView));
+
 		mapView.getOverlays().add(new RouteOverlay(route, currentRun, mapView));
+		mapView.getOverlays().add(new CurrentLocationOverlay(this, mapView));
 
 		gpsListener = new GPSListener(currentRun, mapView);
 		gpsManager = new GPSManager(this);
 		gpsManager.addObserver(gpsListener);
 		gpsManager.addObserver(statistics);
-		
-		timeManager = new TimeManager(this);
 
+		timeManager = new TimeManager(this);
+		
+		updateUI();
+
+		if (getIntent().getExtras().getFloat(Constants.GPS_SIGNAL) < Constants.GPS_ACCURACY_BAD) {
+			startTracking();
+		} else {
+			showWaitingDialog();
+		}
+	}
+
+	private void startTracking() {
+		// remove temporary observer
+		gpsManager.removeObserver(0);
+		
 		statistics.getTime().start();
 		timeManager.setEnabled(true);
 		timeManager.execute();
 	}
-	
+
+	/**
+	 * Shows a progressdialog, as long as there is no acceptable gps-signal strength
+	 */
+	private void showWaitingDialog() {
+		progressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.run_gpsWait), true);
+		// user can cancel with back-button
+		progressDialog.setCancelable(true);
+		
+		// if the user cancels, finish activity
+		progressDialog.setOnCancelListener(new OnCancelListener() {
+			@Override
+			public void onCancel(DialogInterface dialog) {
+				gpsManager.stop();
+				
+				RunningInfoActivity.this.finish();
+			}	
+		});
+		
+		// listen for new gps-waypoints and check current accuracy
+		gpsManager.addObserver(new Observer<Waypoint>() {
+			@Override
+			public void notify(Waypoint p) {
+				if (progressDialog.isShowing()) {
+					Log.i(getClass().getName(), "Waiting for GPS: current Accuracy: " + p.getAccuracy());
+					
+					// acceptable accuracy found?
+					if (p.hasAccuracy() && p.getAccuracy() < Constants.GPS_ACCURACY_BAD) {
+						// close dialog
+						progressDialog.dismiss();
+						// start gps-tracking
+						startTracking();
+					}	
+				}
+			}
+			
+		});
+	}
+
 	/* Creates the menu items */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -120,19 +180,19 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		}
 
 		switch (item.getItemId()) {
-		
+
 		}
 
 		return false;
 	}
-	
+
 	@Override
 	public void onPause() {
 		super.onPause();
-		
-		pauseRun();
+
+		//pauseRun();
 	}
-	
+
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -140,13 +200,13 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-	    if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-	        stopRun();
-	    }
-	    
-	    return super.onKeyDown(keyCode, event);
+		if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+			stopRun();
+		}
+
+		return super.onKeyDown(keyCode, event);
 	}
-	
+
 	protected void buttonPauseClicked(View v) {
 		if (statistics.getTime().isPaused()) {
 			continueRun();
@@ -154,7 +214,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 			pauseRun();
 		}
 	}
-	
+
 	protected void buttonStopClicked(View v) {
 		stopRun();
 	}
@@ -172,14 +232,10 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	private void stopRun() {
 		statistics.getTime().pause();
 		updateRunStatistics();
-		
-		runDAO.insert(currentRun);
-		
 		gpsManager.stop();
-		
-		Log.i(getClass().getName(), "Run saved: " + currentRun);
-		
-		this.finish();
+
+		SaveRunDialog dialog = new SaveRunDialog(this, currentRun, this);
+		dialog.show();
 	}
 
 	@Override
@@ -193,7 +249,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	 */
 	private void updateRunStatistics() {
 		currentRun.setTimeInSeconds(statistics.getTime().getDurationInSeconds());
-		currentRun.setCalories((int)statistics.getCalories());
+		currentRun.setCalories((int) statistics.getCalories());
 		currentRun.setDistanceInKm(statistics.getDistanceInKm());
 		currentRun.setPace(statistics.getAveragePace());
 		currentRun.setSpeed(statistics.getAverageSpeed());
@@ -213,12 +269,30 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		textElapsedTime.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
 		textPace.setText(String.format("%02.2f", pace) + "\n" + getResources().getString(R.string.app_unitPace));
 		textDistance.setText(String.format("%2.2f", distance) + "\n" + getResources().getString(R.string.app_unitDistance));
-		textCalories.setText(getResources().getString(R.string.app_calories) + ": " + String.format("%2.0f", calories) + " " + getResources().getString(R.string.app_unitCalories));
+		textCalories.setText(getResources().getString(R.string.app_calories) + ": " + String.format("%2.0f", calories) + " "
+				+ getResources().getString(R.string.app_unitCalories));
 	}
 
 	@Override
 	public void notify(TimeManager param) {
 		updateRunStatistics();
 		updateUI();
+	}
+
+	@Override
+	public void readyToFinishActivity(boolean saveRun, boolean saveRunAsRoute, String routeName) {
+		if (saveRun) {
+			runDAO.insert(currentRun);
+
+			// Show notification
+			Toast toast = Toast.makeText(this, getResources().getString(R.string.run_saved), Toast.LENGTH_LONG);
+			toast.show();
+		}
+
+		if (saveRunAsRoute && routeName != null) {
+			// TODO: save run as route
+		}
+
+		finish();
 	}
 }

@@ -24,8 +24,10 @@ import at.ac.tuwien.hci.ghost.data.dao.RouteDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
 import at.ac.tuwien.hci.ghost.data.entities.Waypoint;
+import at.ac.tuwien.hci.ghost.gps.CurrentLocationOverlay;
 import at.ac.tuwien.hci.ghost.gps.GPSListener;
 import at.ac.tuwien.hci.ghost.gps.GPSManager;
+import at.ac.tuwien.hci.ghost.gps.RouteOverlay;
 import at.ac.tuwien.hci.ghost.observer.Observer;
 import at.ac.tuwien.hci.ghost.util.Constants;
 import at.ac.tuwien.hci.ghost.util.Util;
@@ -45,6 +47,7 @@ public class StartRunActivity extends MapActivity implements OnInitListener, Obs
 	private MapView mapView = null;
 	private TextToSpeech tts = null;
 	private GPSManager gpsManager = null;
+	private float gpsAccuracy = Constants.GPS_ACCURACY_BAD + 1;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -156,6 +159,7 @@ public class StartRunActivity extends MapActivity implements OnInitListener, Obs
 		Intent runningInfoIntent = new Intent(this, RunningInfoActivity.class);
 
 		runningInfoIntent.putExtra(Constants.ROUTE, r);
+		runningInfoIntent.putExtra(Constants.GPS_SIGNAL, gpsAccuracy);
 
 		gpsManager.stop();
 		tts.speak(getResources().getString(R.string.audio_startRun), TextToSpeech.QUEUE_FLUSH, null);
@@ -196,20 +200,32 @@ public class StartRunActivity extends MapActivity implements OnInitListener, Obs
 		mapView.getController().animateTo(p.getGeoPoint());
 		
 		if (p.getLocation().hasAccuracy()) {
-			float accuracy = p.getLocation().getAccuracy();
+			gpsAccuracy = p.getLocation().getAccuracy();
 			
-			Log.i(getClass().getName(),"New Location with Accuracy " + accuracy);
+			Log.i(getClass().getName(),"New Location with Accuracy " + gpsAccuracy);
 			
-			if (accuracy > Constants.GPS_ACCURACY_BAD) {
+			if (gpsAccuracy > Constants.GPS_ACCURACY_BAD) {
 				startButton.setTextColor(R.color.noGps);
-			} else if (accuracy > Constants.GPS_ACCURACY_MEDIUM) {
+				startButton.setText(R.string.run_gpsStartAndWait);
+				//startButton.setEnabled(false);
+			} else if (gpsAccuracy > Constants.GPS_ACCURACY_MEDIUM) {
 				startButton.setTextColor(R.color.mediumGps);
+				startButton.setText(R.string.run_start);
+				//startButton.setEnabled(true);
 			} else {
 				startButton.setTextColor(R.color.goodGps);
-			}
-			
+				startButton.setText(R.string.run_start);
+				//startButton.setEnabled(true);
+			}		
 		} else {
+			gpsAccuracy = Constants.GPS_ACCURACY_BAD + 1;
+			
 			startButton.setTextColor(R.color.noGps);
+			startButton.setText(R.string.run_gpsWait);
+			//startButton.setEnabled(false);
 		}
+		
+		// redraw button
+		startButton.invalidate();
 	}
 }

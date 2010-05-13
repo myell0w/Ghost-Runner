@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Vector;
 
 import android.content.Context;
-import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -15,8 +14,6 @@ import at.ac.tuwien.hci.ghost.observer.Observer;
 import at.ac.tuwien.hci.ghost.observer.Subject;
 
 public class GPSManager implements Subject<Waypoint>, Observer<Waypoint> {
-	private static final double MIN_DISTANCE_IN_METER_BETWEEN_2_WAYPOINTS = 2;
-	
 	/** Context of the GPSManager */
 	private Context context;
 	/** The associated location manager */
@@ -43,11 +40,11 @@ public class GPSManager implements Subject<Waypoint>, Observer<Waypoint> {
 		else
 			return null;
 	}
-	
+
 	public void stop() {
 		locationManager.removeUpdates(locationListener);
 	}
-	
+
 	private class MyLocationListener implements LocationListener {
 		private Observer<Waypoint> gpsRecorder;
 
@@ -77,34 +74,44 @@ public class GPSManager implements Subject<Waypoint>, Observer<Waypoint> {
 	}
 
 	@Override
-	public void addObserver(Observer<Waypoint> o) {
-		observers.add(o);
-	}
-
-	@Override
-	public void notifyAll(Waypoint event) {
-		for (Observer<Waypoint> o : observers) {
-			o.notify(event);
+	public synchronized void addObserver(Observer<Waypoint> o) {
+		synchronized (observers) {
+			observers.add(o);
 		}
 	}
 
 	@Override
-	public void removeObserver(Observer<Waypoint> o) {
-		observers.remove(o);
+	public synchronized void notifyAll(Waypoint event) {
+		synchronized (observers) {
+			for (Observer<Waypoint> o : observers) {
+				o.notify(event);
+			}
+		}
 	}
 
 	@Override
-	public void notify(Waypoint p) {
-		// distance between two locations must be bigger than 1 meter
+	public synchronized void removeObserver(Observer<Waypoint> o) {
+		synchronized (observers) {
+			observers.remove(o);
+		}
+	}
+
+	@Override
+	public synchronized void removeObserver(int index) {
+		synchronized (observers) {
+			observers.remove(index);
+		}
+	}
+
+	@Override
+	public synchronized void notify(Waypoint p) {
 		if (!waypoints.isEmpty()) {
 			p.calculateSpeed(this.getLastKnownLocation());
 		}
 
-		if (waypoints.isEmpty() || p.distanceTo(this.getLastKnownLocation()) > MIN_DISTANCE_IN_METER_BETWEEN_2_WAYPOINTS) {
-			waypoints.add(p);
-			notifyAll(p);
-			
-			Log.i(getClass().getName(), "New Waypoint: " + p + ", distance: " + p.distanceTo(this.getLastKnownLocation()));
-		}
+		waypoints.add(p);
+		notifyAll(p);
+
+		Log.i(getClass().getName(), "New Waypoint: " + p);
 	}
 }

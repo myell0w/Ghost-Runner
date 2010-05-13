@@ -3,6 +3,7 @@ package at.ac.tuwien.hci.ghost.util;
 public interface Constants {
 	public static final String ROUTE = "at.ac.tuwien.hci.ghost.Route";
 	public static final String RUN = "at.ac.tuwien.hci.ghost.Run";
+	public static final String GPS_SIGNAL = "at.ac.tuwien.hci.ghost.Gps_Signal";
 
 	/** database constants */
 	public static final String DB_TABLE_GOALS = "Goals";
@@ -73,6 +74,6 @@ public interface Constants {
 	public static final int DEFAULT_ZOOM_LEVEL = 15;
 	
 	/** GPS Accuracy Levels */
-	public static final float GPS_ACCURACY_BAD = 40;
+	public static final float GPS_ACCURACY_BAD = 140;
 	public static final float GPS_ACCURACY_MEDIUM = 20;
 }

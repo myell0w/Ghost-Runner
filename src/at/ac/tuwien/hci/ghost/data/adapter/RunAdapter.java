@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
@@ -31,11 +32,20 @@ public class RunAdapter extends ArrayAdapter<Run> {
 		Run r = runs.get(position);
 
 		if (r != null) {
+			ImageView runIcon = (ImageView) v.findViewById(R.id.runIcon);
 			TextView runStats = (TextView) v.findViewById(R.id.runStat);
 			TextView runDate = (TextView) v.findViewById(R.id.runDate);
+			
+			if (runIcon != null) {
+				int imageId = r.getPerformanceImageResourceId();
+				
+				if (imageId != -1) {
+					runIcon.setImageResource(imageId);
+				}
+			}
 
 			if (runStats != null) {
-				String stats = r.getDistanceInKm() + " " + getContext().getString(R.string.app_unitDistance) + ", " + r.getTimeString() + " "
+				String stats = String.format("%.2f",r.getDistanceInKm()) + " " + getContext().getString(R.string.app_unitDistance) + ", " + r.getTimeString() + " "
 						+ getContext().getString(R.string.app_unitTime) + ", " + r.getPaceString() + " " + getContext().getString(R.string.app_unitPace);
 				runStats.setText(stats);
 			}

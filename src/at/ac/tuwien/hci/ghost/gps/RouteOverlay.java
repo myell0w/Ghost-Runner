@@ -1,4 +1,4 @@
-package at.ac.tuwien.hci.ghost.ui.run;
+package at.ac.tuwien.hci.ghost.gps;
 
 import java.util.List;
 import java.util.Vector;
@@ -6,6 +6,7 @@ import java.util.Vector;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Point;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
@@ -62,27 +63,46 @@ public class RouteOverlay extends com.google.android.maps.Overlay {
 
 	public void drawPath(MapView mv, Canvas canvas, List<GeoPoint> points, int color) {
 		if (points != null && !points.isEmpty()) {
-			int x1 = -1, y1 = -1, x2 = -1, y2 = -1;
 			Paint paint = new Paint();
+			Path path = new Path();
 
 			paint.setColor(color);
 			paint.setStyle(Paint.Style.STROKE);
-			paint.setStrokeWidth(3);
+			
+			// set width depending on zoom level
+			if (mv.getZoomLevel() < 13) {
+				paint.setStrokeWidth(3);
+			} else if (mv.getZoomLevel() == 13) {
+				paint.setStrokeWidth(5);
+			} else if (mv.getZoomLevel() == 14) {
+				paint.setStrokeWidth(7);
+			} else if (mv.getZoomLevel() == 15) {
+				paint.setStrokeWidth(9);
+			} else if (mv.getZoomLevel() == 16) {
+				paint.setStrokeWidth(11);
+			} else if (mv.getZoomLevel() == 17) {
+				paint.setStrokeWidth(13);
+			} else {
+				paint.setStrokeWidth(15);
+			}
+
+			paint.setStrokeCap(Paint.Cap.ROUND);
+			paint.setStrokeJoin(Paint.Join.ROUND);
 
 			for (int i = 0; i < points.size(); i++) {
 				Point point = new Point();
 
 				mv.getProjection().toPixels(points.get(i), point);
-				x2 = point.x;
-				y2 = point.y;
-
-				if (i > 0) {
-					canvas.drawLine(x1, y1, x2, y2, paint);
+				
+				// move to first position, the draw line to others
+				if (i == 0) {
+					path.moveTo(point.x, point.y);
+				} else {
+					path.lineTo(point.x, point.y);
 				}
-
-				x1 = x2;
-				y1 = y2;
 			}
+			
+			canvas.drawPath(path, paint);
 		}
 	}
 }

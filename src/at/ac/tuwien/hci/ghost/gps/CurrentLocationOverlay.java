@@ -1,4 +1,4 @@
-package at.ac.tuwien.hci.ghost.ui.run;
+package at.ac.tuwien.hci.ghost.gps;
 
 import android.content.Context;
 

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:stretchColumns="1"
+	android:layout_gravity="center_vertical|center_horizontal"
+	android:layout_height="wrap_content" android:layout_width="wrap_content">
+
+	<TableRow>
+		<TextView android:id="@+id/textSaveAsRoute" android:text="@string/run.saveAsRoute"
+			android:layout_marginLeft="15dip" android:layout_gravity="center_vertical|right" />
+		<CheckBox android:id="@+id/saveAsRoute" android:layout_marginLeft="13dip" />
+	</TableRow>
+
+	<TableRow>
+		<TextView android:id="@+id/textRouteName" android:text="@string/routes.name"
+			android:layout_marginLeft="15dip" android:layout_gravity="center_vertical|right" />
+		<EditText android:id="@+id/routeName"
+			android:layout_marginLeft="13dip" android:layout_marginRight="5dip" android:layout_gravity="center_vertical|left"
+			android:layout_width="fill_parent" android:text="@string/routes.defaultName" android:selectAllOnFocus="true" />
+	</TableRow>
+
+	<TableRow android:layout_marginTop="15dip">
+		<Button android:id="@+id/buttonSave" android:text="@string/app.save"
+			android:layout_height="wrap_content" android:layout_width="0dip"
+			android:layout_weight="1" />
+		<Button android:id="@+id/buttonDiscard" android:text="@string/app.discard"
+			android:layout_height="wrap_content" android:layout_width="0dip"
+			android:layout_weight="1" />
+	</TableRow>
+</TableLayout> 

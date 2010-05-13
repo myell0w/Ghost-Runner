@@ -10,6 +10,7 @@ import android.util.Log;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
+import at.ac.tuwien.hci.ghost.data.entities.Run.Performance;
 import at.ac.tuwien.hci.ghost.util.Constants;
 import at.ac.tuwien.hci.ghost.util.Date;
 
@@ -53,9 +54,9 @@ public class RunDAO extends DataAccessObject {
 		/* TODO remove stub shit */
 		if (runs == null)
 			runs = new ArrayList<Entity>();
-		runs.add(new Run(3, new Date(2, 3, 2010, 14, 20), 5600, 12.56f, 423, null));
-		runs.add(new Run(4, new Date(3, 3, 2010, 17, 22), 7600, 23.56f, 523, null));
-		runs.add(new Run(5, new Date(4, 3, 2010, 12, 00), 1600, 2.56f, 623, null));
+		runs.add(new Run(3, new Date(2, 3, 2010, 14, 20), 5600, 12.56f, 423, null, Performance.WORSE_THAN_AVERAGE));
+		runs.add(new Run(4, new Date(3, 3, 2010, 17, 22), 7600, 23.56f, 523, null, Performance.AVERAGE));
+		runs.add(new Run(5, new Date(4, 3, 2010, 12, 00), 1600, 2.56f, 623, null, Performance.BETTER_THAN_AVERAGE));
 
 		return runs;
 	}
@@ -78,6 +79,7 @@ public class RunDAO extends DataAccessObject {
 	protected List<Entity> search(String selection, String orderBy) {
 		List<Entity> runs = new ArrayList<Entity>();
 
+		// TODO gerdschi: das feld performance im Run befüllen (besser/durchschnitt/schlechter)
 		try {
 			Cursor cursor = null;
 			cursor = ghostDB.query(Constants.DB_TABLE_RUNS, new String[] { Constants.DB_RUNS_COLUMN_ID, Constants.DB_RUNS_COLUMN_DATE,
@@ -135,6 +137,11 @@ public class RunDAO extends DataAccessObject {
 		long timeEnd = dateEnd.getAsJavaDefaultDate().getTime();
 		return entitiesToRuns(search(Constants.DB_RUNS_COLUMN_DATE + " BETWEEN " + timeStart + " AND " + timeEnd, null));
 	}
+	
+	public Run getLastCompletedRun() {
+		// TODO gerdschi
+		return null;
+	}
 
 	/**
 	 * Inserts a specific run
@@ -146,6 +153,9 @@ public class RunDAO extends DataAccessObject {
 	@Override
 	public long insert(Entity entity) {
 		long result;
+		
+		// TODO gerdschi: das feld performance speichern (besser/durchschnitt/schlechter)
+		
 		try {
 			Run run = (Run) entity;
 			ContentValues values = new ContentValues();
@@ -209,6 +219,9 @@ public class RunDAO extends DataAccessObject {
 	@Override
 	public boolean update(Entity entity) {
 		boolean result = false;
+		
+		// TODO gerdschi: das feld performance updaten (besser/durchschnitt/schlechter)
+		
 		try {
 			Run run = (Run) entity;
 			ContentValues values = new ContentValues();

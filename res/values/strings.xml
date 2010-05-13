@@ -10,6 +10,9 @@
 
 	<string name="app.name">GhostRunner</string>
 	<string name="app.mapKey">0wJX1d5k44xaJGN8HcVAOCITMkj4Zd8uE_JWlFg</string>
+	
+	<string name="app.save">Save</string>
+	<string name="app.discard">Discard</string>
 
 	<string name="app.tabRun">Run</string>
 	<string name="app.tabRoutes">Routes</string>
@@ -39,13 +42,45 @@
 	
 	
 	<!-- Audio Outputs -->
+	<string name="audio.unitHours">hours</string>
+	<string name="audio.unitMinutes">minutes</string>
+	<string name="audio.unitSeconds">seconds</string>
+	<string name="audio.unitDistance">kilometers</string>
+	<string name="audio.unitPace">minutes per kilometer</string>
+	<string name="audio.unitCalories">kilocalories</string>
+	<string name="audio.unitSpeed">kilometer per hour</string>
+	
 	<string name="audio.startRun">Activity Started!</string>
 	<string name="audio.pauseRun">Activity Paused!</string>
 	<string name="audio.stopRun">Activity Finished!</string>
 	
+	<string name="audio.lastRun.1">Your last run was </string>
+	<string name="audio.lastRun.2">days ago! </string>
+	<string name="audio.lastRunNone">You haven't completed any runs yet!</string>
+	
+	<string name="audio.goalDistance.1">You have completed  </string>
+	<string name="audio.goalDistance.2">percent of your desired monthly distance! </string>
+	<string name="audio.goalRuns.1">You have completed  </string>
+	<string name="audio.goalRuns.2">percent of your desired monthly runs! </string>
+	<string name="audio.goalCalories.1">You have completed  </string>
+	<string name="audio.goalCalories.2">percent of your desired monthly calories! </string>
+	
+	<string name="audio.ghostBehind.1">You are </string>
+	<string name="audio.ghostBehind.2">behind your best ghost-run! </string>
+	<string name="audio.ghostAhead.1">You are </string>
+	<string name="audio.ghostAhead.2">ahead of your best ghost-run! </string>
+	<string name="audio.ghostEqual.1">You are matching your best ghost-run! </string>
+	
+	<string name="audio.averagePace">Average pace: </string>
+	<string name="audio.averageSpeed">Average speed: </string>
+	<string name="audio.currentDistance">Current distance: </string>
+	
+	<string name="audio.motivation1">Well done!</string>
 
 	<!-- Run -->
 	<string name="run.gpsSignal">GPS Signal</string>
+	<string name="run.gpsWait">Waiting for GPS Signal...</string>
+	<string name="run.gpsStartAndWait">Start when GPS available</string>
 	<string name="run.start">Start Run</string>
 	<string name="run.stop">Stop Run</string>
 	<string name="run.pause">Pause Run</string>
@@ -53,12 +88,23 @@
 
 	<string name="run.map"> Show Map </string>
 	<string name="run.info"> Show Info </string>
+	
+	<string name="run.save">Save your run?</string>
+	<string name="run.saveAsRoute"> Save as route</string>
+	<string name="run.saved">Run was saved!</string>
+	
+	
+	<string name="run.selectRoute">Select a Route</string>
+	<string name="run.selectGoal">Select a Goal</string>
 
 	<!-- Routes -->
 	<string name="routes.runs">Runs</string>
 	<string name="routes.none">No Routes!</string>
 	<string name="routes.noRuns">No Runs!</string>
 	<string name="routes.delete">Delete Route</string>
+	<string name="routes.name">Routename:</string>
+	<string name="routes.defaultName">Route</string>
+	
 	
 
 	<!-- History -->
@@ -94,17 +140,19 @@
 
 	<!-- Preferences -->
 	<string name="pref.category1">Body info</string>
-	<string name="pref.category2">Sharing info</string>
+	<string name="pref.category2">General statistics</string>
 
 	<string name="pref.userName">Username</string>
 	<string name="pref.weight">Weight</string>
 	<string name="pref.age">Age</string>
 	<string name="pref.size">Size</string>
 	<string name="pref.sex">Sex</string>
+	<string name="pref.speakStats">Speak statistics</string>
 
 	<string name="pref.userName.summary">Your username for sharing Routes</string>
 	<string name="pref.weight.summary">Your weight in kg</string>
 	<string name="pref.age.summary">Your age in years</string>
-	<string name="pref.size.summary">your size in cm</string>
-	<string name="pref.sex.summary">your sex</string>
+	<string name="pref.size.summary">Your size in cm</string>
+	<string name="pref.sex.summary">Your sex</string>
+	<string name="pref.speakStats.summary">Speak statistics at startup</string>
 </resources>
