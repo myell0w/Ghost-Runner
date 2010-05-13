@@ -112,7 +112,7 @@ public class RunDAO extends DataAccessObject {
 		return runs;
 	}
 
-	private List<Run> entitiesToRuns(List<Entity> entities) {
+	public List<Run> entitiesToRuns(List<Entity> entities) {
 		List<Run> runs = new ArrayList<Run>();
 		for (Entity e : entities) {
 			if (e instanceof Run) {
@@ -180,6 +180,19 @@ public class RunDAO extends DataAccessObject {
 			result = ghostDB.delete(Constants.DB_TABLE_RUNS, Constants.DB_RUNS_COLUMN_ID + "=" + id, null) > 0;
 		} catch (Exception e) {
 			Log.e(RunDAO.class.toString(), "Error delete(): " + e.toString());
+			result = false;
+		}
+		return result;
+	}
+	
+	public boolean deleteAll() {
+		boolean result = false;
+		try {
+			result = ghostDB.delete(Constants.DB_TABLE_RUNS, "1=1", null) > 0;
+			System.out.println("ERROR'S HERE");
+		} catch(Exception e) {
+			System.out.println("ERROR: " + e.toString());
+			Log.e(RunDAO.class.toString(), "Error deleteAll(): " + e.toString());
 			result = false;
 		}
 		return result;
