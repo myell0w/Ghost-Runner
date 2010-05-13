@@ -139,8 +139,13 @@ public class RunDAO extends DataAccessObject {
 	}
 	
 	public Run getLastCompletedRun() {
-		// TODO gerdschi
-		return null;
+		Run run = null;
+
+		List<Entity> runs = search(Constants.DB_RUNS_COLUMN_DATE + " = (SELECT MAX(" + Constants.DB_RUNS_COLUMN_DATE + ") FROM " + Constants.DB_TABLE_RUNS + ")", null);
+		if (runs != null && !runs.isEmpty())
+			run = (Run) runs.get(0);
+
+		return run;
 	}
 
 	/**
