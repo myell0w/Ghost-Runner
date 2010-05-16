@@ -1,13 +1,9 @@
 package at.ac.tuwien.hci.ghost.ui.run;
 
 import java.util.List;
-import java.util.Locale;
 
 import android.content.Intent;
-import android.media.AudioManager;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
-import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,7 +21,6 @@ import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
 import at.ac.tuwien.hci.ghost.data.entities.Waypoint;
 import at.ac.tuwien.hci.ghost.gps.CurrentLocationOverlay;
-import at.ac.tuwien.hci.ghost.gps.GPSListener;
 import at.ac.tuwien.hci.ghost.gps.GPSManager;
 import at.ac.tuwien.hci.ghost.gps.RouteOverlay;
 import at.ac.tuwien.hci.ghost.observer.Observer;
@@ -36,7 +31,7 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 
-public class StartRunActivity extends MapActivity implements OnInitListener, Observer<Waypoint> {
+public class StartRunActivity extends MapActivity implements Observer<Waypoint> {
 	private DataAccessObject dao = null;
 	private List<Entity> routes = null;
 	private ArrayAdapter<Route> routeAdapter = null;
@@ -45,7 +40,6 @@ public class StartRunActivity extends MapActivity implements OnInitListener, Obs
 	private Spinner selectedGoal = null;
 	private Button startButton = null;
 	private MapView mapView = null;
-	private TextToSpeech tts = null;
 	private GPSManager gpsManager = null;
 	private float gpsAccuracy = Constants.GPS_ACCURACY_BAD + 1;
 
@@ -54,11 +48,6 @@ public class StartRunActivity extends MapActivity implements OnInitListener, Obs
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.startrun);
-
-		// always change Media Volume
-		this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
-		// Initialize text-to-speech. This is an asynchronous operation.
-		tts = new TextToSpeech(this, this);
 
 		dao = new RouteDAO(this);
 
@@ -162,38 +151,10 @@ public class StartRunActivity extends MapActivity implements OnInitListener, Obs
 		runningInfoIntent.putExtra(Constants.GPS_SIGNAL, gpsAccuracy);
 
 		gpsManager.stop();
-		tts.speak(getResources().getString(R.string.audio_startRun), TextToSpeech.QUEUE_FLUSH, null);
 		
 		this.startActivity(runningInfoIntent);
 	}
 
-	@Override
-	public void onDestroy() {
-		// Don't forget to shutdown!
-		if (tts != null) {
-			tts.stop();
-			tts.shutdown();
-		}
-
-		super.onDestroy();
-	}
-
-	// Implements TextToSpeech.OnInitListener.
-	public void onInit(int status) {
-		// status can be either TextToSpeech.SUCCESS or TextToSpeech.ERROR.
-		if (status == TextToSpeech.SUCCESS) {
-			// Set preferred language to US english.
-			int result = tts.setLanguage(Locale.US);
-
-			if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-				// Lanuage data is missing or the language is not supported.
-				Log.e(getClass().getName(), "Language is not available.");
-			}
-		} else {
-			// Initialization failed.
-			Log.e(getClass().getName(), "Could not initialize TextToSpeech.");
-		}
-	}
 
 	@Override
 	public void notify(Waypoint p) {

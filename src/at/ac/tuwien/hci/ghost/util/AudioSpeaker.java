@@ -1,12 +1,12 @@
 package at.ac.tuwien.hci.ghost.util;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
-import at.ac.tuwien.hci.ghost.R;
 
 /**
  * Text-To-Speech-Wrapper
@@ -14,7 +14,9 @@ import at.ac.tuwien.hci.ghost.R;
  * @author Matthias
  *
  */
-public class AudioSpeaker implements OnInitListener {
+public class AudioSpeaker implements OnInitListener, Serializable {
+	private static final long serialVersionUID = -5049952095081885738L;
+	
 	private TextToSpeech tts;
 	private InitListener initListener;
 	
@@ -53,7 +55,8 @@ public class AudioSpeaker implements OnInitListener {
 				// Lanuage data is missing or the language is not supported.
 				Log.e(getClass().getName(), "Language is not available.");
 			} else {
-				initListener.initFinished();
+				if (initListener != null)
+					initListener.initFinished();
 			}
 		} else {
 			// Initialization failed.

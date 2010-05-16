@@ -5,12 +5,17 @@ import java.util.List;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.View.OnCreateContextMenuListener;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import at.ac.tuwien.hci.ghost.R;
+import at.ac.tuwien.hci.ghost.data.adapter.RouteAdapter;
 import at.ac.tuwien.hci.ghost.data.adapter.RunAdapter;
 import at.ac.tuwien.hci.ghost.data.dao.DataAccessObject;
 import at.ac.tuwien.hci.ghost.data.dao.RouteDAO;
@@ -23,20 +28,19 @@ import at.ac.tuwien.hci.ghost.util.Util;
 
 public class AllRunsOfRouteActivity extends ListActivity {
 	private static final int VIEW_RUN_DETAIL = 1;
-
-	/** menu constans */
-	private final int MENU_DELETE = 101;
+	
 
 	/** the route */
 	private Route route = null;
 	/** all routes */
 	private List<Run> runs = null;
 	/** DAO for retrieving Routes */
-	private DataAccessObject dao = null;
+	private DataAccessObject runDao = null;
 
 	private DataAccessObject routeDao = null;
 	/** Adapter for combining Entities and ListView */
 	private RunAdapter adapter = null;
+	private ListView listView = null;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -47,7 +51,7 @@ public class AllRunsOfRouteActivity extends ListActivity {
 		route = (Route) getIntent().getExtras().getSerializable(Constants.ROUTE);
 
 		// create dao-objects
-		dao = new RunDAO(this);
+		runDao = new RunDAO(this);
 		routeDao = new RouteDAO(this);
 		// get all routes
 		runs = getAllRuns();
@@ -59,10 +63,20 @@ public class AllRunsOfRouteActivity extends ListActivity {
 
 		TextView heading = (TextView) this.findViewById(R.id.routeHeading);
 		heading.setText(route.getName());
+		
+		listView = (ListView) findViewById(android.R.id.list);
+
+		listView.setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
+			@Override
+			public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+				menu.setHeaderTitle(R.string.app_contextMenuTitle);
+				menu.add(0, Constants.MENU_DELETE, 0, R.string.run_delete);
+			}
+		});
 	}
 
 	private List<Run> getAllRuns() {
-		return ((RunDAO) dao).getAllRunsOfRoute(route);
+		return ((RunDAO) runDao).getAllRunsOfRoute(route);
 	}
 
 	@Override
@@ -89,7 +103,7 @@ public class AllRunsOfRouteActivity extends ListActivity {
 	/* Creates the menu items */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(0, MENU_DELETE, 0, getResources().getString(R.string.routes_delete)).setIcon(android.R.drawable.ic_menu_delete);
+		menu.add(0, Constants.MENU_DELETE, 0, getResources().getString(R.string.routes_delete)).setIcon(android.R.drawable.ic_menu_delete);
 		Util.onCreateOptionsMenu(this, menu);
 
 		return true;
@@ -103,11 +117,29 @@ public class AllRunsOfRouteActivity extends ListActivity {
 		}
 
 		switch (item.getItemId()) {
-		case MENU_DELETE:
+		case Constants.MENU_DELETE:
 			routeDao.delete(route.getID());
 			finish();
 			return true;
 		}
+		return false;
+	}
+	
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item.getMenuInfo(); 
+		
+		switch (item.getItemId()) {
+		case Constants.MENU_DELETE:
+			runDao.delete(runs.get(menuInfo.position).getID());
+			runs.remove(menuInfo.position);
+			
+			adapter = new RunAdapter(this, R.layout.allrunsofroute_listitem, runs);
+			this.setListAdapter(adapter);
+			
+			return true;
+		}
+
 		return false;
 	}
 }

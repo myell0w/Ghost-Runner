@@ -9,11 +9,8 @@ import android.content.pm.ResolveInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import at.ac.tuwien.hci.ghost.R;
-import at.ac.tuwien.hci.ghost.data.dao.GoalDAO;
-import at.ac.tuwien.hci.ghost.data.entities.Goal;
 import at.ac.tuwien.hci.ghost.ui.PreferenceActivity;
 import at.ac.tuwien.hci.ghost.ui.WeatherActivity;
-import at.ac.tuwien.hci.ghost.ui.goal.NewGoalActivity;
 
 public class Util {
 

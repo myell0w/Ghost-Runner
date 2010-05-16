@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
@@ -34,13 +35,15 @@ public class MainTabActivity extends android.app.TabActivity implements InitList
 		speaker = new AudioSpeaker(this,this);
 		// change formatting of numbers
 		Locale.setDefault(Locale.US);
+		// always change Media Volume
+		this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
 		final TabHost tabHost = getTabHost();
 		tabHost.addTab(tabHost.newTabSpec("TabRun").setIndicator(this.getResources().getText(R.string.app_tabRun),
 				this.getResources().getDrawable(R.drawable.tab_run)).setContent(new Intent(this, StartRunActivity.class)));
 
 		tabHost.addTab(tabHost.newTabSpec("TabRoutes").setIndicator(this.getResources().getText(R.string.app_tabRoutes),
-				this.getResources().getDrawable(R.drawable.tab_routes)).setContent(new Intent(this, RoutesActivity.class)));
+				this.getResources().getDrawable(R.drawable.tab_routes)).setContent(new Intent(this, RoutesActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)));
 
 		// This tab sets the intent flag so that it is recreated each time the
 		// tab is clicked

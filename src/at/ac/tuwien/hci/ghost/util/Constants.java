@@ -4,7 +4,9 @@ public interface Constants {
 	public static final String ROUTE = "at.ac.tuwien.hci.ghost.Route";
 	public static final String RUN = "at.ac.tuwien.hci.ghost.Run";
 	public static final String GPS_SIGNAL = "at.ac.tuwien.hci.ghost.Gps_Signal";
+	public static final String AUDIO_SPEAKER = "at.ac.tuwien.hci.ghost.util.AudioSpeaker";
 
+	
 	/** database constants */
 	public static final String DB_TABLE_GOALS = "Goals";
 	public static final String DB_GOALS_COLUMN_ID = "id";
@@ -69,6 +71,7 @@ public interface Constants {
 	public static final int MENU_SETTINGS = 102;
 	public static final int MENU_WEATHER = 103;
 	public static final int MENU_NEW_GOAL = 104;
+	public static final int MENU_DELETE = 105;
 	
 	/** Map Zoom Level */
 	public static final int DEFAULT_ZOOM_LEVEL = 15;

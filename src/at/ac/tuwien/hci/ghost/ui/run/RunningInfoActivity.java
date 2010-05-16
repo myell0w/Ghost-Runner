@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -27,6 +28,7 @@ import at.ac.tuwien.hci.ghost.gps.RouteOverlay;
 import at.ac.tuwien.hci.ghost.gps.RunStatistics;
 import at.ac.tuwien.hci.ghost.observer.Observer;
 import at.ac.tuwien.hci.ghost.ui.run.SaveRunDialog.ReadyListener;
+import at.ac.tuwien.hci.ghost.util.AudioSpeaker;
 import at.ac.tuwien.hci.ghost.util.Constants;
 import at.ac.tuwien.hci.ghost.util.Date;
 import at.ac.tuwien.hci.ghost.util.Util;
@@ -54,6 +56,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	private Button buttonStop = null;
 	private Button buttonPause = null;
 	private ProgressDialog progressDialog = null;
+	private AudioSpeaker speaker = null;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -61,6 +64,8 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.runninginfo);
 
+		speaker = new AudioSpeaker(this,null);
+		
 		runDAO = new RunDAO(this);
 		routeDAO = new RouteDAO(this);
 		route = (Route) getIntent().getExtras().get(Constants.ROUTE);
@@ -127,6 +132,8 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		statistics.getTime().start();
 		timeManager.setEnabled(true);
 		timeManager.execute();
+		
+		speaker.speak(getResources().getString(R.string.audio_startRun), TextToSpeech.QUEUE_FLUSH);
 	}
 
 	/**

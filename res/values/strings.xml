@@ -13,6 +13,7 @@
 	
 	<string name="app.save">Save</string>
 	<string name="app.discard">Discard</string>
+	<string name="app.contextMenuTitle">Edit</string>
 
 	<string name="app.tabRun">Run</string>
 	<string name="app.tabRoutes">Routes</string>
@@ -93,8 +94,7 @@
 	<string name="run.saveAsRoute"> Save as route</string>
 	<string name="run.saved">Run was saved!</string>
 	<string name="runAndRoute.saved">Run and Route were saved!</string>
-
-	
+	<string name="run.delete">Delete Run</string>
 	
 	<string name="run.selectRoute">Select a Route</string>
 	<string name="run.selectGoal">Select a Goal</string>
