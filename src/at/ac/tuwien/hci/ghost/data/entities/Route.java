@@ -20,7 +20,7 @@ public class Route extends Entity {
 	/** name of the route */
 	private String name = null;
 	/** distance of the route */
-	private float distance = 0.0f;
+	private float distanceInKm = 0.0f;
 	/** number of runs on this route */
 	private int runCount = 0;
 	/** all waypoints of the route */
@@ -36,7 +36,7 @@ public class Route extends Entity {
 	public Route(long id, String name, float distance, int runCount) {
 		this.id = id;
 		this.name = name;
-		this.distance = distance;
+		this.distanceInKm = distance;
 		this.runCount = runCount;
 		
 		waypoints = new Vector<Waypoint>();
@@ -62,12 +62,12 @@ public class Route extends Entity {
 		this.name = name;
 	}
 
-	public float getDistance() {
-		return distance;
+	public float getDistanceInKm() {
+		return distanceInKm;
 	}
 
-	public void setDistance(float distance) {
-		this.distance = distance;
+	public void setDistanceInKm(float distance) {
+		this.distanceInKm = distance;
 	}
 
 	public int getRunCount() {

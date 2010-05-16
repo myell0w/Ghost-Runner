@@ -77,7 +77,7 @@ public class RouteDAO extends DataAccessObject {
 				if (cursor.moveToFirst()) {
 					do {
 						Route route = new Route(cursor.getLong(0));
-						route.setDistance(cursor.getFloat(1));
+						route.setDistanceInKm(cursor.getFloat(1));
 						route.setName(cursor.getString(2));
 						route.setRunCount(cursor.getInt(3));
 
@@ -106,7 +106,7 @@ public class RouteDAO extends DataAccessObject {
 		try {
 			Route route = (Route) entity;
 			ContentValues values = new ContentValues();
-			values.put(Constants.DB_ROUTES_COLUMN_DISTANCE, route.getDistance());
+			values.put(Constants.DB_ROUTES_COLUMN_DISTANCE, route.getDistanceInKm());
 			if (route.getName() != null)
 				values.put(Constants.DB_ROUTES_COLUMN_NAME, route.getName());
 			values.put(Constants.DB_ROUTES_COLUMN_RUNCOUNT, route.getRunCount());
@@ -151,7 +151,7 @@ public class RouteDAO extends DataAccessObject {
 		try {
 			Route route = (Route) entity;
 			ContentValues values = new ContentValues();
-			values.put(Constants.DB_ROUTES_COLUMN_DISTANCE, route.getDistance());
+			values.put(Constants.DB_ROUTES_COLUMN_DISTANCE, route.getDistanceInKm());
 			if (route.getName() != null)
 				values.put(Constants.DB_ROUTES_COLUMN_NAME, route.getName());
 			values.put(Constants.DB_ROUTES_COLUMN_RUNCOUNT, route.getRunCount());

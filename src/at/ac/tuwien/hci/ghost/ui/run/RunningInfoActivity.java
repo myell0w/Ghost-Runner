@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import at.ac.tuwien.hci.ghost.R;
@@ -47,6 +48,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	private RunDAO runDAO = null;
 	private RouteDAO routeDAO = null;
 
+	private LinearLayout layout = null;
 	private TextView textPace = null;
 	private TextView textElapsedTime = null;
 	private TextView textDistance = null;
@@ -71,6 +73,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		route = (Route) getIntent().getExtras().get(Constants.ROUTE);
 
 		// get view outlets
+		layout = (LinearLayout) findViewById(R.id.runningInfo);
 		textPace = (TextView) findViewById(R.id.pace);
 		textElapsedTime = (TextView) findViewById(R.id.elapsedTime);
 		textDistance = (TextView) findViewById(R.id.distance);
@@ -281,6 +284,30 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		textDistance.setText(String.format("%2.2f", distance) + "\n" + getResources().getString(R.string.app_unitDistance));
 		textCalories.setText(getResources().getString(R.string.app_calories) + ": " + String.format("%2.0f", calories) + " "
 				+ getResources().getString(R.string.app_unitCalories));
+		
+		// update progress of run, change image
+		if (currentRun.hasRoute()) {
+			float progress =  currentRun.getDistanceInKm() / currentRun.getRoute().getDistanceInKm();
+			
+			if (progress > 0.95f) {
+				// 100 %
+				layout.setBackgroundResource(R.drawable.runninginfo_4);
+			} else if (progress > 0.75f) {
+				// 75 %
+				layout.setBackgroundResource(R.drawable.runninginfo_3);
+			} else if (progress > 0.5f) {
+				// 50 %
+				layout.setBackgroundResource(R.drawable.runninginfo_2);
+			} else if (progress > 0.25f) {
+				// 25 %
+				layout.setBackgroundResource(R.drawable.runninginfo_1);
+			} else {
+				// 0 %
+				layout.setBackgroundResource(R.drawable.runninginfo);
+			}
+			
+			layout.invalidate();
+		}
 	}
 
 	@Override
@@ -314,8 +341,10 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		}
 		
 		// Show notification
-		Toast toast = Toast.makeText(this, getResources().getString(toastId), Toast.LENGTH_LONG);
-		toast.show();
+		if (toastId != -1) {
+			Toast toast = Toast.makeText(this, getResources().getString(toastId), Toast.LENGTH_LONG);
+			toast.show();
+		}
 
 		finish();
 	}

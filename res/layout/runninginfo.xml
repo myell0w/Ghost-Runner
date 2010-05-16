@@ -24,7 +24,7 @@
 	</LinearLayout>
 
 	<!-- unterer Block mit restlichen Infos -->
-	<LinearLayout android:layout_width="fill_parent"
+	<LinearLayout android:id="@+id/runningInfo" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:orientation="vertical"
 		android:background="@drawable/runninginfo">
 		<TextView android:id="@+id/route" android:text="@string/app.route"
