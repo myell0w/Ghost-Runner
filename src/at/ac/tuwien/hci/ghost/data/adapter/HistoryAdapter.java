@@ -45,7 +45,7 @@ public class HistoryAdapter extends ArrayAdapter<Run> {
 			}
 			
 			if (runDate != null) {
-				String date = r.getDate().toString() + ": ";
+				String date = r.getDate().toString() + " - ";
 
 				if (r.hasRoute()) {
 					date += r.getRoute().getName();

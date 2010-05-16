@@ -87,9 +87,7 @@ public class Date implements Serializable {
 	}
 
 	public Date(int day, int month, int year, int hour, int minute) {
-		set(day, month, year);
-		setHour(hour);
-		setMinute(minute);
+		set(day, month, year,hour,minute);
 	}
 
 	/**
@@ -103,7 +101,7 @@ public class Date implements Serializable {
 	 *            Das Jahr
 	 */
 	public Date(int day, int month, int year) {
-		set(day, month, year);
+		set(day, month, year,0,0);
 	}
 
 	/**
@@ -145,18 +143,7 @@ public class Date implements Serializable {
 	 */
 	@SuppressWarnings("deprecation")
 	public void set(java.util.Date date) {
-		set(date.getDate(), date.getMonth() + 1, date.getYear() + 1900);
-	}
-
-	/**
-	 * setzt das Datum neu
-	 * 
-	 * @param date
-	 *            Das gewŸnschte Datum als SQL-Datum
-	 */
-	@SuppressWarnings("deprecation")
-	public void set(java.sql.Date date) {
-		set(date.getDate(), date.getMonth() + 1, date.getYear() + 1900);
+		set(date.getDate(), date.getMonth() + 1, date.getYear() + 1900, date.getHours(), date.getMinutes());
 	}
 
 	/**
@@ -166,7 +153,7 @@ public class Date implements Serializable {
 	 *            Das gewŸnschte Datum als GregorianCalendar
 	 */
 	public void set(GregorianCalendar date) {
-		set(date.get(Calendar.DAY_OF_MONTH), date.get(Calendar.MONTH), date.get(Calendar.YEAR));
+		set(date.get(Calendar.DAY_OF_MONTH), date.get(Calendar.MONTH), date.get(Calendar.YEAR), date.get(Calendar.HOUR), date.get(Calendar.MINUTE));
 	}
 
 	/**
@@ -189,10 +176,12 @@ public class Date implements Serializable {
 	 * @param year
 	 *            Das Jahr
 	 */
-	public void set(int day, int month, int year) {
+	public void set(int day, int month, int year, int hour, int minute) {
 		// Monat wird in GregorianCalender mit 0 = JŠnner, 11 = Dezember
 		// gespeichert ==> -1
 		this.date = new GregorianCalendar(year, month - 1, day);
+		setHour(hour);
+		setMinute(minute);
 	}
 
 	/**

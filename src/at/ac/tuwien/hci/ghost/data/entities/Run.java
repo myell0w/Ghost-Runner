@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Vector;
 
 import at.ac.tuwien.hci.ghost.R;
-import at.ac.tuwien.hci.ghost.data.entities.Goal.Type;
 import at.ac.tuwien.hci.ghost.util.Date;
 
 public class Run extends Entity {
 	private static final long serialVersionUID = 3050093983774457949L;
+	private static final float MAX_PACE = 999;
 
 	public enum Performance {
 		WORSE_THAN_AVERAGE, AVERAGE, BETTER_THAN_AVERAGE;
@@ -176,12 +176,16 @@ public class Run extends Entity {
 	}
 
 	public static String getPaceString(float pace) {
-		int minutes = (int) pace;
-		float secondsFactor = pace - minutes;
-		int seconds = Math.round(secondsFactor * 60);
-		String secondsString = seconds < 10 ? "0" + seconds : String.valueOf(seconds);
+		if (pace < MAX_PACE) {
+			int minutes = (int) pace;
+			float secondsFactor = pace - minutes;
+			int seconds = Math.round(secondsFactor * 60);
+			String secondsString = seconds < 10 ? "0" + seconds : String.valueOf(seconds);
 
-		return minutes + ":" + secondsString;
+			return minutes + ":" + secondsString;
+		}
+		
+		return "-";
 	}
 
 	@Override

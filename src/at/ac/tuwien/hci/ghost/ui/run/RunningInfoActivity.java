@@ -97,6 +97,9 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		// initialize entities
 		currentRun = new Run(1, new Date(), 0, 0, 0, route, null);
 		statistics = new RunStatistics(this);
+		
+		System.out.println("*****************************************************Date: " + currentRun.getDate().toFullString());
+		System.out.println("*****************************************************Date2: " + new Date(currentRun.getDate().getAsJavaDefaultDate().getTime()).toFullString());
 
 		mapView.getOverlays().add(new RouteOverlay(route, currentRun, mapView));
 		mapView.getOverlays().add(new CurrentLocationOverlay(this, mapView));

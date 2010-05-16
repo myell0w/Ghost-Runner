@@ -16,11 +16,8 @@ import android.widget.TextView;
 import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.data.adapter.HistoryAdapter;
 import at.ac.tuwien.hci.ghost.data.dao.DataAccessObject;
-import at.ac.tuwien.hci.ghost.data.dao.GoalDAO;
 import at.ac.tuwien.hci.ghost.data.dao.RunDAO;
-import at.ac.tuwien.hci.ghost.data.entities.Goal;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
-import at.ac.tuwien.hci.ghost.ui.goal.NewGoalActivity;
 import at.ac.tuwien.hci.ghost.ui.run.RunDetailsActivity;
 import at.ac.tuwien.hci.ghost.util.Constants;
 import at.ac.tuwien.hci.ghost.util.Date;
@@ -81,8 +78,8 @@ public class HistoryActivity extends ListActivity {
 
 	private List<Run> getRunsInMonth(int month, int year) {
 		List<Run> ret=((RunDAO) dao).getAllRunsInMonth(month, year);
-
 		TextView monthName = (TextView) findViewById(R.id.monthName);
+		
 		switch(month) {
 		case 1: monthName.setText(getResources().getString(R.string.history_jan)); break;
 		case 2: monthName.setText(getResources().getString(R.string.history_feb)); break;
@@ -98,12 +95,14 @@ public class HistoryActivity extends ListActivity {
 		case 12: monthName.setText(getResources().getString(R.string.history_dec)); break;
 		default: monthName.setText("Error");
 		}
+		
 		monthName.setText(monthName.getText() + " " + String.valueOf(year));
 
 		//TODO: set Distance, avg Pace & Calories
 		float totalDistance=0, totalTimeInSeconds=0;
 		int totalCalories=0;
-		for(Run r:ret) {
+		
+		for(Run r : ret) {
 			totalDistance += r.getDistanceInKm();
 			totalTimeInSeconds += r.getTime();
 			totalCalories += r.getCalories();
