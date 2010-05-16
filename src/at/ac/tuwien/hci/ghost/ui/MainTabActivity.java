@@ -8,8 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
-import android.speech.tts.TextToSpeech.OnInitListener;
-import android.util.Log;
 import android.widget.TabHost;
 import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.data.dao.GoalDAO;
@@ -21,17 +19,19 @@ import at.ac.tuwien.hci.ghost.ui.goal.GoalsActivity;
 import at.ac.tuwien.hci.ghost.ui.history.HistoryActivity;
 import at.ac.tuwien.hci.ghost.ui.route.RoutesActivity;
 import at.ac.tuwien.hci.ghost.ui.run.StartRunActivity;
+import at.ac.tuwien.hci.ghost.util.AudioSpeaker;
 import at.ac.tuwien.hci.ghost.util.Date;
+import at.ac.tuwien.hci.ghost.util.AudioSpeaker.InitListener;
 
-public class MainTabActivity extends android.app.TabActivity implements OnInitListener {
-	private TextToSpeech mTts;
+public class MainTabActivity extends android.app.TabActivity implements InitListener {
+	private AudioSpeaker speaker = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// Initialize text-to-speech. This is an asynchronous operation.
-		mTts = new TextToSpeech(this, this);
+		// init TTS
+		speaker = new AudioSpeaker(this,this);
 		// change formatting of numbers
 		Locale.setDefault(Locale.US);
 
@@ -54,33 +54,9 @@ public class MainTabActivity extends android.app.TabActivity implements OnInitLi
 
 	@Override
 	public void onDestroy() {
-		// Don't forget to shutdown!
-		if (mTts != null) {
-			mTts.stop();
-			mTts.shutdown();
-		}
+		speaker.shutdown();
 
 		super.onDestroy();
-	}
-
-	// Implements TextToSpeech.OnInitListener.
-	public void onInit(int status) {
-		// status can be either TextToSpeech.SUCCESS or TextToSpeech.ERROR.
-		if (status == TextToSpeech.SUCCESS) {
-			// Set preferred language to US english.
-			int result = mTts.setLanguage(Locale.US);
-
-			if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-				// Lanuage data is missing or the language is not supported.
-				Log.e(getClass().getName(), "Language is not available.");
-			} else {
-				// Greet the user.
-				sayStatsAndMotivation();
-			}
-		} else {
-			// Initialization failed.
-			Log.e(getClass().getName(), "Could not initialize TextToSpeech.");
-		}
 	}
 
 	private void sayStatsAndMotivation() {
@@ -99,7 +75,7 @@ public class MainTabActivity extends android.app.TabActivity implements OnInitLi
 				lastRunString = getResources().getString(R.string.audio_lastRunNone);
 			}
 
-			mTts.speak(lastRunString, TextToSpeech.QUEUE_FLUSH, null);
+			speaker.speak(lastRunString, TextToSpeech.QUEUE_FLUSH);
 
 			// TODO: speak goal progress
 			List<Entity> goals = goalDAO.getAll();
@@ -110,25 +86,30 @@ public class MainTabActivity extends android.app.TabActivity implements OnInitLi
 
 					switch (g.getType()) {
 						case RUNS:
-							mTts.speak(getResources().getString(R.string.audio_goalRuns_1) 
+							speaker.speak(getResources().getString(R.string.audio_goalRuns_1) 
 									   + " " +  g.getProgress() + " " + 
-									   getResources().getString(R.string.audio_goalRuns_2), TextToSpeech.QUEUE_ADD, null);
+									   getResources().getString(R.string.audio_goalRuns_2));
 							break;
 						
 						case DISTANCE:
-							mTts.speak(getResources().getString(R.string.audio_goalDistance_1) 
+							speaker.speak(getResources().getString(R.string.audio_goalDistance_1) 
 									   + " " +  g.getProgress() + " " + 
-									   getResources().getString(R.string.audio_goalDistance_2), TextToSpeech.QUEUE_ADD, null);
+									   getResources().getString(R.string.audio_goalDistance_2));
 							break;
 							
 						case CALORIES:
-							mTts.speak(getResources().getString(R.string.audio_goalCalories_1) 
+							speaker.speak(getResources().getString(R.string.audio_goalCalories_1) 
 									   + " " +  g.getProgress() + " " + 
-									   getResources().getString(R.string.audio_goalCalories_2), TextToSpeech.QUEUE_ADD, null);
+									   getResources().getString(R.string.audio_goalCalories_2));
 							break;
 					}
 				}
 			}
 		}
+	}
+
+	@Override
+	public void initFinished() {
+		sayStatsAndMotivation();
 	}
 }
