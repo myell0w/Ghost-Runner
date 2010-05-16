@@ -121,6 +121,7 @@ public class RunDAO extends DataAccessObject {
 				runs.add((Run) e);
 			}
 		}
+		
 		return runs;
 	}
 

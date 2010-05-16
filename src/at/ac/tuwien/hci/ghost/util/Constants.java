@@ -74,6 +74,7 @@ public interface Constants {
 	public static final int DEFAULT_ZOOM_LEVEL = 15;
 	
 	/** GPS Accuracy Levels */
+	//TODO: set values accurate
 	public static final float GPS_ACCURACY_BAD = 1140; // 40
 	public static final float GPS_ACCURACY_MEDIUM = 320; //20
 }

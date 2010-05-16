@@ -323,7 +323,7 @@ public class Date implements Serializable {
 			daysBetween++;
 		}
 		
-		return daysBetween;
+		return daysBetween - 1;
 	}
 
 	/**

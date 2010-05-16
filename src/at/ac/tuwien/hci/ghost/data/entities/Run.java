@@ -211,6 +211,6 @@ public class Run extends Entity {
 			}
 		}
 
-		return -1;
+		return R.drawable.indicator_none;
 	}
 }

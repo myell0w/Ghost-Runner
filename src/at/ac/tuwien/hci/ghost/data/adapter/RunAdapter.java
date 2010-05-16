@@ -39,9 +39,8 @@ public class RunAdapter extends ArrayAdapter<Run> {
 			if (runIcon != null) {
 				int imageId = r.getPerformanceImageResourceId();
 				
-				if (imageId != -1) {
-					runIcon.setImageResource(imageId);
-				}
+				runIcon.setImageResource(imageId);
+				runIcon.invalidate();
 			}
 
 			if (runStats != null) {
