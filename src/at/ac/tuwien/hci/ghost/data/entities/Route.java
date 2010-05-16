@@ -100,6 +100,10 @@ public class Route extends Entity {
 		return waypoints;
 	}
 	
+	public void setWaypoints(List<Waypoint> waypoints) {
+		this.waypoints = waypoints;
+	}
+	
 	@Override
 	public boolean equals(Object o) {
 		if (o instanceof Route) {

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.TimeManager;
+import at.ac.tuwien.hci.ghost.data.dao.RouteDAO;
 import at.ac.tuwien.hci.ghost.data.dao.RunDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
@@ -42,6 +43,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	private GPSManager gpsManager = null;
 	private GPSListener gpsListener = null;
 	private RunDAO runDAO = null;
+	private RouteDAO routeDAO = null;
 
 	private TextView textPace = null;
 	private TextView textElapsedTime = null;
@@ -60,6 +62,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		setContentView(R.layout.runninginfo);
 
 		runDAO = new RunDAO(this);
+		routeDAO = new RouteDAO(this);
 		route = (Route) getIntent().getExtras().get(Constants.ROUTE);
 
 		// get view outlets
@@ -98,9 +101,6 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		currentRun = new Run(1, new Date(), 0, 0, 0, route, null);
 		statistics = new RunStatistics(this);
 		
-		System.out.println("*****************************************************Date: " + currentRun.getDate().toFullString());
-		System.out.println("*****************************************************Date2: " + new Date(currentRun.getDate().getAsJavaDefaultDate().getTime()).toFullString());
-
 		mapView.getOverlays().add(new RouteOverlay(route, currentRun, mapView));
 		mapView.getOverlays().add(new CurrentLocationOverlay(this, mapView));
 
@@ -284,17 +284,31 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 
 	@Override
 	public void readyToFinishActivity(boolean saveRun, boolean saveRunAsRoute, String routeName) {
-		if (saveRun) {
-			runDAO.insert(currentRun);
-
-			// Show notification
-			Toast toast = Toast.makeText(this, getResources().getString(R.string.run_saved), Toast.LENGTH_LONG);
-			toast.show();
-		}
-
+		int toastId = -1;
+		Route r = null;
+		
+		// save the route
 		if (saveRunAsRoute && routeName != null) {
-			// TODO: save run as route
+			r = new Route(1, routeName, currentRun.getDistanceInKm(), 1);
+			
+			r.setWaypoints(currentRun.getWaypoints());
+			r.setID(routeDAO.insert(r));
 		}
+		
+		// save the run
+		if (saveRun) {
+			currentRun.setRoute(r);
+			currentRun.setID(runDAO.insert(currentRun));
+			toastId = R.string.run_saved;
+		}
+		
+		if (saveRunAsRoute && routeName != null) {
+			toastId = R.string.runAndRoute_saved;
+		}
+		
+		// Show notification
+		Toast toast = Toast.makeText(this, getResources().getString(toastId), Toast.LENGTH_LONG);
+		toast.show();
 
 		finish();
 	}

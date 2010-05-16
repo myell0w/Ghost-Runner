@@ -92,6 +92,8 @@
 	<string name="run.save">Save your run?</string>
 	<string name="run.saveAsRoute"> Save as route</string>
 	<string name="run.saved">Run was saved!</string>
+	<string name="runAndRoute.saved">Run and Route were saved!</string>
+
 	
 	
 	<string name="run.selectRoute">Select a Route</string>
