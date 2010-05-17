@@ -104,8 +104,12 @@ public class RunDAO extends DataAccessObject {
 						else { // set route object to empty route
 							run.setRoute(Route.getEmptyRoute());
 						}
+						// set waypoints of this run
 						List<Waypoint> waypoints = waypointDAO.getAllWaypointsOfRun(run.getID());
 						run.setWaypoints(waypoints);
+						
+						// set performance indicator of this run
+						run.setPerformance(calculatePerformance(run));
 
 						runs.add(run);
 					} while (cursor.moveToNext());
@@ -119,7 +123,14 @@ public class RunDAO extends DataAccessObject {
 		return runs;
 	}
 
-	public List<Run> entitiesToRuns(List<Entity> entities) {
+	/**
+	 * Converts a list of entities to a list of Runs
+	 * 
+	 * @param entities
+	 *            The list
+	 * @return list of runs
+	 */
+	private List<Run> entitiesToRuns(List<Entity> entities) {
 		List<Run> runs = new ArrayList<Run>();
 		for (Entity e : entities) {
 			if (e instanceof Run) {
@@ -130,12 +141,28 @@ public class RunDAO extends DataAccessObject {
 		return runs;
 	}
 
+	/**
+	 * Returns all runs of a route
+	 * 
+	 * @param route
+	 *            the route
+	 * @return list of runs of the given <i>route</i>
+	 */
 	public List<Run> getAllRunsOfRoute(Route route) {
 		if (route != null)
 			return entitiesToRuns(search(Constants.DB_RUNS_COLUMN_ROUTEID + "=" + route.getID(), null));
 		return null;
 	}
 
+	/**
+	 * Returns all runs of one month from (including) first to last day of month
+	 * 
+	 * @param month
+	 *            the month from 1 to 12
+	 * @param year
+	 * 			  the year
+	 * @return list of runs
+	 */
 	public List<Run> getAllRunsInMonth(int month, int year) {
 		Date dateStart = new Date(1, month, year, 0, 0);
 		Date dateEnd = new Date(1, (month == 12 ? 1 : month + 1), (month == 12 ? year + 1 : year), 0, 0);
@@ -144,6 +171,11 @@ public class RunDAO extends DataAccessObject {
 		return entitiesToRuns(search(Constants.DB_RUNS_COLUMN_DATE + " BETWEEN " + timeStart + " AND " + timeEnd, null));
 	}
 	
+	/**
+	 * Returns the last completed run, i.e. the run with max date
+	 * 
+	 * @return the last completed run
+	 */
 	public Run getLastCompletedRun() {
 		Run run = null;
 
@@ -164,8 +196,6 @@ public class RunDAO extends DataAccessObject {
 	@Override
 	public long insert(Entity entity) {
 		long result;
-		
-		// TODO gerdschi: das feld performance speichern (besser/durchschnitt/schlechter)
 		
 		try {
 			Run run = (Run) entity;
@@ -221,8 +251,6 @@ public class RunDAO extends DataAccessObject {
 	public boolean update(Entity entity) {
 		boolean result = false;
 		
-		// TODO gerdschi: das feld performance updaten (besser/durchschnitt/schlechter)
-		
 		try {
 			Run run = (Run) entity;
 			ContentValues values = new ContentValues();
@@ -243,5 +271,34 @@ public class RunDAO extends DataAccessObject {
 			result = false;
 		}
 		return result;
+	}
+	
+	/**
+	 * Calculates the performance of this run, compared to other runs of the same route
+	 * 
+	 * @param run
+	 *            the run
+	 * @return Performance indicator
+	 */
+	private Performance calculatePerformance(Run run)
+	{
+		Performance performance = null;
+		if (run.getRoute() != null && !run.getRoute().equals(Route.getEmptyRoute())) // do nothing for empty route
+		{
+			float sumPace = 0;
+			List<Run> runs = getAllRunsOfRoute(run.getRoute());
+			for(Run r:runs)
+			{
+				sumPace += r.getPace();
+			}
+			
+			if((sumPace/runs.size()) < run.getPace()) // worse than average
+				performance = Performance.WORSE_THAN_AVERAGE;
+			else if((sumPace/runs.size()) > run.getPace()) // better than average
+				performance = Performance.BETTER_THAN_AVERAGE;
+			else
+				performance = Performance.AVERAGE; // TODO shouldn't there be a gap for tolerance?
+		}
+		return performance;
 	}
 }
