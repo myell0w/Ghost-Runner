@@ -109,6 +109,8 @@ public class MainTabActivity extends android.app.TabActivity implements InitList
 				}
 			}
 		}
+		
+		speaker.shutdown();
 	}
 
 	@Override
