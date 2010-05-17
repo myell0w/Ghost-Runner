@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
@@ -15,8 +14,8 @@ import at.ac.tuwien.hci.ghost.util.Constants;
 
 public class GoalDAO extends DataAccessObject {
 
-	public GoalDAO(Context context) {
-		super(context);
+	public GoalDAO() {
+		super();
 	}
 
 	/**
@@ -66,7 +65,7 @@ public class GoalDAO extends DataAccessObject {
 		List<Entity> goals = new ArrayList<Entity>();
 		try {
 			Cursor cursor = null;
-			cursor = ghostDB.query(Constants.DB_TABLE_GOALS, new String[] { Constants.DB_GOALS_COLUMN_ID, Constants.DB_GOALS_COLUMN_PERIOD,
+			cursor = DBConnection.ghostDB.query(Constants.DB_TABLE_GOALS, new String[] { Constants.DB_GOALS_COLUMN_ID, Constants.DB_GOALS_COLUMN_PERIOD,
 					Constants.DB_GOALS_COLUMN_PROGRESS, Constants.DB_GOALS_COLUMN_TYPE, Constants.DB_GOALS_COLUMN_GOALVALUE }, selection, null, null, null,
 					orderBy);
 			if (cursor != null) {
@@ -109,7 +108,7 @@ public class GoalDAO extends DataAccessObject {
 			values.put(Constants.DB_GOALS_COLUMN_GOALVALUE, goal.getGoalValue());
 			if (goal.getType() != null)
 				values.put(Constants.DB_GOALS_COLUMN_TYPE, goal.getType().ordinal());
-			result = ghostDB.insert(Constants.DB_TABLE_GOALS, null, values);
+			result = DBConnection.ghostDB.insert(Constants.DB_TABLE_GOALS, null, values);
 		} catch (Exception e) {
 			Log.e(GoalDAO.class.toString(), "Error insert(): " + e.toString());
 			result = -1;
@@ -128,7 +127,7 @@ public class GoalDAO extends DataAccessObject {
 	public boolean delete(long id) {
 		boolean result = false;
 		try {
-			result = ghostDB.delete(Constants.DB_TABLE_GOALS, Constants.DB_GOALS_COLUMN_ID + "=" + id, null) > 0;
+			result = DBConnection.ghostDB.delete(Constants.DB_TABLE_GOALS, Constants.DB_GOALS_COLUMN_ID + "=" + id, null) > 0;
 		} catch (Exception e) {
 			Log.e(GoalDAO.class.toString(), "Error delete(): " + e.toString());
 			result = false;
@@ -158,7 +157,7 @@ public class GoalDAO extends DataAccessObject {
 			values.put(Constants.DB_GOALS_COLUMN_GOALVALUE, goal.getGoalValue());
 			if (goal.getType() != null)
 				values.put(Constants.DB_GOALS_COLUMN_TYPE, goal.getType().ordinal());
-			result = ghostDB.update(Constants.DB_TABLE_GOALS, values, Constants.DB_GOALS_COLUMN_ID + "=" + goal.getID(), null) > 0;
+			result = DBConnection.ghostDB.update(Constants.DB_TABLE_GOALS, values, Constants.DB_GOALS_COLUMN_ID + "=" + goal.getID(), null) > 0;
 		} catch (Exception e) {
 			Log.e(GoalDAO.class.toString(), "Error update(): " + e.toString());
 			result = false;

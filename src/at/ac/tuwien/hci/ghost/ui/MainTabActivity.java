@@ -63,8 +63,8 @@ public class MainTabActivity extends android.app.TabActivity implements InitList
 	}
 
 	private void sayStatsAndMotivation() {
-		RunDAO runDAO = new RunDAO(this);
-		GoalDAO goalDAO = new GoalDAO(this);
+		RunDAO runDAO = new RunDAO();
+		GoalDAO goalDAO = new GoalDAO();
 		Run lastCompletedRun = runDAO.getLastCompletedRun();
 		String lastRunString = "";
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);

@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
 import at.ac.tuwien.hci.ghost.R;
+import at.ac.tuwien.hci.ghost.data.dao.DBConnection;
 import at.ac.tuwien.hci.ghost.data.dao.DataAccessObject;
 import at.ac.tuwien.hci.ghost.data.dao.RouteDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
@@ -48,8 +49,10 @@ public class StartRunActivity extends MapActivity implements Observer<Waypoint> 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.startrun);
+		
+		DBConnection.open(getApplicationContext());
 
-		dao = new RouteDAO(this);
+		dao = new RouteDAO();
 
 		mapView = (MapView) findViewById(R.id.overviewMap);
 		mapView.setBuiltInZoomControls(true);

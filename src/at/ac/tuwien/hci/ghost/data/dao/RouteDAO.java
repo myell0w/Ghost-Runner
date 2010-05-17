@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
@@ -16,9 +15,9 @@ public class RouteDAO extends DataAccessObject {
 	
 	private WaypointDAO waypointDAO = null; // used for getting the waypoints of a run
 
-	public RouteDAO(Context context) {
-		super(context);
-		waypointDAO = new WaypointDAO(context);
+	public RouteDAO() {
+		super();
+		waypointDAO = new WaypointDAO();
 	}
 
 	/**
@@ -75,7 +74,7 @@ public class RouteDAO extends DataAccessObject {
 
 		try {
 			Cursor cursor = null;
-			cursor = ghostDB.query(Constants.DB_TABLE_ROUTES, new String[] { Constants.DB_ROUTES_COLUMN_ID, Constants.DB_ROUTES_COLUMN_DISTANCE,
+			cursor = DBConnection.ghostDB.query(Constants.DB_TABLE_ROUTES, new String[] { Constants.DB_ROUTES_COLUMN_ID, Constants.DB_ROUTES_COLUMN_DISTANCE,
 					Constants.DB_ROUTES_COLUMN_NAME, Constants.DB_ROUTES_COLUMN_RUNCOUNT }, selection, null, null, null, orderBy);
 			if (cursor != null) {
 				if (cursor.moveToFirst()) {
@@ -118,7 +117,7 @@ public class RouteDAO extends DataAccessObject {
 			values.put(Constants.DB_ROUTES_COLUMN_RUNCOUNT, route.getRunCount());
 			if(route.getWaypoints() != null && !route.getWaypoints().isEmpty()) // do not insert empty waypoints list
 				waypointDAO.insertWaypointsOfRoute(route.getID(), route.getWaypoints());
-			result = ghostDB.insert(Constants.DB_TABLE_ROUTES, null, values);
+			result = DBConnection.ghostDB.insert(Constants.DB_TABLE_ROUTES, null, values);
 		} catch (Exception e) {
 			Log.e(RouteDAO.class.toString(), "Error insert(): " + e.toString());
 			result = -1;
@@ -138,7 +137,7 @@ public class RouteDAO extends DataAccessObject {
 		boolean result = false;
 		try {
 			waypointDAO.deleteWaypointsOfRoute(id);
-			result = ghostDB.delete(Constants.DB_TABLE_ROUTES, Constants.DB_ROUTES_COLUMN_ID + "=" + id, null) > 0;
+			result = DBConnection.ghostDB.delete(Constants.DB_TABLE_ROUTES, Constants.DB_ROUTES_COLUMN_ID + "=" + id, null) > 0;
 		} catch (Exception e) {
 			Log.e(RouteDAO.class.toString(), "Error delete(): " + e.toString());
 			result = false;
@@ -166,7 +165,7 @@ public class RouteDAO extends DataAccessObject {
 			values.put(Constants.DB_ROUTES_COLUMN_RUNCOUNT, route.getRunCount());
 			if(route.getWaypoints() != null && !route.getWaypoints().isEmpty()) // do not update empty waypoints list
 				waypointDAO.updateWaypointsOfRoute(route.getID(), route.getWaypoints());
-			result = ghostDB.update(Constants.DB_TABLE_ROUTES, values, Constants.DB_ROUTES_COLUMN_ID + "=" + route.getID(), null) > 0;
+			result = DBConnection.ghostDB.update(Constants.DB_TABLE_ROUTES, values, Constants.DB_ROUTES_COLUMN_ID + "=" + route.getID(), null) > 0;
 		} catch (Exception e) {
 			Log.e(RouteDAO.class.toString(), "Error update(): " + e.toString());
 			result = false;

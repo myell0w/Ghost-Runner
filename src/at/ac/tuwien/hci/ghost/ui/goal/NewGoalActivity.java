@@ -67,7 +67,7 @@ public class NewGoalActivity extends Activity {
 		if (bundle.containsKey("newGoal"))
 			goal = (Goal) bundle.get("newGoal");
 
-		goalDAO = new GoalDAO(this);
+		goalDAO = new GoalDAO();
 
 		ArrayAdapter<Type> adapterType = new ArrayAdapter<Type>(this, android.R.layout.simple_spinner_item, Goal.Type.values());
 		adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

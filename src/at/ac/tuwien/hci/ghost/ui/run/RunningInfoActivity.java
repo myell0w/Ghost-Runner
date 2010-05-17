@@ -68,8 +68,8 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 
 		speaker = new AudioSpeaker(this,null);
 		
-		runDAO = new RunDAO(this);
-		routeDAO = new RouteDAO(this);
+		runDAO = new RunDAO();
+		routeDAO = new RouteDAO();
 		route = (Route) getIntent().getExtras().get(Constants.ROUTE);
 
 		// get view outlets

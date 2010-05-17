@@ -40,7 +40,7 @@ public class RoutesActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 
 		// create dao-object
-		dao = new RouteDAO(this);
+		dao = new RouteDAO();
 		// get all routes
 		routes = getAllRoutes();
 		// create adapter

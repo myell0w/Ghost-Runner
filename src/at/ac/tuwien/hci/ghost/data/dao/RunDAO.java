@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
@@ -20,10 +19,10 @@ public class RunDAO extends DataAccessObject {
 	private RouteDAO routeDAO = null; // used for getting the route of a run
 	private WaypointDAO waypointDAO = null; // used for getting the waypoints of a run
 
-	public RunDAO(Context context) {
-		super(context);
-		routeDAO = new RouteDAO(context);
-		waypointDAO = new WaypointDAO(context);
+	public RunDAO() {
+		super();
+		routeDAO = new RouteDAO();
+		waypointDAO = new WaypointDAO();
 	}
 
 	/**
@@ -85,7 +84,7 @@ public class RunDAO extends DataAccessObject {
 		// TODO gerdschi: das feld performance im Run befŸllen (besser/durchschnitt/schlechter)
 		try {
 			Cursor cursor = null;
-			cursor = ghostDB.query(Constants.DB_TABLE_RUNS, new String[] { Constants.DB_RUNS_COLUMN_ID, Constants.DB_RUNS_COLUMN_DATE,
+			cursor = DBConnection.ghostDB.query(Constants.DB_TABLE_RUNS, new String[] { Constants.DB_RUNS_COLUMN_ID, Constants.DB_RUNS_COLUMN_DATE,
 					Constants.DB_RUNS_COLUMN_TIMEINSECONDS, Constants.DB_RUNS_COLUMN_DISTANCE, Constants.DB_RUNS_COLUMN_PACE, Constants.DB_RUNS_COLUMN_SPEED,
 					Constants.DB_RUNS_COLUMN_CALORIES, Constants.DB_RUNS_COLUMN_ROUTEID }, selection, null, null, null, orderBy);
 			if (cursor != null) {
@@ -211,7 +210,7 @@ public class RunDAO extends DataAccessObject {
 				values.put(Constants.DB_RUNS_COLUMN_ROUTEID, run.getRoute().getID());
 			if (run.getWaypoints() != null && !run.getWaypoints().isEmpty()) // do not insert empty waypoints
 				waypointDAO.insertWaypointsOfRun(run.getID(), run.getWaypoints());
-			result = ghostDB.insert(Constants.DB_TABLE_RUNS, null, values);
+			result = DBConnection.ghostDB.insert(Constants.DB_TABLE_RUNS, null, values);
 		} catch (Exception e) {
 			Log.e(RunDAO.class.toString(), "Error insert(): " + e.toString());
 			result = -1;
@@ -231,7 +230,7 @@ public class RunDAO extends DataAccessObject {
 		boolean result = false;
 		try {
 			waypointDAO.deleteWaypointsOfRun(id);
-			result = ghostDB.delete(Constants.DB_TABLE_RUNS, Constants.DB_RUNS_COLUMN_ID + "=" + id, null) > 0;
+			result = DBConnection.ghostDB.delete(Constants.DB_TABLE_RUNS, Constants.DB_RUNS_COLUMN_ID + "=" + id, null) > 0;
 		} catch (Exception e) {
 			Log.e(RunDAO.class.toString(), "Error delete(): " + e.toString());
 			result = false;
@@ -265,7 +264,7 @@ public class RunDAO extends DataAccessObject {
 				values.put(Constants.DB_RUNS_COLUMN_ROUTEID, run.getRoute().getID());
 			if (run.getWaypoints() != null && !run.getWaypoints().isEmpty()) // do not update empty waypoints
 				waypointDAO.updateWaypointsOfRun(run.getID(), run.getWaypoints());
-			result = ghostDB.update(Constants.DB_TABLE_RUNS, values, Constants.DB_RUNS_COLUMN_ID + "=" + run.getID(), null) > 0;
+			result = DBConnection.ghostDB.update(Constants.DB_TABLE_RUNS, values, Constants.DB_RUNS_COLUMN_ID + "=" + run.getID(), null) > 0;
 		} catch (Exception e) {
 			Log.e(RunDAO.class.toString(), "Error update(): " + e.toString());
 			result = false;
@@ -285,19 +284,35 @@ public class RunDAO extends DataAccessObject {
 		Performance performance = null;
 		if (run.getRoute() != null && !run.getRoute().equals(Route.getEmptyRoute())) // do nothing for empty route
 		{
-			float sumPace = 0;
-			List<Run> runs = getAllRunsOfRoute(run.getRoute());
-			for(Run r:runs)
+			try
 			{
-				sumPace += r.getPace();
+				Cursor cursor = null;
+				float avgPace = -1;
+				
+				cursor = DBConnection.ghostDB.rawQuery("SELECT AVG(" + Constants.DB_RUNS_COLUMN_PACE + ")" +
+						"						FROM " + Constants.DB_TABLE_RUNS + "" +
+								"				WHERE " + Constants.DB_RUNS_COLUMN_ROUTEID + "=" + run.getRoute().getID(), null);
+				if (cursor != null) {
+					if (cursor.moveToFirst()) {
+						avgPace = cursor.getFloat(0);
+					}
+				}
+				
+				if(avgPace == -1)
+					throw new Exception("Database error: average pace could not be retrieved");
+				
+				if(avgPace < run.getPace()) // worse than average
+					performance = Performance.WORSE_THAN_AVERAGE;
+				else if(avgPace > run.getPace()) // better than average
+					performance = Performance.BETTER_THAN_AVERAGE;
+				else
+					performance = Performance.AVERAGE; // TODO shouldn't there be a gap for tolerance?
 			}
-			
-			if((sumPace/runs.size()) < run.getPace()) // worse than average
-				performance = Performance.WORSE_THAN_AVERAGE;
-			else if((sumPace/runs.size()) > run.getPace()) // better than average
-				performance = Performance.BETTER_THAN_AVERAGE;
-			else
-				performance = Performance.AVERAGE; // TODO shouldn't there be a gap for tolerance?
+			catch(Exception e)
+			{
+				performance = null;
+				Log.e(RunDAO.class.toString(), e.toString());
+			}
 		}
 		return performance;
 	}

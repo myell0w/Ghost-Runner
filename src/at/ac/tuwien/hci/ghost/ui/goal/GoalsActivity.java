@@ -33,7 +33,7 @@ public class GoalsActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 
 		// create dao-object
-		dao = new GoalDAO(this);
+		dao = new GoalDAO();
 		// get all routes
 		goals = getAllGoals();
 		// create adapter

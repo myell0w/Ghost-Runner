@@ -44,7 +44,7 @@ public class HistoryActivity extends ListActivity {
 		this.setContentView(R.layout.history);
 		
 		// create dao-object
-		dao = new RunDAO(this);
+		dao = new RunDAO();
 
 		// get all routes and set Header
 		month = new Date();

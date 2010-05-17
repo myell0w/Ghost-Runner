@@ -51,8 +51,8 @@ public class AllRunsOfRouteActivity extends ListActivity {
 		route = (Route) getIntent().getExtras().getSerializable(Constants.ROUTE);
 
 		// create dao-objects
-		runDao = new RunDAO(this);
-		routeDao = new RouteDAO(this);
+		runDao = new RunDAO();
+		routeDao = new RouteDAO();
 		// get all routes
 		runs = getAllRuns();
 		// create adapter
