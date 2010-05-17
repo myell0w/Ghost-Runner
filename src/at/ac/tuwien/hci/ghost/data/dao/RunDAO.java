@@ -207,7 +207,10 @@ public class RunDAO extends DataAccessObject {
 			values.put(Constants.DB_RUNS_COLUMN_SPEED, run.getSpeed());
 			values.put(Constants.DB_RUNS_COLUMN_CALORIES, run.getCalories());
 			if (run.getRoute() != null && !run.getRoute().equals(Route.getEmptyRoute())) // do not insert empty route
+			{
 				values.put(Constants.DB_RUNS_COLUMN_ROUTEID, run.getRoute().getID());
+				routeDAO.update(run.getRoute());
+			}
 			if (run.getWaypoints() != null && !run.getWaypoints().isEmpty()) // do not insert empty waypoints
 				waypointDAO.insertWaypointsOfRun(run.getID(), run.getWaypoints());
 			result = DBConnection.ghostDB.insert(Constants.DB_TABLE_RUNS, null, values);
@@ -301,9 +304,9 @@ public class RunDAO extends DataAccessObject {
 				if(avgPace == -1)
 					throw new Exception("Database error: average pace could not be retrieved");
 				
-				if(avgPace < run.getPace()) // worse than average
+				if(avgPace < (run.getPace() - (avgPace*0.03f))) // worse than average minus 3%
 					performance = Performance.WORSE_THAN_AVERAGE;
-				else if(avgPace > run.getPace()) // better than average
+				else if(avgPace > (run.getPace() + (avgPace*0.03f))) // better than average plus 3%
 					performance = Performance.BETTER_THAN_AVERAGE;
 				else
 					performance = Performance.AVERAGE; // TODO shouldn't there be a gap for tolerance?

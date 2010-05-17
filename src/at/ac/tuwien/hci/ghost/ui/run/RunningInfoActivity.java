@@ -324,7 +324,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		
 		// save the route
 		if (saveRunAsRoute && routeName != null) {
-			r = new Route(1, routeName, currentRun.getDistanceInKm(), 1);
+			r = new Route(1, routeName, currentRun.getDistanceInKm(), 0);
 			
 			r.setWaypoints(currentRun.getWaypoints());
 			r.setID(routeDAO.insert(r));
@@ -333,8 +333,10 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		// save the run
 		if (saveRun) {
 			if (r != null)
+			{
 				currentRun.setRoute(r);
-			
+			}
+			currentRun.getRoute().increaseRunCount();
 			currentRun.setID(runDAO.insert(currentRun));
 			toastId = R.string.run_saved;
 		}
