@@ -121,11 +121,11 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		
 		updateUI();
 
-		if (getIntent().getExtras().getFloat(Constants.GPS_SIGNAL) < Constants.GPS_ACCURACY_BAD) {
+		//if (getIntent().getExtras().getFloat(Constants.GPS_SIGNAL) < Constants.GPS_ACCURACY_BAD) {
 			startTracking();
-		} else {
-			showWaitingDialog();
-		}
+		//} else {
+		//	showWaitingDialog();
+		//}
 	}
 
 	private void startTracking() {

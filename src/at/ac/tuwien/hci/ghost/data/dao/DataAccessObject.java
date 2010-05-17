@@ -8,8 +8,7 @@ import at.ac.tuwien.hci.ghost.data.entities.Entity;
 
 public abstract class DataAccessObject {
 
-	protected SQLiteDatabase ghostDB = null;
-	protected DBOpenHelper dbOpenHelper = null;
+	/*protected DBOpenHelper dbOpenHelper = null;
 	protected Context context = null;
 
 	public DataAccessObject(Context context) {
@@ -24,7 +23,7 @@ public abstract class DataAccessObject {
 
 	protected void close() {
 		ghostDB.close();
-	}
+	}*/
 
 	// abstract public List<Entity> search(List<Entity> searchTerms);
 	abstract protected List<Entity> search(String selection, String orderBy);
