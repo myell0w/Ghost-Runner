@@ -33,11 +33,12 @@ import at.ac.tuwien.hci.ghost.util.AudioSpeaker;
 import at.ac.tuwien.hci.ghost.util.Constants;
 import at.ac.tuwien.hci.ghost.util.Date;
 import at.ac.tuwien.hci.ghost.util.Util;
+import at.ac.tuwien.hci.ghost.util.AudioSpeaker.InitListener;
 
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 
-public class RunningInfoActivity extends MapActivity implements Observer<TimeManager>, ReadyListener {
+public class RunningInfoActivity extends MapActivity implements Observer<TimeManager>, ReadyListener, InitListener {
 	private Run currentRun = null;
 	/** statistics for current run */
 	private RunStatistics statistics = null;
@@ -66,7 +67,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.runninginfo);
 
-		speaker = new AudioSpeaker(this,null);
+		speaker = new AudioSpeaker(this,this);
 		
 		runDAO = new RunDAO();
 		routeDAO = new RouteDAO();
@@ -137,7 +138,9 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		timeManager.setEnabled(true);
 		timeManager.execute();
 		
-		speaker.speak(getResources().getString(R.string.audio_startRun), TextToSpeech.QUEUE_FLUSH);
+		if (speaker.isInitialized()) {
+			//speaker.speak(getResources().getString(R.string.audio_startRun), TextToSpeech.QUEUE_FLUSH);
+		}
 	}
 
 	/**
@@ -335,7 +338,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 			if (r != null)
 				currentRun.setRoute(r);
 			
-			currentRun.setID(runDAO.insert(currentRun));
+			currentRun.setID(runDAO.insert(currentRun)); 
 			toastId = R.string.run_saved;
 		}
 		
@@ -350,5 +353,10 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		}
 
 		finish();
+	}
+
+	@Override
+	public void initFinished() {
+		speaker.speak(getResources().getString(R.string.audio_startRun), TextToSpeech.QUEUE_FLUSH);
 	}
 }

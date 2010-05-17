@@ -19,6 +19,7 @@ public class AudioSpeaker implements OnInitListener, Serializable {
 	
 	private TextToSpeech tts;
 	private InitListener initListener;
+	private boolean initialized = false;
 	
 	public interface InitListener {
 		public void initFinished();
@@ -57,11 +58,16 @@ public class AudioSpeaker implements OnInitListener, Serializable {
 			} else {
 				if (initListener != null)
 					initListener.initFinished();
+				
+				initialized = true;
 			}
 		} else {
 			// Initialization failed.
 			Log.e(getClass().getName(), "Could not initialize TextToSpeech.");
-		}
-		
+		}	
+	}
+	
+	public boolean isInitialized() {
+		return initialized;
 	}
 }
