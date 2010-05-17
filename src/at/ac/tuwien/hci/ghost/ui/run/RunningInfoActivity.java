@@ -121,6 +121,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		
 		updateUI();
 
+		// TODO:
 		//if (getIntent().getExtras().getFloat(Constants.GPS_SIGNAL) < Constants.GPS_ACCURACY_BAD) {
 			startTracking();
 		//} else {
@@ -331,7 +332,9 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		
 		// save the run
 		if (saveRun) {
-			currentRun.setRoute(r);
+			if (r != null)
+				currentRun.setRoute(r);
+			
 			currentRun.setID(runDAO.insert(currentRun));
 			toastId = R.string.run_saved;
 		}
