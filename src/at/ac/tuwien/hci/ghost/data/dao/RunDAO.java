@@ -10,6 +10,7 @@ import android.util.Log;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
+import at.ac.tuwien.hci.ghost.data.entities.Waypoint;
 import at.ac.tuwien.hci.ghost.data.entities.Run.Performance;
 import at.ac.tuwien.hci.ghost.util.Constants;
 import at.ac.tuwien.hci.ghost.util.Date;
@@ -17,10 +18,12 @@ import at.ac.tuwien.hci.ghost.util.Date;
 public class RunDAO extends DataAccessObject {
 
 	private RouteDAO routeDAO = null; // used for getting the route of a run
+	private WaypointDAO waypointDAO = null; // used for getting the waypoints of a run
 
 	public RunDAO(Context context) {
 		super(context);
 		routeDAO = new RouteDAO(context);
+		waypointDAO = new WaypointDAO(context);
 	}
 
 	/**
@@ -101,6 +104,8 @@ public class RunDAO extends DataAccessObject {
 						else { // set route object to empty route
 							run.setRoute(Route.getEmptyRoute());
 						}
+						List<Waypoint> waypoints = waypointDAO.getAllWaypointsOfRun(run.getID());
+						run.setWaypoints(waypoints);
 
 						runs.add(run);
 					} while (cursor.moveToNext());
@@ -174,6 +179,8 @@ public class RunDAO extends DataAccessObject {
 			values.put(Constants.DB_RUNS_COLUMN_CALORIES, run.getCalories());
 			if (run.getRoute() != null && !run.getRoute().equals(Route.getEmptyRoute())) // do not insert empty route
 				values.put(Constants.DB_RUNS_COLUMN_ROUTEID, run.getRoute().getID());
+			if (run.getWaypoints() != null && !run.getWaypoints().isEmpty()) // do not insert empty waypoints
+				waypointDAO.insertWaypointsOfRun(run.getID(), run.getWaypoints());
 			result = ghostDB.insert(Constants.DB_TABLE_RUNS, null, values);
 		} catch (Exception e) {
 			Log.e(RunDAO.class.toString(), "Error insert(): " + e.toString());
@@ -193,22 +200,10 @@ public class RunDAO extends DataAccessObject {
 	public boolean delete(long id) {
 		boolean result = false;
 		try {
+			waypointDAO.deleteWaypointsOfRun(id);
 			result = ghostDB.delete(Constants.DB_TABLE_RUNS, Constants.DB_RUNS_COLUMN_ID + "=" + id, null) > 0;
 		} catch (Exception e) {
 			Log.e(RunDAO.class.toString(), "Error delete(): " + e.toString());
-			result = false;
-		}
-		return result;
-	}
-	
-	public boolean deleteAll() {
-		boolean result = false;
-		try {
-			result = ghostDB.delete(Constants.DB_TABLE_RUNS, "1=1", null) > 0;
-			System.out.println("ERROR'S HERE");
-		} catch(Exception e) {
-			System.out.println("ERROR: " + e.toString());
-			Log.e(RunDAO.class.toString(), "Error deleteAll(): " + e.toString());
 			result = false;
 		}
 		return result;
@@ -240,6 +235,8 @@ public class RunDAO extends DataAccessObject {
 			values.put(Constants.DB_RUNS_COLUMN_CALORIES, run.getCalories());
 			if (run.getRoute() != null && !run.getRoute().equals(Route.getEmptyRoute())) // do not update empty route
 				values.put(Constants.DB_RUNS_COLUMN_ROUTEID, run.getRoute().getID());
+			if (run.getWaypoints() != null && !run.getWaypoints().isEmpty()) // do not update empty waypoints
+				waypointDAO.updateWaypointsOfRun(run.getID(), run.getWaypoints());
 			result = ghostDB.update(Constants.DB_TABLE_RUNS, values, Constants.DB_RUNS_COLUMN_ID + "=" + run.getID(), null) > 0;
 		} catch (Exception e) {
 			Log.e(RunDAO.class.toString(), "Error update(): " + e.toString());

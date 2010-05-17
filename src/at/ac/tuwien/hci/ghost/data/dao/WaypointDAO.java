@@ -121,14 +121,15 @@ public class WaypointDAO extends DataAccessObject {
 		return entitiesToWaypoints(search(Constants.DB_WAYPOINTS_COLUMN_RUNID + "=" + runId, null));
 	}
 	
-	public long insertWaypointsOfRoute(Route route, List<Waypoint> waypoints) {
+	public boolean  insertWaypointsOfRoute(Route route, List<Waypoint> waypoints) {
 		if(route != null)
 			return insertWaypointsOfRoute(route.getID(), waypoints);
-		return -1;
+		return false;
 	}
 	
-	public long insertWaypointsOfRoute(long routeId, List<Waypoint> waypoints) {
-		long result = -1;
+	public boolean insertWaypointsOfRoute(long routeId, List<Waypoint> waypoints) {
+		boolean result = false;
+		long insertResult = -1;
 		ghostDB.beginTransaction();
 		try
 		{
@@ -143,27 +144,31 @@ public class WaypointDAO extends DataAccessObject {
 				values.put(Constants.DB_WAYPOINTS_COLUMN_ALTITUDE, waypoint.getLocation().getAltitude());
 				values.put(Constants.DB_WAYPOINTS_COLUMN_ROUTEID, routeId);
 				values.putNull(Constants.DB_WAYPOINTS_COLUMN_RUNID);
-				result = ghostDB.insert(Constants.DB_TABLE_WAYPOINTS, null, values);
+				insertResult = ghostDB.insert(Constants.DB_TABLE_WAYPOINTS, null, values);
+				if(insertResult == -1)
+					throw new Exception("Database error while updating waypoints");
 			}
 			ghostDB.setTransactionSuccessful();
+			result = true;
 		}
 		catch(Exception e)
 		{
-			result = -1;
+			result = false;
 			Log.e(WaypointDAO.class.toString(), "Error insertWaypointsOfRoute(): " + e.toString());
 		}
 		ghostDB.endTransaction();
 		return result;
 	}
 	
-	public long insertWaypointsOfRun(Run run, List<Waypoint> waypoints) {
+	public boolean insertWaypointsOfRun(Run run, List<Waypoint> waypoints) {
 		if(run != null)
 			return insertWaypointsOfRun(run.getID(), waypoints);
-		return -1;
+		return false;
 	}
 	
-	public long insertWaypointsOfRun(long runId, List<Waypoint> waypoints) {
-		long result = -1;
+	public boolean insertWaypointsOfRun(long runId, List<Waypoint> waypoints) {
+		boolean result = false;
+		long insertResult = -1;
 		ghostDB.beginTransaction();
 		try
 		{
@@ -178,13 +183,16 @@ public class WaypointDAO extends DataAccessObject {
 				values.put(Constants.DB_WAYPOINTS_COLUMN_ALTITUDE, waypoint.getLocation().getAltitude());
 				values.put(Constants.DB_WAYPOINTS_COLUMN_RUNID, runId);
 				values.putNull(Constants.DB_WAYPOINTS_COLUMN_ROUTEID);
-				result = ghostDB.insert(Constants.DB_TABLE_WAYPOINTS, null, values);
+				insertResult = ghostDB.insert(Constants.DB_TABLE_WAYPOINTS, null, values);
+				if(insertResult == -1)
+					throw new Exception("Database error while inserting waypoints");
 			}
 			ghostDB.setTransactionSuccessful();
+			result = true;
 		}
 		catch(Exception e)
 		{
-			result = -1;
+			result = false;
 			Log.e(WaypointDAO.class.toString(), "Error insertWaypointsOfRun(): " + e.toString());
 		}
 		ghostDB.endTransaction();
@@ -226,6 +234,100 @@ public class WaypointDAO extends DataAccessObject {
 			Log.e(WaypointDAO.class.toString(), "Error deleteWaypointsOfRun(): " + e.toString());
 			result = false;
 		}
+		return result;
+	}
+	
+	public boolean updateWaypointsOfRun(Run run, List<Waypoint> waypoints)
+	{
+		if(run != null)
+			return updateWaypointsOfRun(run.getID(), waypoints);
+		return false;
+	}
+	
+	public boolean updateWaypointsOfRun(long runId, List<Waypoint> waypoints)
+	{
+		boolean result = false;
+		long insertResult = -1;
+		ghostDB.beginTransaction();
+		try
+		{
+			// 1. delete old waypoints
+			result = ghostDB.delete(Constants.DB_TABLE_WAYPOINTS, Constants.DB_WAYPOINTS_COLUMN_RUNID + "=" + runId, null) > 0;
+			if(!result)
+				throw new Exception("Database error while updating waypoints: DELETE");
+			
+			// 2. insert new waypoints
+			for(Waypoint waypoint:waypoints)
+			{
+				ContentValues values = new ContentValues();
+				if(waypoint.getTimestamp() != null)
+					values.put(Constants.DB_WAYPOINTS_COLUMN_TIME, waypoint.getTimestamp().getAsJavaDefaultDate().getTime());
+				values.put(Constants.DB_WAYPOINTS_COLUMN_SPEED, waypoint.getSpeed());
+				values.put(Constants.DB_WAYPOINTS_COLUMN_LATITUDE, waypoint.getLocation().getLatitude());
+				values.put(Constants.DB_WAYPOINTS_COLUMN_LONGITUDE, waypoint.getLocation().getLongitude());
+				values.put(Constants.DB_WAYPOINTS_COLUMN_ALTITUDE, waypoint.getLocation().getAltitude());
+				values.put(Constants.DB_WAYPOINTS_COLUMN_RUNID, runId);
+				values.putNull(Constants.DB_WAYPOINTS_COLUMN_ROUTEID);
+				insertResult = ghostDB.insert(Constants.DB_TABLE_WAYPOINTS, null, values);
+				if(insertResult == -1)
+					throw new Exception("Database error while updating waypoints: INSERT");
+			}
+			ghostDB.setTransactionSuccessful();
+			result = true;
+		}
+		catch(Exception e)
+		{
+			result = false;
+			Log.e(WaypointDAO.class.toString(), "Error insertWaypointsOfRun(): " + e.toString());
+		}
+		ghostDB.endTransaction();
+		return result;
+	}
+	
+	public boolean updateWaypointsOfRoute(Route route, List<Waypoint> waypoints)
+	{
+		if(route != null)
+			return updateWaypointsOfRun(route.getID(), waypoints);
+		return false;
+	}
+	
+	public boolean updateWaypointsOfRoute(long routeId, List<Waypoint> waypoints)
+	{
+		boolean result = false;
+		long insertResult = -1;
+		ghostDB.beginTransaction();
+		try
+		{
+			// 1. delete old waypoints
+			result = ghostDB.delete(Constants.DB_TABLE_WAYPOINTS, Constants.DB_WAYPOINTS_COLUMN_ROUTEID + "=" + routeId, null) > 0;
+			if(!result)
+				throw new Exception("Database error while updating waypoints: DELETE");
+			
+			// 2. insert new waypoints
+			for(Waypoint waypoint:waypoints)
+			{
+				ContentValues values = new ContentValues();
+				if(waypoint.getTimestamp() != null)
+					values.put(Constants.DB_WAYPOINTS_COLUMN_TIME, waypoint.getTimestamp().getAsJavaDefaultDate().getTime());
+				values.put(Constants.DB_WAYPOINTS_COLUMN_SPEED, waypoint.getSpeed());
+				values.put(Constants.DB_WAYPOINTS_COLUMN_LATITUDE, waypoint.getLocation().getLatitude());
+				values.put(Constants.DB_WAYPOINTS_COLUMN_LONGITUDE, waypoint.getLocation().getLongitude());
+				values.put(Constants.DB_WAYPOINTS_COLUMN_ALTITUDE, waypoint.getLocation().getAltitude());
+				values.put(Constants.DB_WAYPOINTS_COLUMN_ROUTEID, routeId);
+				values.putNull(Constants.DB_WAYPOINTS_COLUMN_RUNID);
+				insertResult = ghostDB.insert(Constants.DB_TABLE_WAYPOINTS, null, values);
+				if(insertResult == -1)
+					throw new Exception("Database error while updating waypoints: INSERT");
+			}
+			ghostDB.setTransactionSuccessful();
+			result = true;
+		}
+		catch(Exception e)
+		{
+			result = false;
+			Log.e(WaypointDAO.class.toString(), "Error insertWaypointsOfRoute(): " + e.toString());
+		}
+		ghostDB.endTransaction();
 		return result;
 	}
 	
