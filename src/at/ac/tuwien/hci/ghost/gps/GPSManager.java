@@ -99,7 +99,8 @@ public class GPSManager implements Subject<Waypoint>, Observer<Waypoint> {
 	@Override
 	public synchronized void removeObserver(int index) {
 		synchronized (observers) {
-			observers.remove(index);
+			if (index >= 0 && index < observers.size())
+				observers.remove(index);
 		}
 	}
 

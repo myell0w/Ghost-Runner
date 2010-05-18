@@ -39,13 +39,15 @@ public class RouteOverlay extends com.google.android.maps.Overlay {
 			runPoints.clear();
 
 			for (Waypoint p : run.getWaypoints()) {
-				runPoints.add(new GeoPoint((int) (p.getLatitudeDegrees() * 1E6), (int) (p.getLongitudeDegrees() * 1E6)));
+				runPoints.add(p.getGeoPoint());
 			}
-		} else if (route != null && route.getWaypoints() != null) {
+		} 
+		
+		if (route != null && route.getWaypoints() != null) {
 			routePoints.clear();
 
 			for (Waypoint p : route.getWaypoints()) {
-				routePoints.add(new GeoPoint((int) (p.getLatitudeDegrees() * 1E6), (int) (p.getLongitudeDegrees() * 1E6)));
+				routePoints.add(p.getGeoPoint());
 			}
 		}
 	}
@@ -55,8 +57,8 @@ public class RouteOverlay extends com.google.android.maps.Overlay {
 		super.draw(canvas, mv, shadow);
 
 		updateGeoPoints();
-		drawPath(mv, canvas, runPoints, Color.BLUE);
 		drawPath(mv, canvas, routePoints, Color.RED);
+		drawPath(mv, canvas, runPoints, Color.BLUE);
 
 		return true;
 	}

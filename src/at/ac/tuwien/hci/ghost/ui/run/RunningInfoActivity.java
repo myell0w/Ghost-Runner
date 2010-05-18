@@ -129,7 +129,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 
 	private void startTracking() {
 		// remove temporary observer
-		gpsManager.removeObserver(0);
+		gpsManager.removeObserver(2);
 
 		statistics.getTime().start();
 		timeManager.setEnabled(true);
@@ -352,6 +352,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 			toast.show();
 		}
 
+		gpsManager.stop();
 		finish();
 	}
 }

@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
+import at.ac.tuwien.hci.ghost.data.entities.Waypoint;
 import at.ac.tuwien.hci.ghost.gps.RouteOverlay;
 import at.ac.tuwien.hci.ghost.util.Constants;
 import at.ac.tuwien.hci.ghost.util.Util;
@@ -36,16 +37,27 @@ public class RunDetailsActivity extends MapActivity {
 		detailTotalTime.setText(run.getTimeString() + " " + getResources().getString(R.string.app_unitTime));
 		
 		TextView detailTotalDistance = (TextView) findViewById(R.id.detailTotalDistance);
-		detailTotalDistance.setText(run.getDistanceInKm() + " " + getResources().getString(R.string.app_unitDistance));
+		detailTotalDistance.setText(String.format("%.2f",run.getDistanceInKm()) + " " + getResources().getString(R.string.app_unitDistance));
 		
 		TextView detailAveragePace = (TextView) findViewById(R.id.detailAveragePace);
 		detailAveragePace.setText(run.getPaceString() + " " + getResources().getString(R.string.app_unitPace));
 		
 		TextView detailAverageSpeed = (TextView) findViewById(R.id.detailAverageSpeed);
-		detailAverageSpeed.setText(run.getSpeed() + " " + getResources().getString(R.string.app_unitSpeed));
+		detailAverageSpeed.setText(String.format("%.2f",run.getSpeed()) + " " + getResources().getString(R.string.app_unitSpeed));
 		
 		TextView detailCalories = (TextView) findViewById(R.id.detailTotalCalories);
 		detailCalories.setText(run.getCalories() + " " + getResources().getString(R.string.app_unitCalories));
+		
+		System.out.println(" ---------------------- Waypoints Count: " + run.getWaypoints().size());
+		
+		for (Waypoint p : run.getWaypoints()) {
+			System.out.println(" ##### WP: " + p.getLatitudeDegrees() + ", " + p.getLongitudeDegrees());
+		}
+		
+		if (run.getWaypoints().size() > 0) {
+			mapView.getController().animateTo(run.getWaypoints().get(0).getGeoPoint());
+			mapView.postInvalidate();
+		}
 	}
 
 	@Override
