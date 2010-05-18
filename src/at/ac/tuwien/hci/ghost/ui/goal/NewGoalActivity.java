@@ -92,7 +92,7 @@ public class NewGoalActivity extends Activity {
 
 		} else {
 			textHeader.setText("New Goal");
-			seekGoal.setProgress((int) SEEKBAR_WIDTH / 2);
+			seekGoal.setProgress(SEEKBAR_WIDTH / 2);
 		}
 
 		seekGoal.setMax(SEEKBAR_WIDTH);

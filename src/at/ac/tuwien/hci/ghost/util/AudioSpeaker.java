@@ -6,6 +6,7 @@ import java.util.Locale;
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
+import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
 import android.util.Log;
 
 /**
@@ -14,21 +15,48 @@ import android.util.Log;
  * @author Matthias
  *
  */
-public class AudioSpeaker implements OnInitListener, Serializable {
+public class AudioSpeaker implements OnInitListener, Serializable, OnUtteranceCompletedListener {
 	private static final long serialVersionUID = -5049952095081885738L;
 	
+	private static AudioSpeaker instance = null;
+	
+	private Context context;
 	private TextToSpeech tts;
 	private InitListener initListener;
+	private SpeakingListener speakingListener;
 	private boolean initialized = false;
+	
+	// Interfaces
 	
 	public interface InitListener {
 		public void initFinished();
 	}
 	
-	public AudioSpeaker(Context context, InitListener initListener) {
-		tts = new TextToSpeech(context, this);
-		this.initListener = initListener;
+	public interface SpeakingListener {
+		public void speakingFinished();
 	}
+	
+	// Singleton
+	
+	public static void createInstance(Context context, InitListener initListener, SpeakingListener speakingListener) {
+		instance = new AudioSpeaker(context,initListener,speakingListener);
+	}
+	
+	public static AudioSpeaker getInstance() {
+		return instance;
+	}
+	
+	private AudioSpeaker(Context context, InitListener initListener, SpeakingListener speakingListener) {
+		tts = new TextToSpeech(context, this);
+		
+		tts.setOnUtteranceCompletedListener(this);
+		
+		this.context = context;
+		this.initListener = initListener;
+		this.speakingListener = speakingListener;
+	}
+	
+	// normal methods
 	
 	public void shutdown() {
 		if (tts != null) {
@@ -43,6 +71,18 @@ public class AudioSpeaker implements OnInitListener, Serializable {
 	
 	public void speak(String text) {
 		speak(text, TextToSpeech.QUEUE_ADD);
+	}
+	
+	public void speak(int resId, int queueMode) {
+		tts.speak(context.getResources().getString(resId), queueMode, null);
+	}
+	
+	public void speak(int resId) {
+		speak(resId, TextToSpeech.QUEUE_ADD);
+	}
+	
+	public boolean isSpeaking() {
+		return tts.isSpeaking();
 	}
 
 	@Override
@@ -69,5 +109,19 @@ public class AudioSpeaker implements OnInitListener, Serializable {
 	
 	public boolean isInitialized() {
 		return initialized;
+	}
+
+	@Override
+	public void onUtteranceCompleted(String arg0) {
+		if (speakingListener != null)
+			speakingListener.speakingFinished();
+	}
+
+	public void setInitListener(InitListener initListener) {
+		this.initListener = initListener;
+	}
+
+	public void setSpeakingListener(SpeakingListener speakingListener) {
+		this.speakingListener = speakingListener;
 	}
 }

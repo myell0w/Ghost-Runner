@@ -33,12 +33,11 @@ import at.ac.tuwien.hci.ghost.util.AudioSpeaker;
 import at.ac.tuwien.hci.ghost.util.Constants;
 import at.ac.tuwien.hci.ghost.util.Date;
 import at.ac.tuwien.hci.ghost.util.Util;
-import at.ac.tuwien.hci.ghost.util.AudioSpeaker.InitListener;
 
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 
-public class RunningInfoActivity extends MapActivity implements Observer<TimeManager>, ReadyListener, InitListener {
+public class RunningInfoActivity extends MapActivity implements Observer<TimeManager>, ReadyListener {
 	private Run currentRun = null;
 	/** statistics for current run */
 	private RunStatistics statistics = null;
@@ -59,7 +58,6 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	private Button buttonStop = null;
 	private Button buttonPause = null;
 	private ProgressDialog progressDialog = null;
-	private AudioSpeaker speaker = null;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -67,8 +65,6 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.runninginfo);
 
-		speaker = new AudioSpeaker(this,this);
-		
 		runDAO = new RunDAO();
 		routeDAO = new RouteDAO();
 		route = (Route) getIntent().getExtras().get(Constants.ROUTE);
@@ -109,7 +105,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		// initialize entities
 		currentRun = new Run(1, new Date(), 0, 0, 0, route, null);
 		statistics = new RunStatistics(this);
-		
+
 		mapView.getOverlays().add(new RouteOverlay(route, currentRun, mapView));
 		mapView.getOverlays().add(new CurrentLocationOverlay(this, mapView));
 
@@ -119,65 +115,65 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		gpsManager.addObserver(statistics);
 
 		timeManager = new TimeManager(this);
-		
+
 		updateUI();
 
 		// TODO:
-		//if (getIntent().getExtras().getFloat(Constants.GPS_SIGNAL) < Constants.GPS_ACCURACY_BAD) {
-			startTracking();
-		//} else {
-		//	showWaitingDialog();
-		//}
+		// if (getIntent().getExtras().getFloat(Constants.GPS_SIGNAL) <
+		// Constants.GPS_ACCURACY_BAD) {
+		startTracking();
+		// } else {
+		// showWaitingDialog();
+		// }
 	}
 
 	private void startTracking() {
 		// remove temporary observer
 		gpsManager.removeObserver(0);
-		
+
 		statistics.getTime().start();
 		timeManager.setEnabled(true);
 		timeManager.execute();
-		
-		if (speaker.isInitialized()) {
-			//speaker.speak(getResources().getString(R.string.audio_startRun), TextToSpeech.QUEUE_FLUSH);
-		}
+
+		AudioSpeaker.getInstance().speak(R.string.audio_startRun, TextToSpeech.QUEUE_FLUSH);
 	}
 
 	/**
-	 * Shows a progressdialog, as long as there is no acceptable gps-signal strength
+	 * Shows a progressdialog, as long as there is no acceptable gps-signal
+	 * strength
 	 */
 	private void showWaitingDialog() {
 		progressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.run_gpsWait), true);
 		// user can cancel with back-button
 		progressDialog.setCancelable(true);
-		
+
 		// if the user cancels, finish activity
 		progressDialog.setOnCancelListener(new OnCancelListener() {
 			@Override
 			public void onCancel(DialogInterface dialog) {
 				gpsManager.stop();
-				
+
 				RunningInfoActivity.this.finish();
-			}	
+			}
 		});
-		
+
 		// listen for new gps-waypoints and check current accuracy
 		gpsManager.addObserver(new Observer<Waypoint>() {
 			@Override
 			public void notify(Waypoint p) {
 				if (progressDialog.isShowing()) {
 					Log.i(getClass().getName(), "Waiting for GPS: current Accuracy: " + p.getAccuracy());
-					
+
 					// acceptable accuracy found?
 					if (p.hasAccuracy() && p.getAccuracy() < Constants.GPS_ACCURACY_BAD) {
 						// close dialog
 						progressDialog.dismiss();
 						// start gps-tracking
 						startTracking();
-					}	
+					}
 				}
 			}
-			
+
 		});
 	}
 
@@ -207,7 +203,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	public void onPause() {
 		super.onPause();
 
-		//pauseRun();
+		// pauseRun();
 	}
 
 	@Override
@@ -237,16 +233,19 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	}
 
 	private void continueRun() {
+		AudioSpeaker.getInstance().speak(R.string.audio_continueRun, TextToSpeech.QUEUE_FLUSH);
 		statistics.getTime().start();
 		buttonPause.setText(getResources().getString(R.string.run_pause));
 	}
 
 	private void pauseRun() {
+		AudioSpeaker.getInstance().speak(R.string.audio_pauseRun, TextToSpeech.QUEUE_FLUSH);
 		statistics.getTime().pause();
 		buttonPause.setText(getResources().getString(R.string.run_continue));
 	}
 
 	private void stopRun() {
+		AudioSpeaker.getInstance().speak(R.string.audio_stopRun, TextToSpeech.QUEUE_FLUSH);
 		statistics.getTime().pause();
 		updateRunStatistics();
 		gpsManager.stop();
@@ -288,11 +287,11 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		textDistance.setText(String.format("%2.2f", distance) + "\n" + getResources().getString(R.string.app_unitDistance));
 		textCalories.setText(getResources().getString(R.string.app_calories) + ": " + String.format("%2.0f", calories) + " "
 				+ getResources().getString(R.string.app_unitCalories));
-		
+
 		// update progress of run, change image
 		if (currentRun.hasRoute()) {
-			float progress =  currentRun.getDistanceInKm() / currentRun.getRoute().getDistanceInKm();
-			
+			float progress = currentRun.getDistanceInKm() / currentRun.getRoute().getDistanceInKm();
+
 			if (progress > 0.95f) {
 				// 100 %
 				layout.setBackgroundResource(R.drawable.runninginfo_4);
@@ -309,7 +308,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 				// 0 %
 				layout.setBackgroundResource(R.drawable.runninginfo);
 			}
-			
+
 			layout.invalidate();
 		}
 	}
@@ -324,30 +323,29 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	public void readyToFinishActivity(boolean saveRun, boolean saveRunAsRoute, String routeName) {
 		int toastId = -1;
 		Route r = null;
-		
+
 		// save the route
 		if (saveRunAsRoute && routeName != null) {
 			r = new Route(1, routeName, currentRun.getDistanceInKm(), 0);
-			
+
 			r.setWaypoints(currentRun.getWaypoints());
 			r.setID(routeDAO.insert(r));
 		}
-		
+
 		// save the run
 		if (saveRun) {
-			if (r != null)
-			{
+			if (r != null) {
 				currentRun.setRoute(r);
 			}
 			currentRun.getRoute().increaseRunCount();
 			currentRun.setID(runDAO.insert(currentRun));
 			toastId = R.string.run_saved;
 		}
-		
+
 		if (saveRunAsRoute && routeName != null) {
 			toastId = R.string.runAndRoute_saved;
 		}
-		
+
 		// Show notification
 		if (toastId != -1) {
 			Toast toast = Toast.makeText(this, getResources().getString(toastId), Toast.LENGTH_LONG);
@@ -355,10 +353,5 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		}
 
 		finish();
-	}
-
-	@Override
-	public void initFinished() {
-		speaker.speak(getResources().getString(R.string.audio_startRun), TextToSpeech.QUEUE_FLUSH);
 	}
 }

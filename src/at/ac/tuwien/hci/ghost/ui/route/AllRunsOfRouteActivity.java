@@ -15,7 +15,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import at.ac.tuwien.hci.ghost.R;
-import at.ac.tuwien.hci.ghost.data.adapter.RouteAdapter;
 import at.ac.tuwien.hci.ghost.data.adapter.RunAdapter;
 import at.ac.tuwien.hci.ghost.data.dao.DataAccessObject;
 import at.ac.tuwien.hci.ghost.data.dao.RouteDAO;

@@ -25,14 +25,13 @@ import at.ac.tuwien.hci.ghost.util.Date;
 import at.ac.tuwien.hci.ghost.util.AudioSpeaker.InitListener;
 
 public class MainTabActivity extends android.app.TabActivity implements InitListener {
-	private AudioSpeaker speaker = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		// init TTS
-		speaker = new AudioSpeaker(this,this);
+		AudioSpeaker.createInstance(this,this,null);
 		// change formatting of numbers
 		Locale.setDefault(Locale.US);
 		// always change Media Volume
@@ -57,7 +56,7 @@ public class MainTabActivity extends android.app.TabActivity implements InitList
 
 	@Override
 	public void onDestroy() {
-		speaker.shutdown();
+		AudioSpeaker.getInstance().shutdown();
 
 		super.onDestroy();
 	}
@@ -78,7 +77,7 @@ public class MainTabActivity extends android.app.TabActivity implements InitList
 				lastRunString = getResources().getString(R.string.audio_lastRunNone);
 			}
 
-			speaker.speak(lastRunString, TextToSpeech.QUEUE_FLUSH);
+			AudioSpeaker.getInstance().speak(lastRunString, TextToSpeech.QUEUE_FLUSH);
 
 			// TODO: speak goal progress
 			List<Entity> goals = goalDAO.getAll();
@@ -89,19 +88,19 @@ public class MainTabActivity extends android.app.TabActivity implements InitList
 
 					switch (g.getType()) {
 						case RUNS:
-							speaker.speak(getResources().getString(R.string.audio_goalRuns_1) 
+							AudioSpeaker.getInstance().speak(getResources().getString(R.string.audio_goalRuns_1) 
 									   + " " +  g.getProgress() + " " + 
 									   getResources().getString(R.string.audio_goalRuns_2));
 							break;
 						
 						case DISTANCE:
-							speaker.speak(getResources().getString(R.string.audio_goalDistance_1) 
+							AudioSpeaker.getInstance().speak(getResources().getString(R.string.audio_goalDistance_1) 
 									   + " " +  g.getProgress() + " " + 
 									   getResources().getString(R.string.audio_goalDistance_2));
 							break;
 							
 						case CALORIES:
-							speaker.speak(getResources().getString(R.string.audio_goalCalories_1) 
+							AudioSpeaker.getInstance().speak(getResources().getString(R.string.audio_goalCalories_1) 
 									   + " " +  g.getProgress() + " " + 
 									   getResources().getString(R.string.audio_goalCalories_2));
 							break;
@@ -109,8 +108,6 @@ public class MainTabActivity extends android.app.TabActivity implements InitList
 				}
 			}
 		}
-		
-		speaker.shutdown();
 	}
 
 	@Override

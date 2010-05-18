@@ -168,6 +168,7 @@ public class Run extends Entity {
 		this.waypoints = waypoints;
 	}
 
+	@Override
 	public String toString() {
 		return date.toFullString() + ", " + this.getTimeString() + ", " + this.getPaceString();
 	}

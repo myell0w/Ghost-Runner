@@ -26,7 +26,7 @@ public class Waypoint extends Entity {
 		if (location.hasSpeed())
 			speed = location.getSpeed();
 		else {
-			double diff = (double) (getTimestamp().getAsJavaDefaultDate().getTime() - 
+			double diff = (getTimestamp().getAsJavaDefaultDate().getTime() - 
 									previousLocation.getTimestamp().getAsJavaDefaultDate().getTime());
 			double distance = location.distanceTo(previousLocation.getLocation());
 			
@@ -42,13 +42,13 @@ public class Waypoint extends Entity {
 	public double getLongitudeMinutes() {
 		double degree = getLongitudeDegrees();
 
-		return (double) ((degree - (int) degree)) * 60.0;
+		return ((degree - (int) degree)) * 60.0;
 	}
 
 	public double getLongitudeSeconds() {
 		double minutes = getLongitudeMinutes();
 
-		return (double) ((minutes - (int) minutes)) * 60.0;
+		return ((minutes - (int) minutes)) * 60.0;
 	}
 
 	public double getLatitudeDegrees() {
@@ -58,13 +58,13 @@ public class Waypoint extends Entity {
 	public double getLatitudeMinutes() {
 		double degree = getLatitudeDegrees();
 
-		return (double) ((degree - (int) degree)) * 60.0;
+		return ((degree - (int) degree)) * 60.0;
 	}
 
 	public double getLatitudeSeconds() {
 		double minutes = getLatitudeMinutes();
 
-		return (double) ((minutes - (int) minutes)) * 60.0;
+		return ((minutes - (int) minutes)) * 60.0;
 	}
 
 	public Location getLocation() {
@@ -105,6 +105,7 @@ public class Waypoint extends Entity {
 		this.id = id;
 	}
 
+	@Override
 	public String toString() {
 		return "Latitude: " + location.getLatitude() + ", Longitude: " + location.getLongitude();
 	}

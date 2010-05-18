@@ -1,10 +1,6 @@
 package at.ac.tuwien.hci.ghost;
 
 
-import java.util.Calendar;
-import java.util.List;
-
-import junit.framework.Assert;
 import android.test.AndroidTestCase;
 import at.ac.tuwien.hci.ghost.data.dao.RunDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
@@ -17,6 +13,7 @@ public class RunDAOTest extends AndroidTestCase {
 	
 	private RunDAO runDAO = null;
 	
+	@Override
 	protected void setUp() throws Exception {
 		System.out.println("SETTING UP");
 		if(runDAO == null)
@@ -30,6 +27,7 @@ public class RunDAOTest extends AndroidTestCase {
 		runDAO.insert(run3);
 	}
 	
+	@Override
 	protected void tearDown() throws Exception {
 		System.out.println("TEARING DOWN");
 		if(runDAO.delete(1) == false)

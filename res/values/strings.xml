@@ -55,6 +55,7 @@
 	
 	<string name="audio.startRun">Activity Started!</string>
 	<string name="audio.pauseRun">Activity Paused!</string>
+	<string name="audio.continueRun">Activity Continued!</string>
 	<string name="audio.stopRun">Activity Finished!</string>
 	
 	<string name="audio.lastRun.1">Your last run was </string>

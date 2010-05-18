@@ -10,5 +10,6 @@ public abstract class Entity implements Serializable {
 
 	public abstract void setID(long id);
 	
+	@Override
 	public abstract boolean equals(Object o);
 }
