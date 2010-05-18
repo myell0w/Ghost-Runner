@@ -31,7 +31,7 @@ public class MainTabActivity extends android.app.TabActivity implements InitList
 		super.onCreate(savedInstanceState);
 
 		// init TTS
-		AudioSpeaker.createInstance(this,this,null);
+		AudioSpeaker.createInstance(this.getApplicationContext(),this,null);
 		// change formatting of numbers
 		Locale.setDefault(Locale.US);
 		// always change Media Volume

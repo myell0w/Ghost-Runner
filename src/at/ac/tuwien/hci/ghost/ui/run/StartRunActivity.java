@@ -66,17 +66,7 @@ public class StartRunActivity extends MapActivity implements Observer<Waypoint> 
 		selectedRoute = (Spinner) findViewById(R.id.selectedRoute);
 		selectedGoal = (Spinner) findViewById(R.id.selectedGoal);
 
-		routes = dao.getAll();
-		routeAdapter = new ArrayAdapter<Route>(this, android.R.layout.simple_spinner_item);
-		routeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-		routeAdapter.add(Route.getEmptyRoute());
-
-		for (Entity e : routes) {
-			routeAdapter.add((Route) e);
-		}
-
-		selectedRoute.setAdapter(routeAdapter);
+		
 		selectedRoute.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -95,9 +85,7 @@ public class StartRunActivity extends MapActivity implements Observer<Waypoint> 
 			}
 
 			@Override
-			public void onNothingSelected(AdapterView<?> parentView) {
-				// your code here
-			}
+			public void onNothingSelected(AdapterView<?> parentView) { }
 
 		});
 
@@ -116,6 +104,27 @@ public class StartRunActivity extends MapActivity implements Observer<Waypoint> 
 				startRun();
 			}
 		});
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		
+		updateRouteDropdown();
+	}
+
+	private void updateRouteDropdown() {
+		routes = dao.getAll();
+		routeAdapter = new ArrayAdapter<Route>(this, android.R.layout.simple_spinner_item);
+		routeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		routeAdapter.add(Route.getEmptyRoute());
+
+		for (Entity e : routes) {
+			routeAdapter.add((Route) e);
+		}
+
+		selectedRoute.setAdapter(routeAdapter);
 	}
 
 	@Override

@@ -2,8 +2,10 @@ package at.ac.tuwien.hci.ghost.ui.run;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -58,6 +60,8 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	private Button buttonStop = null;
 	private Button buttonPause = null;
 	private ProgressDialog progressDialog = null;
+	
+	private int speakStatisticsIntervalInSeconds = 5;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -68,6 +72,10 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		runDAO = new RunDAO();
 		routeDAO = new RouteDAO();
 		route = (Route) getIntent().getExtras().get(Constants.ROUTE);
+		
+		// read out speak statistics interval
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		speakStatisticsIntervalInSeconds = Integer.parseInt(prefs.getString("speakInterval", "5")) * 60;
 
 		// get view outlets
 		layout = (LinearLayout) findViewById(R.id.runningInfo);
@@ -249,6 +257,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		statistics.getTime().pause();
 		updateRunStatistics();
 		gpsManager.stop();
+		timeManager.setEnabled(false);
 
 		SaveRunDialog dialog = new SaveRunDialog(this, currentRun, this);
 		dialog.show();
@@ -317,6 +326,39 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	public void notify(TimeManager param) {
 		updateRunStatistics();
 		updateUI();
+		
+		long timeInSeconds = statistics.getTime().getDurationInSeconds(); 
+		
+		if (timeInSeconds > 30 && (timeInSeconds % speakStatisticsIntervalInSeconds) == 0
+				&& !AudioSpeaker.getInstance().isSpeaking()) {
+			speakStatistics();
+		}
+	}
+
+	private void speakStatistics() {
+		// speak time
+		String s = getResources().getString(R.string.audio_currentTime);
+		
+		if (statistics.getTime().getDisplayHours() > 0) {
+			s += String.format("%d ",(int)statistics.getTime().getDisplayHours());
+			s += getResources().getString(R.string.audio_unitHours) + " and ";
+		}
+		
+		if (statistics.getTime().getDisplayMinutes() > 0) {
+			s += String.format("%d ",(int)statistics.getTime().getDisplayMinutes());
+			s += getResources().getString(R.string.audio_unitMinutes) + " and ";
+		}
+		
+		s += String.format("%d ",(int)statistics.getTime().getDisplaySeconds());
+		s += getResources().getString(R.string.audio_unitSeconds);
+		
+		AudioSpeaker.getInstance().speak(s, TextToSpeech.QUEUE_FLUSH);
+		
+		// TODO: speak distance
+		
+		// TODO: speak pace
+		
+		// TODO: speak performance
 	}
 
 	@Override
@@ -352,7 +394,6 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 			toast.show();
 		}
 
-		gpsManager.stop();
 		finish();
 	}
 }
