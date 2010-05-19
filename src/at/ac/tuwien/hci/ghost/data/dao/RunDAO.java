@@ -131,6 +131,10 @@ public class RunDAO extends DataAccessObject {
 	 */
 	private List<Run> entitiesToRuns(List<Entity> entities) {
 		List<Run> runs = new ArrayList<Run>();
+		
+		if(entities == null)
+			return runs;
+		
 		for (Entity e : entities) {
 			if (e instanceof Run) {
 				runs.add((Run) e);

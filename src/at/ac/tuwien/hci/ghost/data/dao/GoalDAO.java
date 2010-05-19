@@ -1,6 +1,7 @@
 package at.ac.tuwien.hci.ghost.data.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.content.ContentValues;
@@ -8,6 +9,7 @@ import android.database.Cursor;
 import android.util.Log;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Goal;
+import at.ac.tuwien.hci.ghost.data.entities.Run;
 import at.ac.tuwien.hci.ghost.data.entities.Goal.Period;
 import at.ac.tuwien.hci.ghost.data.entities.Goal.Type;
 import at.ac.tuwien.hci.ghost.util.Constants;
@@ -62,6 +64,12 @@ public class GoalDAO extends DataAccessObject {
 	 */
 	@Override
 	protected List<Entity> search(String selection, String orderBy) {
+		// Get all Runs for calculating Goals
+		List<Run> runs;
+		DataAccessObject dao = new RunDAO();
+		Date now=new Date();
+		runs = ((RunDAO) dao).getAllRunsInMonth(now.getMonth(), now.getYear());
+		
 		List<Entity> goals = new ArrayList<Entity>();
 		try {
 			Cursor cursor = null;
@@ -76,7 +84,7 @@ public class GoalDAO extends DataAccessObject {
 						goal.setProgress(cursor.getFloat(2));
 						goal.setType(Type.Int2Type(cursor.getInt(3)));
 						goal.setGoalValue(cursor.getFloat(4));
-
+						goal.setProgress(runs);
 						goals.add(goal);
 					} while (cursor.moveToNext());
 				}

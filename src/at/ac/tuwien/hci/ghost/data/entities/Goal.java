@@ -1,5 +1,8 @@
 package at.ac.tuwien.hci.ghost.data.entities;
 
+import java.util.List;
+
+@SuppressWarnings("serial")
 public class Goal extends Entity {
 	public enum Period {
 		WEEK, MONTH, YEAR;
@@ -79,6 +82,29 @@ public class Goal extends Entity {
 
 	public float getProgress() {
 		return progress;
+	}
+	
+	public void setProgress(List<Run> runs) {
+		this.progress = 1;
+		
+		if(this.goalValue != 0 && this.type!=null) {
+			float progressvalue=0;
+			switch(this.type) {
+			case CALORIES: 	progressvalue = Run.getCaloriesSum(runs); break;
+			case DISTANCE: 	progressvalue = Run.getDistanceSum(runs); break;
+			case RUNS:		progressvalue = Run.getRunCount(runs); break;
+			default: progressvalue=0;
+			}
+			
+			if(progressvalue==0) {
+				this.progress = 0;
+			}
+			else {
+				this.progress = progressvalue/this.goalValue;
+			}
+		}
+		if(this.progress>1)
+			this.progress=1;
 	}
 
 	public float getProgressFraction() {
