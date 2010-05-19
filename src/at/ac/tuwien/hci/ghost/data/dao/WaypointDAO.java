@@ -52,8 +52,9 @@ public class WaypointDAO extends DataAccessObject {
 	@Override
 	protected List<Entity> search(String selection, String orderBy) {
 		List<Entity> waypoints = new ArrayList<Entity>();
+		Cursor cursor = null;
 		try {
-			Cursor cursor = null;
+			System.out.println("TUT ER NOCH");
 			cursor = DBConnection.ghostDB.query(Constants.DB_TABLE_WAYPOINTS,
 					               new String[] { Constants.DB_WAYPOINTS_COLUMN_ID,
 												  Constants.DB_WAYPOINTS_COLUMN_TIME,
@@ -78,11 +79,17 @@ public class WaypointDAO extends DataAccessObject {
 						waypoints.add(waypoint);
 					} while (cursor.moveToNext());
 				}
-				cursor.close();
 			}
 		} catch (Exception e) {
 			waypoints = null;
 			Log.e(WaypointDAO.class.toString(), "Error search(): " + e.toString());
+		} finally {
+			if(cursor != null)
+			{
+				System.out.println("CLOSING CURSOR WAYPOINTS");
+				cursor.close();
+				cursor = null;
+			}
 		}
 		return waypoints;
 	}

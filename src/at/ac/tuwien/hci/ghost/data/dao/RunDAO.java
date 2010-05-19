@@ -80,10 +80,9 @@ public class RunDAO extends DataAccessObject {
 	@Override
 	protected List<Entity> search(String selection, String orderBy) {
 		List<Entity> runs = new ArrayList<Entity>();
+		Cursor cursor = null;
 
-		// TODO gerdschi: das feld performance im Run befüllen (besser/durchschnitt/schlechter)
 		try {
-			Cursor cursor = null;
 			cursor = DBConnection.ghostDB.query(Constants.DB_TABLE_RUNS, new String[] { Constants.DB_RUNS_COLUMN_ID, Constants.DB_RUNS_COLUMN_DATE,
 					Constants.DB_RUNS_COLUMN_TIMEINSECONDS, Constants.DB_RUNS_COLUMN_DISTANCE, Constants.DB_RUNS_COLUMN_PACE, Constants.DB_RUNS_COLUMN_SPEED,
 					Constants.DB_RUNS_COLUMN_CALORIES, Constants.DB_RUNS_COLUMN_ROUTEID }, selection, null, null, null, orderBy);
@@ -91,6 +90,7 @@ public class RunDAO extends DataAccessObject {
 				if (cursor.moveToFirst()) {
 					do {
 						Run run = new Run(cursor.getLong(0));
+						System.out.println("CATCHING RUN " + run.getID());
 						run.setDate(new Date(cursor.getLong(1)));
 						run.setTimeInSeconds(cursor.getLong(2));
 						run.setDistanceInKm(cursor.getFloat(3));
@@ -103,9 +103,6 @@ public class RunDAO extends DataAccessObject {
 						else { // set route object to empty route
 							run.setRoute(Route.getEmptyRoute());
 						}
-						// set waypoints of this run
-						List<Waypoint> waypoints = waypointDAO.getAllWaypointsOfRun(run.getID());
-						run.setWaypoints(waypoints);
 						
 						// set performance indicator of this run
 						run.setPerformance(calculatePerformance(run));
@@ -113,11 +110,30 @@ public class RunDAO extends DataAccessObject {
 						runs.add(run);
 					} while (cursor.moveToNext());
 				}
-				cursor.close();
 			}
 		} catch (Exception e) {
 			runs = null;
 			Log.e(RunDAO.class.toString(), "Error search(): " + e.toString());
+		} finally {
+			if(cursor != null)
+			{
+				System.out.println("CLOSING CURSOR RUNS");
+				cursor.close();
+				cursor = null;
+			}
+		}
+		// now add waypoints
+		if(runs != null) {
+			for(int i=0;i<runs.size();i++)
+			{
+				// set waypoints of this run
+				List<Waypoint> waypoints = waypointDAO.getAllWaypointsOfRun(runs.get(i).getID());
+				if(waypoints != null && !waypoints.isEmpty())
+					System.out.println("**** RUN " + runs.get(i).getID() + " HAS " + waypoints.size() + " WAYPOINTS");
+				else
+					System.out.println("**** RUN " + runs.get(i).getID() + " HAS NO WAYPOINTS");
+				((Run)runs.get(i)).setWaypoints(waypoints);
+			}
 		}
 		return runs;
 	}
@@ -211,9 +227,11 @@ public class RunDAO extends DataAccessObject {
 				values.put(Constants.DB_RUNS_COLUMN_ROUTEID, run.getRoute().getID());
 				routeDAO.update(run.getRoute());
 			}
+			result = DBConnection.ghostDB.insert(Constants.DB_TABLE_RUNS, null, values);
+			
+			run.setID(result);
 			if (run.getWaypoints() != null && !run.getWaypoints().isEmpty()) // do not insert empty waypoints
 				waypointDAO.insertWaypointsOfRun(run.getID(), run.getWaypoints());
-			result = DBConnection.ghostDB.insert(Constants.DB_TABLE_RUNS, null, values);
 		} catch (Exception e) {
 			Log.e(RunDAO.class.toString(), "Error insert(): " + e.toString());
 			result = -1;
@@ -287,9 +305,9 @@ public class RunDAO extends DataAccessObject {
 		Performance performance = null;
 		if (run.getRoute() != null && !run.getRoute().equals(Route.getEmptyRoute())) // do nothing for empty route
 		{
+			Cursor cursor = null;
 			try
 			{
-				Cursor cursor = null;
 				float avgPace = -1;
 				
 				cursor = DBConnection.ghostDB.rawQuery("SELECT AVG(" + Constants.DB_RUNS_COLUMN_PACE + ")" +
@@ -315,6 +333,13 @@ public class RunDAO extends DataAccessObject {
 			{
 				performance = null;
 				Log.e(RunDAO.class.toString(), e.toString());
+			}
+			finally {
+				if(cursor != null)
+				{
+					System.out.println("CLOSING CURSOR AVGPACE");
+					cursor.close();
+				}
 			}
 		}
 		return performance;

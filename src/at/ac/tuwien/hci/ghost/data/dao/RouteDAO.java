@@ -71,9 +71,8 @@ public class RouteDAO extends DataAccessObject {
 	@Override
 	protected List<Entity> search(String selection, String orderBy) {
 		List<Entity> routes = new ArrayList<Entity>();
-
+		Cursor cursor = null;
 		try {
-			Cursor cursor = null;
 			cursor = DBConnection.ghostDB.query(Constants.DB_TABLE_ROUTES, new String[] { Constants.DB_ROUTES_COLUMN_ID, Constants.DB_ROUTES_COLUMN_DISTANCE,
 					Constants.DB_ROUTES_COLUMN_NAME, Constants.DB_ROUTES_COLUMN_RUNCOUNT }, selection, null, null, null, orderBy);
 			if (cursor != null) {
@@ -89,11 +88,13 @@ public class RouteDAO extends DataAccessObject {
 						routes.add(route);
 					} while (cursor.moveToNext());
 				}
-				cursor.close();
 			}
 		} catch (Exception e) {
 			routes = null;
 			Log.e(RouteDAO.class.toString(), "Error search(): " + e.toString());
+		} finally {
+			if(cursor != null)
+				cursor.close();
 		}
 		return routes;
 	}

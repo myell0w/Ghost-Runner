@@ -63,8 +63,8 @@ public class GoalDAO extends DataAccessObject {
 	@Override
 	protected List<Entity> search(String selection, String orderBy) {
 		List<Entity> goals = new ArrayList<Entity>();
+		Cursor cursor = null;
 		try {
-			Cursor cursor = null;
 			cursor = DBConnection.ghostDB.query(Constants.DB_TABLE_GOALS, new String[] { Constants.DB_GOALS_COLUMN_ID, Constants.DB_GOALS_COLUMN_PERIOD,
 					Constants.DB_GOALS_COLUMN_PROGRESS, Constants.DB_GOALS_COLUMN_TYPE, Constants.DB_GOALS_COLUMN_GOALVALUE }, selection, null, null, null,
 					orderBy);
@@ -80,11 +80,13 @@ public class GoalDAO extends DataAccessObject {
 						goals.add(goal);
 					} while (cursor.moveToNext());
 				}
-				cursor.close();
 			}
 		} catch (Exception e) {
 			goals = null;
 			Log.e(GoalDAO.class.toString(), "Error search(): " + e.toString());
+		} finally {
+			if(cursor != null)
+				cursor.close();
 		}
 		return goals;
 	}
