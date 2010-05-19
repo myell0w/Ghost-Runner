@@ -218,4 +218,30 @@ public class Run extends Entity {
 
 		return R.drawable.indicator_none;
 	}
+	
+	public static int getRunCount(List<Run> runs) {
+		if(runs == null)
+			return 0;
+		return runs.size();
+	}
+	
+	public static int getCaloriesSum(List<Run> runs) {
+		int count=0;
+		if(runs == null)
+			return count;
+		for(Run r:runs) {
+			count+=r.getCalories();
+		}
+		return count;
+	}
+	
+	public static float getDistanceSum(List<Run> runs) {
+		float distance=0;
+		if(runs == null)
+			return distance;
+		for(Run r:runs) {
+			distance+=r.getDistanceInKm();
+		}
+		return distance;
+	}
 }
