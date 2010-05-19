@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.util.Log;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
-import at.ac.tuwien.hci.ghost.data.entities.Waypoint;
 import at.ac.tuwien.hci.ghost.util.Constants;
 
 public class RouteDAO extends DataAccessObject {
@@ -116,9 +115,10 @@ public class RouteDAO extends DataAccessObject {
 			if (route.getName() != null)
 				values.put(Constants.DB_ROUTES_COLUMN_NAME, route.getName());
 			values.put(Constants.DB_ROUTES_COLUMN_RUNCOUNT, route.getRunCount());
+			result = DBConnection.ghostDB.insert(Constants.DB_TABLE_ROUTES, null, values);
+			route.setID(result);
 			if(route.getWaypoints() != null && !route.getWaypoints().isEmpty()) // do not insert empty waypoints list
 				waypointDAO.insertWaypointsOfRoute(route.getID(), route.getWaypoints());
-			result = DBConnection.ghostDB.insert(Constants.DB_TABLE_ROUTES, null, values);
 		} catch (Exception e) {
 			Log.e(RouteDAO.class.toString(), "Error insert(): " + e.toString());
 			result = -1;
