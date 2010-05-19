@@ -132,6 +132,7 @@ public class HistoryActivity extends ListActivity {
 		Intent allRunsIntent = new Intent(this, RunDetailsActivity.class);
 		allRunsIntent.putExtra(Constants.RUN, r);
 
+
 		this.startActivityForResult(allRunsIntent, VIEW_RUN_DETAIL);
 	}
 

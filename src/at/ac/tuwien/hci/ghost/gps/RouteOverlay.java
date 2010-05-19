@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
@@ -16,10 +17,11 @@ import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 
 /**
- * Displays an Overlay over the Map showing the Current selected Route and the current travelled Route
+ * Displays an Overlay over the Map showing the Current selected Route and the
+ * current travelled Route
  * 
  * @author Matthias
- *
+ * 
  */
 public class RouteOverlay extends com.google.android.maps.Overlay {
 	private Route route = null;
@@ -41,8 +43,8 @@ public class RouteOverlay extends com.google.android.maps.Overlay {
 			for (Waypoint p : run.getWaypoints()) {
 				runPoints.add(p.getGeoPoint());
 			}
-		} 
-		
+		}
+
 		if (route != null && route.getWaypoints() != null) {
 			routePoints.clear();
 
@@ -70,7 +72,8 @@ public class RouteOverlay extends com.google.android.maps.Overlay {
 
 			paint.setColor(color);
 			paint.setStyle(Paint.Style.STROKE);
-			
+			paint.setPathEffect(new DashPathEffect(new float[] { 3, 3 }, 0));
+
 			// set width depending on zoom level
 			if (mv.getZoomLevel() < 13) {
 				paint.setStrokeWidth(3);
@@ -95,7 +98,7 @@ public class RouteOverlay extends com.google.android.maps.Overlay {
 				Point point = new Point();
 
 				mv.getProjection().toPixels(points.get(i), point);
-				
+
 				// move to first position, the draw line to others
 				if (i == 0) {
 					path.moveTo(point.x, point.y);
@@ -103,7 +106,7 @@ public class RouteOverlay extends com.google.android.maps.Overlay {
 					path.lineTo(point.x, point.y);
 				}
 			}
-			
+
 			canvas.drawPath(path, paint);
 		}
 	}

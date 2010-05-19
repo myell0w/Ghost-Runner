@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.util.Log;
 import at.ac.tuwien.hci.ghost.data.entities.Entity;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
-import at.ac.tuwien.hci.ghost.data.entities.Waypoint;
 import at.ac.tuwien.hci.ghost.util.Constants;
 
 public class RouteDAO extends DataAccessObject {
@@ -71,9 +70,8 @@ public class RouteDAO extends DataAccessObject {
 	@Override
 	protected List<Entity> search(String selection, String orderBy) {
 		List<Entity> routes = new ArrayList<Entity>();
-
+		Cursor cursor = null;
 		try {
-			Cursor cursor = null;
 			cursor = DBConnection.ghostDB.query(Constants.DB_TABLE_ROUTES, new String[] { Constants.DB_ROUTES_COLUMN_ID, Constants.DB_ROUTES_COLUMN_DISTANCE,
 					Constants.DB_ROUTES_COLUMN_NAME, Constants.DB_ROUTES_COLUMN_RUNCOUNT }, selection, null, null, null, orderBy);
 			if (cursor != null) {
@@ -83,17 +81,19 @@ public class RouteDAO extends DataAccessObject {
 						route.setDistanceInKm(cursor.getFloat(1));
 						route.setName(cursor.getString(2));
 						route.setRunCount(cursor.getInt(3));
-						List<Waypoint> waypoints = waypointDAO.getAllWaypointsOfRoute(route.getID());
-						route.setWaypoints(waypoints);
+						//List<Waypoint> waypoints = waypointDAO.getAllWaypointsOfRoute(route.getID());
+						//route.setWaypoints(waypoints);
 
 						routes.add(route);
 					} while (cursor.moveToNext());
 				}
-				cursor.close();
 			}
 		} catch (Exception e) {
 			routes = null;
 			Log.e(RouteDAO.class.toString(), "Error search(): " + e.toString());
+		} finally {
+			if(cursor != null)
+				cursor.close();
 		}
 		return routes;
 	}
@@ -115,9 +115,10 @@ public class RouteDAO extends DataAccessObject {
 			if (route.getName() != null)
 				values.put(Constants.DB_ROUTES_COLUMN_NAME, route.getName());
 			values.put(Constants.DB_ROUTES_COLUMN_RUNCOUNT, route.getRunCount());
+			result = DBConnection.ghostDB.insert(Constants.DB_TABLE_ROUTES, null, values);
+			route.setID(result);
 			if(route.getWaypoints() != null && !route.getWaypoints().isEmpty()) // do not insert empty waypoints list
 				waypointDAO.insertWaypointsOfRoute(route.getID(), route.getWaypoints());
-			result = DBConnection.ghostDB.insert(Constants.DB_TABLE_ROUTES, null, values);
 		} catch (Exception e) {
 			Log.e(RouteDAO.class.toString(), "Error insert(): " + e.toString());
 			result = -1;

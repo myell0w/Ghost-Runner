@@ -5,8 +5,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import at.ac.tuwien.hci.ghost.R;
+import at.ac.tuwien.hci.ghost.data.dao.WaypointDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
-import at.ac.tuwien.hci.ghost.data.entities.Waypoint;
 import at.ac.tuwien.hci.ghost.gps.RouteOverlay;
 import at.ac.tuwien.hci.ghost.util.Constants;
 import at.ac.tuwien.hci.ghost.util.Util;
@@ -17,6 +17,7 @@ import com.google.android.maps.MapView;
 public class RunDetailsActivity extends MapActivity {
 	private MapView mapView = null;
 	private Run run = null;
+	private WaypointDAO waypointDAO = null;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -25,6 +26,11 @@ public class RunDetailsActivity extends MapActivity {
 		setContentView(R.layout.rundetails);
 
 		run = (Run) getIntent().getExtras().getSerializable(Constants.RUN);
+		
+		// load waypoints from db
+		waypointDAO = new WaypointDAO();
+		run.setWaypoints(waypointDAO.getAllWaypointsOfRun(run));
+		run.getRoute().setWaypoints(waypointDAO.getAllWaypointsOfRoute(run.getRoute()));
 
 		mapView = (MapView) findViewById(R.id.overviewMap);
 		mapView.setBuiltInZoomControls(true);
@@ -47,12 +53,6 @@ public class RunDetailsActivity extends MapActivity {
 		
 		TextView detailCalories = (TextView) findViewById(R.id.detailTotalCalories);
 		detailCalories.setText(run.getCalories() + " " + getResources().getString(R.string.app_unitCalories));
-		
-		System.out.println(" ---------------------- Waypoints Count: " + run.getWaypoints().size());
-		
-		for (Waypoint p : run.getWaypoints()) {
-			System.out.println(" ##### WP: " + p.getLatitudeDegrees() + ", " + p.getLongitudeDegrees());
-		}
 		
 		if (run.getWaypoints().size() > 0) {
 			mapView.getController().animateTo(run.getWaypoints().get(0).getGeoPoint());
