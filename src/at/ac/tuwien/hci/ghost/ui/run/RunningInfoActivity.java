@@ -21,6 +21,7 @@ import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.TimeManager;
 import at.ac.tuwien.hci.ghost.data.dao.RouteDAO;
 import at.ac.tuwien.hci.ghost.data.dao.RunDAO;
+import at.ac.tuwien.hci.ghost.data.dao.WaypointDAO;
 import at.ac.tuwien.hci.ghost.data.entities.Route;
 import at.ac.tuwien.hci.ghost.data.entities.Run;
 import at.ac.tuwien.hci.ghost.data.entities.Waypoint;
@@ -72,6 +73,11 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		runDAO = new RunDAO();
 		routeDAO = new RouteDAO();
 		route = (Route) getIntent().getExtras().get(Constants.ROUTE);
+		
+		if (route != null) {
+			WaypointDAO waypointDAO = new WaypointDAO();
+			route.setWaypoints(waypointDAO.getAllWaypointsOfRoute(route));
+		}
 		
 		// read out speak statistics interval
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
