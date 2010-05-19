@@ -171,7 +171,9 @@ public class RunDAO extends DataAccessObject {
 		Date dateEnd = new Date(1, (month == 12 ? 1 : month + 1), (month == 12 ? year + 1 : year), 0, 0);
 		long timeStart = dateStart.getAsJavaDefaultDate().getTime();
 		long timeEnd = dateEnd.getAsJavaDefaultDate().getTime();
-		return entitiesToRuns(search(Constants.DB_RUNS_COLUMN_DATE + " BETWEEN " + timeStart + " AND " + timeEnd, null));
+		List<Run> runs = entitiesToRuns(search(Constants.DB_RUNS_COLUMN_DATE + " BETWEEN " + timeStart + " AND " + timeEnd, null));
+		Log.e(getClass().getName(),"******************** Runsize: " + runs.size() + " " + month + "." + year);
+		return runs;
 	}
 	
 	/**
@@ -183,6 +185,22 @@ public class RunDAO extends DataAccessObject {
 		Run run = null;
 
 		List<Entity> runs = search(Constants.DB_RUNS_COLUMN_DATE + " = (SELECT MAX(" + Constants.DB_RUNS_COLUMN_DATE + ") FROM " + Constants.DB_TABLE_RUNS + ")", null);
+		if (runs != null && !runs.isEmpty())
+			run = (Run) runs.get(0);
+
+		return run;
+	}
+	
+	/**
+	 * Returns the best completed run for a route
+	 * 
+	 * @param route tha route
+	 * @return the last completed run
+	 */
+	public Run getBestCompletedRun(Route route) {
+		Run run = null;
+
+		List<Entity> runs = search(Constants.DB_RUNS_COLUMN_PACE + " = (SELECT MIN(" + Constants.DB_RUNS_COLUMN_PACE + ") FROM " + Constants.DB_TABLE_RUNS + " WHERE " + Constants.DB_RUNS_COLUMN_ROUTEID + "=" + route.getID() +")" , null);
 		if (runs != null && !runs.isEmpty())
 			run = (Run) runs.get(0);
 
@@ -308,12 +326,7 @@ public class RunDAO extends DataAccessObject {
 				if(avgPace == -1)
 					throw new Exception("Database error: average pace could not be retrieved");
 				
-				if(avgPace < (run.getPace() - (avgPace*0.03f))) // worse than average minus 3%
-					performance = Performance.WORSE_THAN_AVERAGE;
-				else if(avgPace > (run.getPace() + (avgPace*0.03f))) // better than average plus 3%
-					performance = Performance.BETTER_THAN_AVERAGE;
-				else
-					performance = Performance.AVERAGE; // TODO shouldn't there be a gap for tolerance?
+				performance = Run.calculatePerformance(avgPace, run.getPace());
 			}
 			catch(Exception e)
 			{
