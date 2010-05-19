@@ -3,8 +3,10 @@ package at.ac.tuwien.hci.ghost.data.entities;
 import java.util.List;
 import java.util.Vector;
 
+import android.util.Log;
 import at.ac.tuwien.hci.ghost.R;
 import at.ac.tuwien.hci.ghost.util.Date;
+import android.util.Log;
 
 public class Run extends Entity {
 	private static final long serialVersionUID = 3050093983774457949L;
@@ -220,8 +222,11 @@ public class Run extends Entity {
 	}
 	
 	public static int getRunCount(List<Run> runs) {
-		if(runs == null)
+		if(runs == null) {
+			Log.e("getRunCount()", "Runs Null");
 			return 0;
+		}
+		Log.e("getRunCount()", "Runs.size: " + runs.size());
 		return runs.size();
 	}
 	
@@ -237,11 +242,24 @@ public class Run extends Entity {
 	
 	public static float getDistanceSum(List<Run> runs) {
 		float distance=0;
-		if(runs == null)
+		if(runs == null) {
+			Log.e("getDistnaceSum()", "Runs Null");
 			return distance;
+		}
 		for(Run r:runs) {
 			distance+=r.getDistanceInKm();
 		}
 		return distance;
+	}
+	
+	public static Performance calculatePerformance(float paceGhost, float paceRun) {
+		Performance performance;
+		if(paceGhost < (paceRun - (paceGhost*0.03f))) // worse than average minus 3%
+			performance = Performance.WORSE_THAN_AVERAGE;
+		else if(paceGhost > (paceRun + (paceGhost*0.03f))) // better than average plus 3%
+			performance = Performance.BETTER_THAN_AVERAGE;
+		else
+			performance = Performance.AVERAGE; // TODO shouldn't there be a gap for tolerance?
+		return performance;
 	}
 }

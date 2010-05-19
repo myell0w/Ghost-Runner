@@ -6,9 +6,11 @@
 	<!--  Global -->
 
 	<string name="app.name">GhostRunner</string>
+
 	<string name="app.mapKey">0wJX1d5k44xaJGN8HcVAOCITMkj4Zd8uE_JWlFg</string>
 	<!-- matthias: 0wJX1d5k44xaJGN8HcVAOCITMkj4Zd8uE_JWlFg -->
 	<!-- gerhard: 0-bK8OSSsc8vA0MbFNnmjAouKmhopTsMpioHHZQ -->
+	<!-- messi: 0wJX1d5k44xYBPfAAF_BPQxogMDg_X7LM7uDEQA -->
 	
 	<string name="app.save">Save</string>
 	<string name="app.discard">Discard</string>
@@ -67,17 +69,18 @@
 	<string name="audio.goalCalories.2">percent of your desired monthly calories! </string>
 	
 	<string name="audio.ghostBehind.1">You are </string>
-	<string name="audio.ghostBehind.2">behind your best ghost-run! </string>
+	<string name="audio.ghostBehind.2">behind your best ghost-run </string>
 	<string name="audio.ghostAhead.1">You are </string>
-	<string name="audio.ghostAhead.2">ahead of your best ghost-run! </string>
-	<string name="audio.ghostEqual.1">You are matching your best ghost-run! </string>
+	<string name="audio.ghostAhead.2">ahead of your best ghost-run </string>
+	<string name="audio.ghostEqual.1">You are matching your best ghost-run </string>
+	<string name="audio.ghostPace">Your average pace was </string>
 	
 	<string name="audio.currentTime">Time: </string>
 	<string name="audio.averagePace">Average pace: </string>
 	<string name="audio.averageSpeed">Average speed: </string>
 	<string name="audio.currentDistance">Current distance: </string>
 	
-	<string name="audio.motivation1">Well done!</string>
+	<string name="audio.motivation1">Well done</string>
 
 	<!-- Run -->
 	<string name="run.gpsSignal">GPS Signal</string>

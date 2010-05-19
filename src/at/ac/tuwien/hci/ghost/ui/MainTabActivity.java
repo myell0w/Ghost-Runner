@@ -89,19 +89,19 @@ public class MainTabActivity extends android.app.TabActivity implements InitList
 					switch (g.getType()) {
 						case RUNS:
 							AudioSpeaker.getInstance().speak(getResources().getString(R.string.audio_goalRuns_1) 
-									   + " " +  g.getProgress() + " " + 
+									   + " " +  g.getProgressPercentage() + " " + 
 									   getResources().getString(R.string.audio_goalRuns_2));
 							break;
 						
 						case DISTANCE:
 							AudioSpeaker.getInstance().speak(getResources().getString(R.string.audio_goalDistance_1) 
-									   + " " +  g.getProgress() + " " + 
+									   + " " +  g.getProgressPercentage() + " " + 
 									   getResources().getString(R.string.audio_goalDistance_2));
 							break;
 							
 						case CALORIES:
 							AudioSpeaker.getInstance().speak(getResources().getString(R.string.audio_goalCalories_1) 
-									   + " " +  g.getProgress() + " " + 
+									   + " " +  g.getProgressPercentage() + " " + 
 									   getResources().getString(R.string.audio_goalCalories_2));
 							break;
 					}

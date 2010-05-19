@@ -1,7 +1,7 @@
 package at.ac.tuwien.hci.ghost.data.dao;
 
 import java.util.ArrayList;
-import java.util.Date;
+import at.ac.tuwien.hci.ghost.util.Date;
 import java.util.List;
 
 import android.content.ContentValues;
@@ -65,11 +65,11 @@ public class GoalDAO extends DataAccessObject {
 	@Override
 	protected List<Entity> search(String selection, String orderBy) {
 		// Get all Runs for calculating Goals
-		List<Run> runs;
-		DataAccessObject dao = new RunDAO();
+		List<Run> runs = null;
+		DataAccessObject rundao = new RunDAO();
 		Date now=new Date();
-		runs = ((RunDAO) dao).getAllRunsInMonth(now.getMonth(), now.getYear());
-		
+		runs = ((RunDAO) rundao).getAllRunsInMonth(now.getMonth(), now.getYear());
+		Log.e(getClass().getName(),"******************** Runsize: " + runs.size() + " " + now.getMonth() + "." + now.getYear());
 		List<Entity> goals = new ArrayList<Entity>();
 		Cursor cursor = null;
 		try {

@@ -45,6 +45,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	/** statistics for current run */
 	private RunStatistics statistics = null;
 	private Route route = null;
+	private Run bestRun = null;
 	private TimeManager timeManager = null;
 	private GPSManager gpsManager = null;
 	private GPSListener gpsListener = null;
@@ -99,6 +100,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 
 		if (route != null) {
 			textRoute.setText(getResources().getString(R.string.app_route) + ": " + route.getName());
+			bestRun = runDAO.getBestCompletedRun(route);
 		} else {
 			textRoute.setText(getResources().getString(R.string.app_route) + ": " + getResources().getString(R.string.app_none));
 		}
@@ -360,11 +362,42 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		
 		AudioSpeaker.getInstance().speak(s, TextToSpeech.QUEUE_FLUSH);
 		
-		// TODO: speak distance
+		// speak distance
+		s = getResources().getString(R.string.audio_currentDistance);
+		s += String.format("%.2f", statistics.getDistanceInKm());
+		s += getResources().getString(R.string.audio_unitDistance);
+		AudioSpeaker.getInstance().speak(s, TextToSpeech.QUEUE_FLUSH);
+				
+		// speak pace
+		s = getResources().getString(R.string.audio_averagePace);
+		s += String.format("%.2f", statistics.getAveragePace());
+		s += getResources().getString(R.string.audio_unitPace);
+		AudioSpeaker.getInstance().speak(s, TextToSpeech.QUEUE_FLUSH);
 		
-		// TODO: speak pace
-		
-		// TODO: speak performance
+		// speak performance
+		if(this.currentRun.hasRoute() && bestRun != null) {
+			s = new String();
+			switch(Run.calculatePerformance(bestRun.getPace(), currentRun.getPace())) {
+			case WORSE_THAN_AVERAGE:
+				s = getResources().getString(R.string.audio_ghostAhead_1);
+				s += getResources().getString(R.string.audio_ghostAhead_2);
+				s += getResources().getString(R.string.audio_ghostPace);
+				s += String.format("%.2f", bestRun.getPace());
+				s += getResources().getString(R.string.audio_unitPace);
+				break;
+			case AVERAGE:
+				s = getResources().getString(R.string.audio_ghostEqual_1);
+				break;
+			case BETTER_THAN_AVERAGE:
+				s = getResources().getString(R.string.audio_ghostBehind_1);
+				s += getResources().getString(R.string.audio_ghostBehind_2);
+				s += getResources().getString(R.string.audio_ghostPace);
+				s += String.format("%.2f", bestRun.getPace());
+				s += getResources().getString(R.string.audio_unitPace);
+				break;
+			}
+			AudioSpeaker.getInstance().speak(s, TextToSpeech.QUEUE_FLUSH);
+		}
 	}
 
 	@Override
