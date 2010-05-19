@@ -82,8 +82,8 @@ public class RouteDAO extends DataAccessObject {
 						route.setDistanceInKm(cursor.getFloat(1));
 						route.setName(cursor.getString(2));
 						route.setRunCount(cursor.getInt(3));
-						List<Waypoint> waypoints = waypointDAO.getAllWaypointsOfRoute(route.getID());
-						route.setWaypoints(waypoints);
+						//List<Waypoint> waypoints = waypointDAO.getAllWaypointsOfRoute(route.getID());
+						//route.setWaypoints(waypoints);
 
 						routes.add(route);
 					} while (cursor.moveToNext());

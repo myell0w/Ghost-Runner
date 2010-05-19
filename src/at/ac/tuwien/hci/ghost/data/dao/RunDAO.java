@@ -123,7 +123,7 @@ public class RunDAO extends DataAccessObject {
 			}
 		}
 		// now add waypoints
-		if(runs != null) {
+		/*if(runs != null) {
 			for(int i=0;i<runs.size();i++)
 			{
 				// set waypoints of this run
@@ -134,7 +134,7 @@ public class RunDAO extends DataAccessObject {
 					System.out.println("**** RUN " + runs.get(i).getID() + " HAS NO WAYPOINTS");
 				((Run)runs.get(i)).setWaypoints(waypoints);
 			}
-		}
+		}*/
 		return runs;
 	}
 
