@@ -31,6 +31,8 @@ public class RunDetailsActivity extends MapActivity {
 		waypointDAO = new WaypointDAO();
 		run.setWaypoints(waypointDAO.getAllWaypointsOfRun(run));
 		run.getRoute().setWaypoints(waypointDAO.getAllWaypointsOfRoute(run.getRoute()));
+		
+		System.out.println("************** " + run.getRoute().getWaypoints().size());
 
 		mapView = (MapView) findViewById(R.id.overviewMap);
 		mapView.setBuiltInZoomControls(true);

@@ -59,20 +59,23 @@ public class RouteOverlay extends com.google.android.maps.Overlay {
 		super.draw(canvas, mv, shadow);
 
 		updateGeoPoints();
-		drawPath(mv, canvas, routePoints, Color.RED);
-		drawPath(mv, canvas, runPoints, Color.BLUE);
+		drawPath(mv, canvas, routePoints, Color.RED, true);
+		drawPath(mv, canvas, runPoints, Color.BLUE, false);
 
 		return true;
 	}
 
-	public void drawPath(MapView mv, Canvas canvas, List<GeoPoint> points, int color) {
+	public void drawPath(MapView mv, Canvas canvas, List<GeoPoint> points, int color, boolean dotted) {
 		if (points != null && !points.isEmpty()) {
 			Paint paint = new Paint();
 			Path path = new Path();
 
 			paint.setColor(color);
 			paint.setStyle(Paint.Style.STROKE);
-			paint.setPathEffect(new DashPathEffect(new float[] { 3, 3 }, 0));
+			
+			if (dotted) {
+				paint.setPathEffect(new DashPathEffect(new float[] {5,5}, 1));
+			}
 
 			// set width depending on zoom level
 			if (mv.getZoomLevel() < 13) {
@@ -89,6 +92,10 @@ public class RouteOverlay extends com.google.android.maps.Overlay {
 				paint.setStrokeWidth(13);
 			} else {
 				paint.setStrokeWidth(15);
+			}
+			
+			if (dotted) {
+				paint.setStrokeWidth(paint.getStrokeWidth() - 1);
 			}
 
 			paint.setStrokeCap(Paint.Cap.ROUND);
