@@ -366,13 +366,13 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		s = getResources().getString(R.string.audio_currentDistance);
 		s += String.format("%.2f", statistics.getDistanceInKm());
 		s += getResources().getString(R.string.audio_unitDistance);
-		AudioSpeaker.getInstance().speak(s, TextToSpeech.QUEUE_FLUSH);
+		AudioSpeaker.getInstance().speak(s, TextToSpeech.QUEUE_ADD);
 				
 		// speak pace
 		s = getResources().getString(R.string.audio_averagePace);
 		s += String.format("%.2f", statistics.getAveragePace());
 		s += getResources().getString(R.string.audio_unitPace);
-		AudioSpeaker.getInstance().speak(s, TextToSpeech.QUEUE_FLUSH);
+		AudioSpeaker.getInstance().speak(s, TextToSpeech.QUEUE_ADD);
 		
 		// speak performance
 		if(this.currentRun.hasRoute() && bestRun != null) {
@@ -396,7 +396,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 				s += getResources().getString(R.string.audio_unitPace);
 				break;
 			}
-			AudioSpeaker.getInstance().speak(s, TextToSpeech.QUEUE_FLUSH);
+			AudioSpeaker.getInstance().speak(s, TextToSpeech.QUEUE_ADD);
 		}
 	}
 
