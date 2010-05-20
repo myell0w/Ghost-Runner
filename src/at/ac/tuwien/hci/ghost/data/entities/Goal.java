@@ -112,7 +112,7 @@ public class Goal extends Entity {
 	}
 
 	public int getProgressPercentage() {
-		return Math.round(progress * 100);
+		return Math.round(progress * 100.f);
 	}
 
 	public boolean finished() {

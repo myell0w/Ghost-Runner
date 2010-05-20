@@ -78,6 +78,6 @@ public interface Constants {
 	
 	/** GPS Accuracy Levels */
 	//TODO: set values accurate
-	public static final float GPS_ACCURACY_BAD = 1140; // 40
-	public static final float GPS_ACCURACY_MEDIUM = 320; //20
+	public static final float GPS_ACCURACY_BAD = 40; // 40
+	public static final float GPS_ACCURACY_MEDIUM = 20; //20
 }

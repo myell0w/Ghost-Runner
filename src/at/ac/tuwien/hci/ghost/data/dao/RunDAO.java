@@ -52,12 +52,8 @@ public class RunDAO extends DataAccessObject {
 		List<Entity> runs = null;
 		runs = search(null, null);
 
-		/* TODO remove stub shit */
 		if (runs == null)
 			runs = new ArrayList<Entity>();
-		runs.add(new Run(3, new Date(2, 3, 2010, 14, 20), 5600, 12.56f, 423, null, Performance.WORSE_THAN_AVERAGE));
-		runs.add(new Run(4, new Date(3, 3, 2010, 17, 22), 7600, 23.56f, 523, null, Performance.AVERAGE));
-		runs.add(new Run(5, new Date(4, 3, 2010, 12, 00), 1600, 2.56f, 623, null, Performance.BETTER_THAN_AVERAGE));
 
 		return runs;
 	}

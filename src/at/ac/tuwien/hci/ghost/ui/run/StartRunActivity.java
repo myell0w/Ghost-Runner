@@ -129,7 +129,6 @@ public class StartRunActivity extends MapActivity implements Observer<Waypoint> 
 
 	@Override
 	protected boolean isRouteDisplayed() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

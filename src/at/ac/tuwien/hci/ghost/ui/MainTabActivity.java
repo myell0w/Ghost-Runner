@@ -79,7 +79,6 @@ public class MainTabActivity extends android.app.TabActivity implements InitList
 
 			AudioSpeaker.getInstance().speak(lastRunString, TextToSpeech.QUEUE_FLUSH);
 
-			// TODO: speak goal progress
 			List<Entity> goals = goalDAO.getAll();
 
 			for (Entity e : goals) {

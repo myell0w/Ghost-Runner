@@ -19,7 +19,6 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		// TODO Add create table statements
 		String createTableGoals = null;
 		String createTableRoutes = null;
 		String createTableRuns = null;

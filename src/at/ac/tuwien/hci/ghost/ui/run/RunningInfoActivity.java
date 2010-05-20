@@ -62,7 +62,7 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	private Button buttonStop = null;
 	private Button buttonPause = null;
 	private ProgressDialog progressDialog = null;
-	
+
 	private int speakStatisticsIntervalInSeconds = 5;
 
 	/** Called when the activity is first created. */
@@ -74,12 +74,12 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 		runDAO = new RunDAO();
 		routeDAO = new RouteDAO();
 		route = (Route) getIntent().getExtras().get(Constants.ROUTE);
-		
+
 		if (route != null) {
 			WaypointDAO waypointDAO = new WaypointDAO();
 			route.setWaypoints(waypointDAO.getAllWaypointsOfRoute(route));
 		}
-		
+
 		// read out speak statistics interval
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		speakStatisticsIntervalInSeconds = Integer.parseInt(prefs.getString("speakInterval", "5")) * 60;
@@ -134,13 +134,11 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 
 		updateUI();
 
-		// TODO:
-		// if (getIntent().getExtras().getFloat(Constants.GPS_SIGNAL) <
-		// Constants.GPS_ACCURACY_BAD) {
-		startTracking();
-		// } else {
-		// showWaitingDialog();
-		// }
+		if (getIntent().getExtras().getFloat(Constants.GPS_SIGNAL) < Constants.GPS_ACCURACY_BAD) {
+			startTracking();
+		} else {
+			showWaitingDialog();
+		}
 	}
 
 	private void startTracking() {
@@ -273,7 +271,6 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 
 	@Override
 	protected boolean isRouteDisplayed() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -334,11 +331,10 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	public void notify(TimeManager param) {
 		updateRunStatistics();
 		updateUI();
-		
-		long timeInSeconds = statistics.getTime().getDurationInSeconds(); 
-		
-		if (timeInSeconds > 30 && (timeInSeconds % speakStatisticsIntervalInSeconds) == 0
-				&& !AudioSpeaker.getInstance().isSpeaking()) {
+
+		long timeInSeconds = statistics.getTime().getDurationInSeconds();
+
+		if (timeInSeconds > 30 && (timeInSeconds % speakStatisticsIntervalInSeconds) == 0 && !AudioSpeaker.getInstance().isSpeaking()) {
 			speakStatistics();
 		}
 	}
@@ -346,43 +342,43 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	private void speakStatistics() {
 		// speak time
 		String s = getResources().getString(R.string.audio_currentTime);
-		int hours = (int)statistics.getTime().getDisplayHours();
-		int minutes = (int)statistics.getTime().getDisplayMinutes();
-		int seconds = (int)statistics.getTime().getDisplaySeconds();
-		
+		int hours = (int) statistics.getTime().getDisplayHours();
+		int minutes = (int) statistics.getTime().getDisplayMinutes();
+		int seconds = (int) statistics.getTime().getDisplaySeconds();
+
 		if (hours > 0) {
-			s += String.format("%d ",hours);
+			s += String.format("%d ", hours);
 			s += getResources().getString(R.string.audio_unitHours);
 			s += " and ";
 		}
-		
+
 		if (minutes > 0) {
-			s += String.format("%d ",minutes);
+			s += String.format("%d ", minutes);
 			s += getResources().getString(R.string.audio_unitMinutes);
 			s += " and ";
 		}
-		
-		s += String.format("%d ",seconds);
+
+		s += String.format("%d ", seconds);
 		s += getResources().getString(R.string.audio_unitSeconds);
-		
+
 		AudioSpeaker.getInstance().speak(s, TextToSpeech.QUEUE_FLUSH);
-		
+
 		// speak distance
 		s = getResources().getString(R.string.audio_currentDistance);
 		s += String.format("%.2f", statistics.getDistanceInKm());
 		s += getResources().getString(R.string.audio_unitDistance);
 		AudioSpeaker.getInstance().speak(s, TextToSpeech.QUEUE_ADD);
-				
+
 		// speak pace
 		s = getResources().getString(R.string.audio_averagePace);
 		s += String.format("%.2f", statistics.getAveragePace());
 		s += getResources().getString(R.string.audio_unitPace);
 		AudioSpeaker.getInstance().speak(s, TextToSpeech.QUEUE_ADD);
-		
+
 		// speak performance
-		if(this.currentRun.hasRoute() && bestRun != null) {
+		if (this.currentRun.hasRoute() && bestRun != null) {
 			s = new String();
-			switch(Run.calculatePerformance(bestRun.getPace(), currentRun.getPace())) {
+			switch (Run.calculatePerformance(bestRun.getPace(), currentRun.getPace())) {
 			case WORSE_THAN_AVERAGE:
 				s = getResources().getString(R.string.audio_ghostAhead_1);
 				s += getResources().getString(R.string.audio_ghostAhead_2);

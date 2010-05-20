@@ -98,7 +98,6 @@ public class HistoryActivity extends ListActivity {
 		
 		monthName.setText(monthName.getText() + " " + String.valueOf(year));
 
-		//TODO: set Distance, avg Pace & Calories
 		float totalDistance=0, totalTimeInSeconds=0;
 		int totalCalories=0;
 		
