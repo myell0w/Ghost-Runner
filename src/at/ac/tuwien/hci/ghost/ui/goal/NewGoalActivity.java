@@ -93,6 +93,14 @@ public class NewGoalActivity extends Activity {
 		} else {
 			textHeader.setText("New Goal");
 			seekGoal.setProgress(SEEKBAR_WIDTH / 2);
+			goal.setType(Goal.Type.DISTANCE);
+			if (goal.getType().equals(Goal.Type.CALORIES)) {
+				goal.setGoalValue((MAX_CALORIES - MIN_CALORIES)/2);
+			} else if (goal.getType().equals(Goal.Type.DISTANCE)) {
+				goal.setGoalValue((MAX_DISTANCE - MIN_DISTANCE)/2);
+			} else if (goal.getType().equals(Goal.Type.RUNS)) {
+				goal.setGoalValue((MAX_RUNS - MIN_RUNS)/2);
+			}
 		}
 
 		seekGoal.setMax(SEEKBAR_WIDTH);
