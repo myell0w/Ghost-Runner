@@ -346,18 +346,23 @@ public class RunningInfoActivity extends MapActivity implements Observer<TimeMan
 	private void speakStatistics() {
 		// speak time
 		String s = getResources().getString(R.string.audio_currentTime);
+		int hours = (int)statistics.getTime().getDisplayHours();
+		int minutes = (int)statistics.getTime().getDisplayMinutes();
+		int seconds = (int)statistics.getTime().getDisplaySeconds();
 		
-		if (statistics.getTime().getDisplayHours() > 0) {
-			s += String.format("%d ",(int)statistics.getTime().getDisplayHours());
-			s += getResources().getString(R.string.audio_unitHours) + " and ";
+		if (hours > 0) {
+			s += String.format("%d ",hours);
+			s += getResources().getString(R.string.audio_unitHours);
+			s += " and ";
 		}
 		
-		if (statistics.getTime().getDisplayMinutes() > 0) {
-			s += String.format("%d ",(int)statistics.getTime().getDisplayMinutes());
-			s += getResources().getString(R.string.audio_unitMinutes) + " and ";
+		if (minutes > 0) {
+			s += String.format("%d ",minutes);
+			s += getResources().getString(R.string.audio_unitMinutes);
+			s += " and ";
 		}
 		
-		s += String.format("%d ",(int)statistics.getTime().getDisplaySeconds());
+		s += String.format("%d ",seconds);
 		s += getResources().getString(R.string.audio_unitSeconds);
 		
 		AudioSpeaker.getInstance().speak(s, TextToSpeech.QUEUE_FLUSH);
