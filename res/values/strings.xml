@@ -75,10 +75,10 @@
 	<string name="audio.ghostEqual.1">You are matching your best ghost-run </string>
 	<string name="audio.ghostPace">Your average pace was </string>
 	
-	<string name="audio.currentTime">Time: </string>
-	<string name="audio.averagePace">Average pace: </string>
-	<string name="audio.averageSpeed">Average speed: </string>
-	<string name="audio.currentDistance">Current distance: </string>
+	<string name="audio.currentTime">Time </string>
+	<string name="audio.averagePace">Average pace </string>
+	<string name="audio.averageSpeed">Average speed </string>
+	<string name="audio.currentDistance">Current distance </string>
 	
 	<string name="audio.motivation1">Well done</string>
 

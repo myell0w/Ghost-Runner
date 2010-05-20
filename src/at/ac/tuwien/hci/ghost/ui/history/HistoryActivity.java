@@ -109,7 +109,7 @@ public class HistoryActivity extends ListActivity {
 		}
 		
 		TextView detailTotalDistance = (TextView) findViewById(R.id.detailTotalDistance);
-		detailTotalDistance.setText(String.valueOf(totalDistance) + " " + getResources().getString(R.string.app_unitDistance));
+		detailTotalDistance.setText(String.format("%.1f", totalDistance) + " " + getResources().getString(R.string.app_unitDistance));
 		
 		TextView detailAveragePace = (TextView) findViewById(R.id.detailAveragePace);
 		if(totalDistance == 0)
