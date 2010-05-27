@@ -30,8 +30,6 @@ public class MainTabActivity extends android.app.TabActivity implements InitList
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// init TTS
-		AudioSpeaker.createInstance(this.getApplicationContext(),this,null);
 		// change formatting of numbers
 		Locale.setDefault(Locale.US);
 		// always change Media Volume
@@ -54,11 +52,28 @@ public class MainTabActivity extends android.app.TabActivity implements InitList
 				this.getResources().getDrawable(R.drawable.tab_goal)).setContent(new Intent(this, GoalsActivity.class)));
 	}
 
+	// TODO MESSI -- wenn du das lšscht, muss der AudioSpeaker in onCreate erzeugt werden
+	public void onStart() {
+		super.onStart();
+		
+		// init TTS
+		AudioSpeaker.createInstance(this.getApplicationContext(),this,null);
+	}
+
 	@Override
 	public void onDestroy() {
 		AudioSpeaker.getInstance().shutdown();
 
 		super.onDestroy();
+	}
+	
+	// TODO MESSI -- wenns nicht geht lšschen
+	@Override
+	public void onStop() {
+		super.onStop();
+		AudioSpeaker.getInstance().shutdown();
+		
+		finish();
 	}
 
 	private void sayStatsAndMotivation() {

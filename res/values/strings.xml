@@ -87,7 +87,7 @@
 	<string name="run.gpsWait">Waiting for GPS Signal...</string>
 	<string name="run.gpsStartAndWait">Start when GPS available</string>
 	<string name="run.start">Start Run</string>
-	<string name="run.stop">Stop Run</string>
+	<string name="run.stop">Finish Run</string>
 	<string name="run.pause">Pause Run</string>
 	<string name="run.continue">Continue Run</string>
 

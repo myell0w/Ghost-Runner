@@ -112,6 +112,14 @@ public class StartRunActivity extends MapActivity implements Observer<Waypoint> 
 		
 		updateRouteDropdown();
 	}
+	
+	// TODO MESSI -- wenns nicht geht lšschen
+	@Override
+	public void onStop() {
+		super.onStop();
+		
+		gpsManager.stop();
+	}
 
 	private void updateRouteDropdown() {
 		routes = dao.getAll();
@@ -179,22 +187,22 @@ public class StartRunActivity extends MapActivity implements Observer<Waypoint> 
 			if (gpsAccuracy > Constants.GPS_ACCURACY_BAD) {
 				startButton.setTextColor(R.color.noGps);
 				startButton.setText(R.string.run_gpsStartAndWait);
-				//startButton.setEnabled(false);
+				startButton.setEnabled(false);
 			} else if (gpsAccuracy > Constants.GPS_ACCURACY_MEDIUM) {
 				startButton.setTextColor(R.color.mediumGps);
 				startButton.setText(R.string.run_start);
-				//startButton.setEnabled(true);
+				startButton.setEnabled(true);
 			} else {
 				startButton.setTextColor(R.color.goodGps);
 				startButton.setText(R.string.run_start);
-				//startButton.setEnabled(true);
+				startButton.setEnabled(true);
 			}		
 		} else {
 			gpsAccuracy = Constants.GPS_ACCURACY_BAD + 1;
 			
 			startButton.setTextColor(R.color.noGps);
 			startButton.setText(R.string.run_gpsWait);
-			//startButton.setEnabled(false);
+			startButton.setEnabled(false);
 		}
 		
 		// redraw button

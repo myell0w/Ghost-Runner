@@ -31,7 +31,7 @@ public class GPSManager implements Subject<Waypoint>, Observer<Waypoint> {
 		locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
 		locationListener = new MyLocationListener(this);
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 6000, 10, locationListener);
 	}
 
 	public Waypoint getLastKnownLocation() {
